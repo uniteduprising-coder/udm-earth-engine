@@ -71,24 +71,13 @@ export async function handleCosmologyApi(
     const asset = await env.ASSETS.fetch(req);
     return asset;
   }
-  if (
-    path === "/planar" ||
-    path === "/planar/" ||
-    path.startsWith("/planar/") ||
-    path === "/simulate" ||
-    path === "/simulate.html" ||
-    path === "/globe" ||
-    path === "/globe.html" ||
-    path === "/view"
-  ) {
-    const assetPath = path.startsWith("/planar") ? path : "/planar/";
-    const req = new Request(`https://earth.uniteduprising.com${assetPath === "/planar" ? "/planar/" : assetPath}`, {
-      method: "GET",
-    });
-    const res = await env.ASSETS.fetch(req);
-    if (res.ok) return res;
-    const fallback = new Request("https://earth.uniteduprising.com/planar/index.html", { method: "GET" });
-    return env.ASSETS.fetch(fallback);
+  if (path === "/planar" || path === "/planar/" || path === "/simulate" || path === "/globe" || path === "/view") {
+    const req = new Request("https://earth.uniteduprising.com/planar/kernel.html", { method: "GET" });
+    return env.ASSETS.fetch(req);
+  }
+  if (path === "/planar/app" || path === "/planar/app/" || path === "/planar/index.html") {
+    const req = new Request("https://earth.uniteduprising.com/planar/index.html", { method: "GET" });
+    return env.ASSETS.fetch(req);
   }
   if (path === "/api/simulation/state") {
     const baked = await fetchBakedJson(env, "/data/cosmology/state.json");

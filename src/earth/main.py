@@ -108,16 +108,25 @@ def create_app() -> FastAPI:
         return {"service": "udm-earth-engine", "toroid": "public/toroid.html missing"}
 
     @app.get("/planar")
-    @app.get("/planar/{rest:path}")
     @app.get("/simulate")
     @app.get("/globe")
     @app.get("/view")
-    async def planar_simulation_viewer(rest: str = ""):
+    async def planar_kernel_viewer():
+        kernel = public / "planar" / "kernel.html"
+        if kernel.exists():
+            return FileResponse(kernel)
         planar_index = public / "planar" / "index.html"
         if planar_index.exists():
-            if rest and (public / "planar" / rest).is_file():
-                return FileResponse(public / "planar" / rest)
             return FileResponse(planar_index)
+
+    @app.get("/planar/{rest:path}")
+    async def planar_static(rest: str):
+        target = public / "planar" / rest
+        if target.is_file():
+            return FileResponse(target)
+        kernel = public / "planar" / "kernel.html"
+        if kernel.exists():
+            return FileResponse(kernel)
         legacy = public / "simulate.html"
         if legacy.exists():
             return FileResponse(legacy)

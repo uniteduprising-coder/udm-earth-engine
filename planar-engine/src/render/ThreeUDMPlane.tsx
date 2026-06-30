@@ -1,5 +1,4 @@
-import { useMemo } from "react";
-import { useLoader } from "@react-three/fiber";
+import { useEffect, useMemo, useState } from "react";
 import * as THREE from "three";
 import { createUDMDiskGeometry, displaceDiskZ } from "./createUDMDiskGeometry";
 import { flowMagnitude, DEFAULT_SIM } from "@/simulation/fieldSample";
@@ -14,7 +13,28 @@ type Props = {
 };
 
 export function ThreeUDMPlane({ textureUrl, showFlowDisplacement }: Props) {
-  const texture = useLoader(THREE.TextureLoader, textureUrl);
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      textureUrl,
+      (tex) => {
+        if (!alive) return;
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
+        setTexture(tex);
+      },
+      undefined,
+      () => {
+        if (alive) setTexture(null);
+      }
+    );
+    return () => {
+      alive = false;
+    };
+  }, [textureUrl]);
 
   const geometry = useMemo(() => {
     const geo = createUDMDiskGeometry(DISK_SCENE_RADIUS, RADIAL_SEGMENTS, RING_SEGMENTS);
@@ -28,14 +48,15 @@ export function ThreeUDMPlane({ textureUrl, showFlowDisplacement }: Props) {
     return geo;
   }, [showFlowDisplacement]);
 
-  useMemo(() => {
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
-  }, [texture]);
-
   return (
     <mesh geometry={geometry} rotation={[0, 0, 0]}>
-      <meshStandardMaterial map={texture} side={THREE.DoubleSide} roughness={0.85} metalness={0.05} />
+      <meshStandardMaterial
+        map={texture ?? undefined}
+        color={texture ? "#ffffff" : "#1a2844"}
+        side={THREE.DoubleSide}
+        roughness={0.85}
+        metalness={0.05}
+      />
     </mesh>
   );
 }

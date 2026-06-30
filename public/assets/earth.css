@@ -112,7 +112,42 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
 
 .leaflet-container { background: #0a1018; font-family: inherit; }
 
+.card-reality h2, .card-validation-live h2, .card-spectral summary h2,
+.card-predict summary h2, .card-market summary h2, .card-replay summary h2, .card-obsnet summary h2 {
+  margin: 0 0 8px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent);
+}
+.reality-selector { display: grid; gap: 4px; font-size: 0.78rem; margin-bottom: 8px; }
+.reality-selector label { cursor: pointer; color: var(--muted); }
+.reality-meta { font-size: 0.78rem; margin-bottom: 6px; }
+.dual-panel, .validation-dashboard, .prediction-output, .prediction-market, .replay-panel, .obs-network {
+  font-size: 0.76rem; line-height: 1.45;
+}
+.dual-row { display: flex; justify-content: space-between; padding: 2px 0; }
+.validation-dashboard .val-row {
+  display: grid; grid-template-columns: 1fr auto auto; gap: 4px; padding: 2px 0; font-size: 0.72rem;
+}
+.val-footer { margin-top: 6px; font-size: 0.75rem; }
+.btn-secondary {
+  width: 100%; margin-top: 6px; background: #1e293b; color: var(--accent);
+  border: 1px solid var(--border); border-radius: 8px; padding: 6px; cursor: pointer; font-size: 0.78rem;
+}
+.ingest-status { font-size: 0.72rem; margin-top: 4px; }
+.spectral-canvas { width: 100%; height: 80px; border-radius: 6px; border: 1px solid var(--border); display: block; }
+.pred-label { display: block; font-size: 0.78rem; margin-bottom: 6px; color: var(--muted); }
+.pred-label select { width: 100%; margin-top: 4px; background: #1e293b; color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px; }
+.pred-card { background: #0f172a; border: 1px solid var(--border); border-radius: 6px; padding: 8px; margin-bottom: 6px; }
+.pred-id { font-weight: 600; margin-bottom: 4px; }
+.pred-stats { margin-top: 6px; }
+.replay-controls { display: flex; gap: 6px; margin-top: 6px; }
+.replay-controls button { flex: 1; background: #1e293b; color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 4px; cursor: pointer; font-size: 0.72rem; }
+.card-spectral summary, .card-predict summary, .card-market summary, .card-replay summary, .card-obsnet summary {
+  cursor: pointer; list-style: none;
+}
+.card-spectral summary::-webkit-details-marker, .card-predict summary::-webkit-details-marker,
+.card-market summary::-webkit-details-marker, .card-replay summary::-webkit-details-marker,
+.card-obsnet summary::-webkit-details-marker { display: none; }
+
 @media (max-width: 860px) {
   .layout { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
-  .sidebar { grid-column: 1; max-height: 200px; border-left: 0; border-top: 1px solid var(--border); }
+  .sidebar { grid-column: 1; max-height: 280px; border-left: 0; border-top: 1px solid var(--border); }
 }

@@ -369,6 +369,7 @@
   function onMapClick(e) {
     if (!state.measureMode) {
       updateMetrics(e.latlng.lat, e.latlng.lng, state.lstHours);
+      window.UDM_ADVANTAGE?.onMapClick(e.latlng.lat, e.latlng.lng);
       return;
     }
     state.measurePts.push(e.latlng);
@@ -503,6 +504,7 @@
         state.simT += 15;
         if (state.params) updateCosmoPanel();
       }, 15000);
+      window.UDM_ADVANTAGE?.init();
     } catch (e) {
       $('#status-line').textContent = `Load error: ${e.message}`;
       $('#map-loading').textContent = 'Could not load map data. Try refresh.';

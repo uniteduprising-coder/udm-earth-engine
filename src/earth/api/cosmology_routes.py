@@ -185,3 +185,9 @@ async def export_session():
 def bake_public_assets() -> None:
     """Export params.json for edge CDN."""
     export_params_json()
+    try:
+        from earth.api.advantage_routes import export_advantage_json
+
+        export_advantage_json()
+    except Exception:
+        pass

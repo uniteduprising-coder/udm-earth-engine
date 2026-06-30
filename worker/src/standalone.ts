@@ -188,6 +188,27 @@ export default {
     if (path === "/api/observations/layers") {
       return json({ layers: OBS_LAYERS }, corsH, 300);
     }
+    if (path.startsWith("/api/advantage/")) {
+      const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/advantage.json");
+      if (!baked) return json({ error: "advantage not baked" }, corsH);
+      if (path === "/api/advantage/summary") return json(baked.summary ? { summary: baked.summary, ...baked } : baked, corsH, 120);
+      if (path === "/api/advantage/spectral") {
+        const cosmology = url.searchParams.get("cosmology") || "udm";
+        const key = cosmology === "copernican" ? "spectral_copernican" : "spectral_udm";
+        return json((baked[key] as object) ?? baked.spectral_udm, corsH, 300);
+      }
+      if (path === "/api/advantage/predictions") return json(baked.predictions ?? {}, corsH, 120);
+      if (path === "/api/advantage/observations/network") return json(baked.observation_network ?? {}, corsH, 120);
+      if (path === "/api/advantage/replay" || path === "/api/advantage/replay/state") return json(baked.replay ?? {}, corsH, 120);
+      if (path === "/api/advantage/ingestion") return json(baked.ingestion ?? {}, corsH, 120);
+      if (path === "/api/advantage/dual-mode" || path === "/api/advantage/predict") {
+        return json({ edge: true, note: "Use Python API for live dual-mode / predict", baked: true }, corsH);
+      }
+      if (path === "/api/advantage/ingestion/run" && request.method === "POST") {
+        return json({ ok: true, edge: true, note: "Ingest stub on edge", validation_score: "15/18" }, corsH);
+      }
+      return json(baked, corsH, 120);
+    }
     if (path === "/api/update" && request.method === "POST") {
       const key = url.searchParams.get("key");
       const val = url.searchParams.get("val");

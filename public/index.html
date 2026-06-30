@@ -64,6 +64,25 @@
       <canvas id="globe-canvas"></canvas>
     </section>
     <aside class="sidebar">
+      <div class="card card-reality">
+        <h2>Reality Mode</h2>
+        <div class="reality-selector">
+          <label><input type="radio" name="reality-mode" value="copernican" /> Copernican</label>
+          <label><input type="radio" name="reality-mode" value="udm" checked /> UDM v5.2α</label>
+          <label><input type="radio" name="reality-mode" value="split" /> Split view</label>
+          <label><input type="radio" name="reality-mode" value="overlay" /> Overlay diff</label>
+        </div>
+        <div class="reality-meta">
+          Score <strong id="reality-score">—</strong> · <span id="reality-consistency">loading…</span>
+        </div>
+        <div id="dual-mode-panel" class="dual-panel muted">Click map to compare cosmologies</div>
+      </div>
+      <div class="card card-validation-live">
+        <h2>Live Validation</h2>
+        <div id="live-validation-dashboard" class="validation-dashboard muted">Connecting telemetry…</div>
+        <button id="btn-ingest" type="button" class="btn-secondary">Run ingestion cycle</button>
+        <div id="ingest-status" class="muted ingest-status"></div>
+      </div>
       <div class="card card-live">
         <h2>Live</h2>
         <div id="feed-status" class="feed-list muted">Updating in background…</div>
@@ -109,6 +128,37 @@
         <summary><h2>Advanced Validation</h2></summary>
         <div id="advanced-validation" class="advanced-panel muted">Run validation to populate</div>
       </details>
+      <details class="card card-spectral" open>
+        <summary><h2>Spectral Renderer</h2></summary>
+        <canvas id="spectral-canvas" width="256" height="80" class="spectral-canvas"></canvas>
+      </details>
+      <details class="card card-predict">
+        <summary><h2>Prediction Generator</h2></summary>
+        <label class="pred-label">Observable
+          <select id="pred-observable">
+            <option value="glow">Glow</option>
+            <option value="sky_color">Sky Color</option>
+            <option value="magnetic">Magnetic</option>
+            <option value="terminator">Terminator</option>
+            <option value="skin_tone">Skin Tone</option>
+            <option value="gravity">Gravity</option>
+          </select>
+        </label>
+        <button id="btn-predict" type="button" class="btn-secondary">If UDM, then…</button>
+        <div id="prediction-output" class="prediction-output muted">Click map, then generate</div>
+      </details>
+      <details class="card card-market">
+        <summary><h2>Prediction Market</h2></summary>
+        <div id="prediction-market" class="prediction-market muted">Loading…</div>
+      </details>
+      <details class="card card-replay">
+        <summary><h2>Historical Replay</h2></summary>
+        <div id="replay-panel" class="replay-panel muted">1982 Soviet Polar Expedition</div>
+      </details>
+      <details class="card card-obsnet">
+        <summary><h2>Observation Network</h2></summary>
+        <div id="obs-network" class="obs-network muted">Loading…</div>
+      </details>
     </aside>
   </main>
 
@@ -119,6 +169,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js" defer></script>
+  <script src="/assets/advantage.js" defer></script>
   <script src="/assets/earth.js" defer></script>
 </body>
 </html>

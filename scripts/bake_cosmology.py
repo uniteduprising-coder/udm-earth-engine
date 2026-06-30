@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from earth.api.advantage_routes import export_advantage_json
 from earth.api.cosmology_routes import bake_public_assets
 from earth.cosmology.chromatic import full_chromatic_synthesis
 from earth.cosmology.engine import get_engine, reset_engine
@@ -33,6 +34,7 @@ def main() -> None:
     (OUT / "nodes.json").write_text(json.dumps(load_node_table(), indent=2), encoding="utf-8")
     chromatic = full_chromatic_synthesis(r_mi=70.0, theta_rad=0.785)
     (OUT / "chromatic.json").write_text(json.dumps(chromatic, indent=2), encoding="utf-8")
+    export_advantage_json()
     print(f"Baked cosmology assets → {OUT}")
 
 

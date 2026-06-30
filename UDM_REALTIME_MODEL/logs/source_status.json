@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-06-30T20:34:45.111262+00:00",
+  "checked_at": "2026-06-30T20:47:29.236151+00:00",
   "sources": {
     "noaa_nesdis_earth_realtime": {
       "status": "online",
@@ -25,7 +25,7 @@
     "swpc": {
       "status": "online",
       "http_code": 200,
-      "bytes": 98208,
+      "bytes": 97232,
       "geometry_policy": "field_input"
     },
     "gfz_kp": {

@@ -1,9 +1,9 @@
 {
-  "pulled_at": "2026-06-30T20:34:45.111262+00:00",
+  "pulled_at": "2026-06-30T20:47:29.236151+00:00",
   "files": {
     "mag": {
       "ok": true,
-      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\mag_20260630T203445.json",
+      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\mag_20260630T204729.json",
       "normalized": {
         "source": "https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json",
         "key": "mag",
@@ -13,7 +13,7 @@
     },
     "plasma": {
       "ok": true,
-      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\plasma_20260630T203445.json",
+      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\plasma_20260630T204729.json",
       "normalized": {
         "source": "https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json",
         "key": "plasma"
@@ -21,7 +21,7 @@
     },
     "kp": {
       "ok": true,
-      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\kp_20260630T203445.json",
+      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\kp_20260630T204729.json",
       "normalized": {
         "source": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json",
         "key": "kp",
@@ -30,7 +30,7 @@
     },
     "aurora": {
       "ok": true,
-      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\aurora_20260630T203445.json",
+      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\aurora_20260630T204730.json",
       "normalized": {
         "source": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
         "key": "aurora"

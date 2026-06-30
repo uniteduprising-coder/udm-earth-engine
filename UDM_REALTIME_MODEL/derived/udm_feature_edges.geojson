@@ -2,7 +2,8 @@
   "type": "FeatureCollection",
   "features": [],
   "metadata": {
-    "status": "needs_manual_review",
-    "note": "Edge detection requires master plate + Pillow/OpenCV pass"
+    "status": "pending_extraction",
+    "note": "Edge detection requires master plate + Pillow/OpenCV pass",
+    "plate": "1000083851.jpg"
   }
 }

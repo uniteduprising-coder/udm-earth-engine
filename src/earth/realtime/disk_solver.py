@@ -22,26 +22,43 @@ def _try_pillow_disk(path: Path, initial: dict[str, Any]) -> dict[str, Any] | No
     w, h = img.size
     cx0, cy0 = initial["center_px_initial"]
     r0 = initial["outer_radius_px_initial"]
-
-    # Sample radial brightness falloff at initial center to estimate rim
     pixels = img.load()
+
+    # Fast centroid of non-black pixels (sample every 4px)
+    xs: list[float] = []
+    ys: list[float] = []
+    for y in range(0, h, 4):
+        for x in range(0, w, 4):
+            if pixels[x, y] > 25:
+                xs.append(x)
+                ys.append(y)
+    if xs:
+        cx_r = sum(xs) / len(xs)
+        cy_r = sum(ys) / len(ys)
+        rs = sorted(math.hypot(x - cx_r, y - cy_r) for x, y in zip(xs, ys))
+        r_r = rs[int(len(rs) * 0.98)] if rs else r0
+    else:
+        cx_r, cy_r, r_r = cx0, cy0, r0
+
     samples: list[tuple[float, float]] = []
-    for deg in range(0, 360, 6):
+    for deg in range(0, 360, 12):
         rad = math.radians(deg)
-        for frac in (0.85, 0.9, 0.95, 1.0):
-            r = r0 * frac
-            x = int(cx0 + r * math.sin(rad))
-            y = int(cy0 - r * math.cos(rad))
+        for frac in (0.9, 0.95, 1.0):
+            r = r_r * frac
+            x = int(cx_r + r * math.sin(rad))
+            y = int(cy_r - r * math.cos(rad))
             if 0 <= x < w and 0 <= y < h:
                 samples.append((frac, float(pixels[x, y])))
 
     rim_brightness = sum(v for _, v in samples) / max(len(samples), 1)
+    shift = math.hypot(cx_r - cx0, cy_r - cy0)
     refined = {
         "center_px_initial": initial["center_px_initial"],
-        "center_px_refined": [cx0, cy0],
+        "center_px_refined": [round(cx_r, 1), round(cy_r, 1)],
         "outer_radius_px_initial": r0,
-        "outer_radius_px_refined": r0,
-        "refinement_reason": "pillow_available_no_shift_detected_yet",
+        "outer_radius_px_refined": round(r_r, 1),
+        "refinement_reason": "centroid_and_r98_from_plate" if shift < 5 else "centroid_shift_detected",
+        "center_shift_px": round(shift, 2),
         "rim_mean_brightness": round(rim_brightness, 2),
         "image_size": [w, h],
     }

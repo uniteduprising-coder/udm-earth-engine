@@ -1,13 +1,13 @@
 id,name,type,plate_x,plate_y,rho,theta,source_lon,source_lat,confidence,notes
-1,North Axis Aperture,central_aperture,767.0,766.0,0.0,0.0,,90,high,plate center register
-2,Equator Bloch Wall N,equator_crossing,767.0,383.0,0.5,0.0,0,0,medium,provisional
-3,Equator Bloch Wall E,equator_crossing,1150.0,766.0,0.5,1.5708,90,0,medium,provisional
-4,Southern Return S,outer_rim,767.0,1532.0,1.0,3.14159,180,-90,low,provisional rim
-5,Arctic Band,polar_basin_edge,767.0,666.42,0.13,0.0,0,66.6,low,rho band from spec
-6,Northern Tropic,parallel_marker,767.0,482.58,0.37,0.0,0,23.4,low,rho band from spec
-7,Southern Tropic,parallel_marker,767.0,283.42,0.63,0.0,0,-23.4,low,rho band from spec
-8,Outer Antarctic Band,outer_rim,767.0,99.58,0.87,0.0,0,-66.6,low,rho band from spec
-9,Greenland-like NE,greenland_outline,717.76,707.32,0.2,-0.4,-40,72,unknown,needs visual lock
-10,North America-like,north_america_outline,578.41,799.25,0.35,-1.2,-100,45,unknown,needs visual lock
-11,Africa-like,africa_outline,890.72,426.09,0.45,0.2,20,5,unknown,needs visual lock
-12,Pacific Trench Proxy,ocean_trench,1011.09,1114.59,0.55,2.8,145,-10,unknown,needs bathymetry match
+1,North Axis Aperture,central_aperture,1024.0,1022.0,0.0,0.0,,90,high,plate center register
+2,Equator Bloch Wall N,equator_crossing,1024.0,516.0,0.5,0.0,0,0,medium,provisional
+3,Equator Bloch Wall E,equator_crossing,1530.0,1022.0,0.5,1.5708,90,0,medium,provisional
+4,Southern Return S,outer_rim,1024.0,2034.0,1.0,3.14159,180,-90,low,provisional rim
+5,Arctic Band,polar_basin_edge,1024.0,890.44,0.13,0.0,0,66.6,low,rho band from spec
+6,Northern Tropic,parallel_marker,1024.0,647.56,0.37,0.0,0,23.4,low,rho band from spec
+7,Southern Tropic,parallel_marker,1024.0,384.44,0.63,0.0,0,-23.4,low,rho band from spec
+8,Outer Antarctic Band,outer_rim,1024.0,141.56,0.87,0.0,0,-66.6,low,rho band from spec
+9,Greenland-like NE,greenland_outline,958.95,944.48,0.2,-0.4,-40,72,unknown,needs visual lock
+10,North America-like,north_america_outline,774.84,1065.93,0.35,-1.2,-100,45,unknown,needs visual lock
+11,Africa-like,africa_outline,1187.45,572.93,0.45,0.2,20,5,unknown,needs visual lock
+12,Pacific Trench Proxy,ocean_trench,1346.48,1482.55,0.55,2.8,145,-10,unknown,needs bathymetry match

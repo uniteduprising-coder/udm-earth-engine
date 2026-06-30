@@ -1,12 +1,12 @@
 {
   "ok": true,
-  "started_at": "2026-06-30T20:34:38.929125+00:00",
-  "finished_at": "2026-06-30T20:34:46.827283+00:00",
+  "started_at": "2026-06-30T20:47:19.765562+00:00",
+  "finished_at": "2026-06-30T20:47:30.976572+00:00",
   "model_root": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL",
   "plate_lock_preserved": true,
   "plates_present": {
-    "full_disk": false,
-    "central_zoom": false
+    "full_disk": true,
+    "central_zoom": true
   },
   "derived": {
     "disk_solution": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_disk_solution.json",
@@ -19,17 +19,21 @@
     "feature_edges": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_feature_edges.geojson",
     "unwrapped": {
       "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_unwrapped_plate.png",
-      "status": "needs_manual_review",
-      "written": false
+      "status": "ok",
+      "written": true,
+      "size": [
+        720,
+        360
+      ]
     }
   },
   "pulls": {
     "swpc": {
-      "pulled_at": "2026-06-30T20:34:45.111262+00:00",
+      "pulled_at": "2026-06-30T20:47:29.236151+00:00",
       "files": {
         "mag": {
           "ok": true,
-          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\mag_20260630T203445.json",
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\mag_20260630T204729.json",
           "normalized": {
             "source": "https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json",
             "key": "mag",
@@ -39,7 +43,7 @@
         },
         "plasma": {
           "ok": true,
-          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\plasma_20260630T203445.json",
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\plasma_20260630T204729.json",
           "normalized": {
             "source": "https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json",
             "key": "plasma"
@@ -47,7 +51,7 @@
         },
         "kp": {
           "ok": true,
-          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\kp_20260630T203445.json",
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\kp_20260630T204729.json",
           "normalized": {
             "source": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json",
             "key": "kp",
@@ -56,7 +60,7 @@
         },
         "aurora": {
           "ok": true,
-          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\aurora_20260630T203445.json",
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\aurora_20260630T204730.json",
           "normalized": {
             "source": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
             "key": "aurora"
@@ -97,12 +101,12 @@
         "passed": true,
         "status": "PASS",
         "initial": [
-          767,
-          766
+          1024,
+          1022
         ],
         "refined": [
-          767,
-          766
+          1023.6,
+          1022.0
         ]
       },
       {
@@ -147,19 +151,15 @@
     "plate_lock_preserved": true
   },
   "renders": {
-    "rendered_at": "2026-06-30T20:34:46.827283+00:00",
+    "rendered_at": "2026-06-30T20:47:30.967035+00:00",
     "files": {
       "spaceweather": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_live_spaceweather.json",
-      "base_plate_ref": null,
+      "base_plate_ref": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_base_plate_ref.jpg",
       "composite_manifest": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_composite.json"
-    },
-    "plate_missing": true
+    }
   },
   "needs_manual_review": [
-    "master_plates_missing",
-    "central_zoom_plate_missing",
     "feature_extraction_pending",
-    "atmospheric_warp_pending",
     "fourfold_central_island_divisions",
     "mid_ocean_ridge_intersections",
     "vortex_arm_intersections",

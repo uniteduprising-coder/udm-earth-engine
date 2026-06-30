@@ -90,7 +90,7 @@ def generate_prediction(
             "t_s": t_s,
             "observable": observable,
         },
-        "cosmology": "UDM v5.2α",
+        "cosmology": "UDM v5.2β",
         "generated_at": datetime.now(UTC).isoformat(),
     }
 

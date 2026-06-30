@@ -1,5 +1,5 @@
 /**
- * UDM Earth — v5.2α Cosmology Engine + edge-static atlas
+ * UDM Earth — v5.2β Toroidal Cosmology Engine + edge-static atlas
  */
 (function () {
   const PHI_WIND = 70.55;
@@ -221,7 +221,7 @@
       sel.appendChild(opt);
     });
     sel.value = state.currentLayer;
-    $('#brand-sub').textContent = `UDM v5.2α · L_f=${L_F} mi · zero placeholders`;
+    $('#brand-sub').textContent = `UDM v5.2β · toroidal · 3,900 mi domain`;
   }
 
   async function loadLayerData(layerId) {
@@ -410,6 +410,7 @@
     const canvas = $('#globe-canvas');
     const wrap = canvas.parentElement;
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
     const camera = new THREE.PerspectiveCamera(45, wrap.clientWidth / wrap.clientHeight, 0.1, 100);
     camera.position.set(0, 0.3, 2.8);
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -430,9 +431,24 @@
     geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
     const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.75 }));
     scene.add(mesh);
+    const belowMgr = window.UDM_BELOW_CELL ? new window.UDM_BELOW_CELL.BelowCellLayerManager(scene) : null;
+    const viewCtrl = window.UDM_VIEW_MODES
+      ? new window.UDM_VIEW_MODES.UndersideViewController(camera, scene, {
+          onModeChange(mode) {
+            if (!belowMgr) return;
+            belowMgr.setLayerVisibility('upper', mode === 'top' || mode === 'toroidal');
+            belowMgr.setLayerVisibility('below', mode === 'underside' || mode === 'toroidal');
+            belowMgr.setLayerVisibility('void', mode === 'toroidal');
+            belowMgr.setLayerVisibility('boundary', mode === 'toroidal');
+          },
+        })
+      : null;
+    window._globeViewCtrl = viewCtrl;
+    window._belowCellMgr = belowMgr;
     (function anim() {
       requestAnimationFrame(anim);
       mesh.rotation.y += 0.002;
+      if (belowMgr && state.cosmology) belowMgr.update(state.cosmology);
       renderer.render(scene, camera);
     })();
     window._globeReady = true;
@@ -469,6 +485,10 @@
       $('#btn-measure').textContent = state.measureMode ? 'Click two points…' : 'Measure distance';
     });
     $('#btn-view').addEventListener('click', toggleView);
+    $('#view-mode-select')?.addEventListener('change', (e) => {
+      if (!state.globeView) toggleView();
+      window._globeViewCtrl?.setMode(e.target.value === 'cross_section' ? 'toroidal' : e.target.value);
+    });
     $('#omega-slider').addEventListener('input', (e) => {
       const v = +e.target.value;
       $('#omega-label').textContent = v.toFixed(2);

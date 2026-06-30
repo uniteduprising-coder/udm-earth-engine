@@ -22,7 +22,7 @@ async def health():
         "status": "ok",
         "time": datetime.now(UTC).isoformat(),
         "projection": "udm_v5",
-        "cosmology_engine": "5.2α",
+        "cosmology_engine": "5.2β",
         "coordinate_basis": "cylindrical (r, theta, z)",
     }
 

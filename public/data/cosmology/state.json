@@ -1,6 +1,6 @@
 {
-  "version": "5.2\u03b1",
-  "engine": "udm_cosmology",
+  "version": "5.2\u03b2",
+  "engine": "udm_cosmology_toroidal",
   "status": "all_constants_defined",
   "t_sim_s": 150.0,
   "macro_step": 10,
@@ -27,8 +27,8 @@
     "r_mi": 70.0,
     "theta_rad": 0.785398,
     "I_cd": 0.13,
-    "B_stat_T": 2.2e-07,
-    "rho_a": -1.7868e-08,
+    "B_stat_T": 0.01370906,
+    "rho_a": -0.001124862546,
     "V_r_h": -0.00118684,
     "V_r_a": -0.00023646
   },
@@ -100,5 +100,64 @@
       "altitude_mi": 0.0
     }
   ],
+  "toroidal_domain": {
+    "version": "5.2\u03b2",
+    "coordinate_basis": "cylindrical (r, \u03b8, z) statute miles",
+    "origin": "Rupes Nigra peak (North Pole, z=0)",
+    "r_mi": {
+      "min": 0.005,
+      "max": 12500.0
+    },
+    "theta_rad": {
+      "min": 0.0,
+      "max": 6.283185307179586
+    },
+    "z_mi": {
+      "min": -3200.0,
+      "max": 700.0
+    },
+    "r_base_mi": 3200.0,
+    "vertical_span_mi": 3900.0,
+    "aspect_ratio": 3.21,
+    "realms": {
+      "upper": {
+        "z_min": 0,
+        "z_max": 700.0,
+        "name": "Firmament Dome"
+      },
+      "middle": {
+        "z_min": -14,
+        "z_max": 0,
+        "name": "Equatorial Plane"
+      },
+      "lower": {
+        "z_min": -3200.0,
+        "z_max": -14,
+        "name": "Below-Cell Abyss"
+      }
+    }
+  },
+  "twin_cell": {
+    "Q_h": 0.87,
+    "Q_b": -0.87,
+    "Q_a": 0.104,
+    "Km_upper": 0.0013,
+    "Km_below": -0.0013,
+    "net_mass_exchange": 0.0,
+    "net_hydro_flux": 0.0,
+    "steady_state": true
+  },
+  "belowCell": {
+    "hydroParticles": true,
+    "aetherParticles": true,
+    "islandCurrent": [
+      0.1,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "I_below_cd": 0.037944251535327975,
+    "V_theta_b": -0.04259717534194845
+  },
   "uptime_s": 0.0
 }

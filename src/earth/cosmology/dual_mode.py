@@ -50,7 +50,7 @@ def compare_cosmologies(
 
     return {
         "mode": "compare",
-        "active_cosmology": "UDM v5.2α",
+        "active_cosmology": "UDM v5.2β",
         "location": {"lat": lat, "lon": lon},
         "t_s": t_s,
         "udm": {
@@ -130,7 +130,7 @@ def reality_mode_summary(engine: CosmologyEngine | None = None) -> dict[str, Any
     return {
         "modes": ["copernican", "udm", "split", "overlay"],
         "active": "udm",
-        "cosmology_version": "5.2α",
+        "cosmology_version": "5.2β",
         "observational_consistency": f"{passed}/{total} checks passed",
         "score_pct": round(100 * passed / total, 1),
         "validation": report,

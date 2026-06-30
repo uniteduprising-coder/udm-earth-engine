@@ -1,0 +1,136 @@
+{
+  "version": "5.2\u03b2",
+  "domain": {
+    "version": "5.2\u03b2",
+    "coordinate_basis": "cylindrical (r, \u03b8, z) statute miles",
+    "origin": "Rupes Nigra peak (North Pole, z=0)",
+    "r_mi": {
+      "min": 0.005,
+      "max": 12500.0
+    },
+    "theta_rad": {
+      "min": 0.0,
+      "max": 6.283185307179586
+    },
+    "z_mi": {
+      "min": -3200.0,
+      "max": 700.0
+    },
+    "r_base_mi": 3200.0,
+    "vertical_span_mi": 3900.0,
+    "aspect_ratio": 3.21,
+    "realms": {
+      "upper": {
+        "z_min": 0,
+        "z_max": 700.0,
+        "name": "Firmament Dome"
+      },
+      "middle": {
+        "z_min": -14,
+        "z_max": 0,
+        "name": "Equatorial Plane"
+      },
+      "lower": {
+        "z_min": -3200.0,
+        "z_max": -14,
+        "name": "Below-Cell Abyss"
+      }
+    }
+  },
+  "void": {
+    "condition": "r > R_disk OR z > z_max OR z < z_T",
+    "rho_kg_m3": 1000000000000.0,
+    "sigma_Sm": 0.0,
+    "n_refractive": 1000000.0,
+    "opacity": 1.0,
+    "rendering": "absolute black \u2014 no emission, reflection, or transmission",
+    "observational": [
+      "Stars on inner firmament surface (z \u2248 z_max)",
+      "No luminaries outside shell",
+      "All fields confined within toroidal domain"
+    ]
+  },
+  "boundaries": {
+    "r_disk": {
+      "r_mi": 12500.0,
+      "V_r": 0,
+      "B_r": 0,
+      "I_glow": 0,
+      "n": "\u221e TIR"
+    },
+    "z_max": {
+      "z_mi": 700.0,
+      "d_dz": 0,
+      "Phi_e": 0,
+      "stars_embedded": true
+    },
+    "z_T": {
+      "z_mi": -3200.0,
+      "V_z": 0,
+      "mirror_vortex": true
+    }
+  },
+  "twin_cell": {
+    "Q_h": 0.87,
+    "Q_b": -0.87,
+    "Q_a": 0.104,
+    "Km_upper": 0.0013,
+    "Km_below": -0.0013,
+    "net_mass_exchange": 0.0,
+    "net_hydro_flux": 0.0,
+    "steady_state": true
+  },
+  "below_cell_anchor": {
+    "r_mi": 70.0,
+    "theta_rad": 0.7853981633974483,
+    "z_mi": -500.0,
+    "t_s": 1050.0,
+    "realm": "below_cell",
+    "V_h": {
+      "theta": -0.04259717534194845,
+      "r": 0.0021090796571745208,
+      "z": -0.00234375
+    },
+    "V_a": {
+      "theta": -0.4805612595573685
+    },
+    "rho_a": -3.4228330075396816e-05,
+    "I_cd": 0.037944243814663596,
+    "sigma_iso": 1.6394373707693302e-21,
+    "island_current_norm": 0.1,
+    "nu_b": 5.9e-05,
+    "nu_a_below": 5.9e-05
+  },
+  "upper_anchor": {
+    "inside_domain": true,
+    "realm": "equatorial",
+    "r_mi": 70.0,
+    "theta_rad": 0.7853981633974483,
+    "z_mi": 0.0,
+    "t_s": 1050.0,
+    "B_stat_T": 0.013709061224489796,
+    "rho_a": -0.0002863406386234958,
+    "I_cd": 0.13243842417472612,
+    "I_below_cd": 0.0,
+    "n_real": 1.00125,
+    "n_imag": 5e-05,
+    "Omega_firm": 0.00019060874263143247,
+    "V_h": {
+      "r": -0.0011868411470567052,
+      "theta": 0.055931594286580365,
+      "z": -0.0
+    },
+    "V_a": {
+      "r": -0.00023645877259367308,
+      "theta": 0.5161167440265749
+    }
+  },
+  "view_modes": [
+    "top",
+    "underside",
+    "toroidal",
+    "cross_section",
+    "observer",
+    "dual_hemisphere"
+  ]
+}

@@ -11,7 +11,9 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from earth.cosmology import fields
+from earth.cosmology.below_cell import below_cell_sample, twin_cell_mass_balance
 from earth.cosmology.params import load_node_table, load_params
+from earth.cosmology.toroidal import domain_extents
 
 
 @dataclass
@@ -130,9 +132,10 @@ class CosmologyEngine:
         """Current engine state for API / WebSocket."""
         P = self.params
         r, th = 70.0, math.pi / 4
+        below = below_cell_sample(r, th, -500.0, self.t_sim, P)
         return {
-            "version": "5.2α",
-            "engine": "udm_cosmology",
+            "version": "5.2β",
+            "engine": "udm_cosmology_toroidal",
             "status": "all_constants_defined",
             "t_sim_s": self.t_sim,
             "macro_step": self.macro_step,
@@ -165,6 +168,15 @@ class CosmologyEngine:
                 "V_r_a": round(fields.V_r_a(r, P), 8),
             },
             "nodes": load_node_table(),
+            "toroidal_domain": domain_extents(P),
+            "twin_cell": twin_cell_mass_balance(P),
+            "belowCell": {
+                "hydroParticles": True,
+                "aetherParticles": True,
+                "islandCurrent": [below["island_current_norm"]] * 4,
+                "I_below_cd": below["I_cd"],
+                "V_theta_b": below["V_h"]["theta"],
+            },
             "uptime_s": round(time.time() - self._started_at, 1),
         }
 

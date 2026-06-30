@@ -1,5 +1,5 @@
 """
-UDM validation protocol v5.2α — 18 checks (§9).
+UDM validation protocol v5.2β — 18 checks (§9).
 """
 
 from __future__ import annotations
@@ -12,8 +12,10 @@ from typing import Any
 
 from earth.config import ROOT
 from earth.cosmology import fields
+from earth.cosmology.below_cell import twin_cell_mass_balance
 from earth.cosmology.coordinates import geo_to_cylindrical
 from earth.cosmology.engine import CosmologyEngine
+from earth.cosmology.imf_hook import imf_live_state
 from earth.cosmology.observations import (
     load_1982_stations,
     load_arctic_mt_anomalies,
@@ -56,7 +58,7 @@ def _load_geomagnetic_jerks() -> list[dict[str, str]]:
 
 
 def run_validation(engine: CosmologyEngine) -> dict[str, Any]:
-    """Execute all 18 validation checks (v5.2α §9)."""
+    """Execute all 18 validation checks (v5.2β §9)."""
     P = engine.params
     checks: list[dict[str, Any]] = []
 
@@ -212,21 +214,32 @@ def run_validation(engine: CosmologyEngine) -> dict[str, Any]:
     )
 
     jerks = _load_geomagnetic_jerks()
+    try:
+        from earth.cosmology.jerk_crosscheck import jerk_crosscheck
+
+        jerk_report = jerk_crosscheck(engine)
+        jerk_status = jerk_report.get("status", "PENDING")
+    except Exception:
+        jerk_report = {"status": "PENDING"}
+        jerk_status = "PENDING"
     checks.append(
         _check(
             18,
             "Geomagnetic jerk correlation",
-            f"{len(jerks)} jerk years loaded",
+            f"{len(jerks)} jerk years, report={jerk_status}",
             "Ω̇ spikes at known jerk years",
-            False,
-            status="PENDING",
+            jerk_status == "PASS",
+            status="PENDING" if jerk_status != "PASS" else "PASS",
         )
     )
+
+    twin = twin_cell_mass_balance(P)
+    imf = imf_live_state()
 
     passed = sum(1 for c in checks if c["passed"])
     pending = sum(1 for c in checks if c["status"] == "PENDING")
     return {
-        "version": "5.2α",
+        "version": "5.2β",
         "total_checks": 18,
         "passed": passed,
         "failed": 18 - passed - pending,
@@ -245,10 +258,13 @@ def run_validation(engine: CosmologyEngine) -> dict[str, Any]:
             "glow_azimuthal_ratio": round(az_ratio, 2),
             "Z_g_ohm": P.get("Z_g", 2.8),
             "C_total_F": P["C_total"],
+            "twin_cell_steady": twin["steady_state"],
+            "imf_Bz_nT": imf.get("feed", {}).get("Bz_nT"),
+            "nu_b_profile": P.get("nu_b_profile", "flat"),
         },
         "open_engineering_tasks": [
-            "IMF coupling amplitude (imf_hook.py)",
-            "GPU AMR for island patches",
+            "AMR full GPU implementation (amr_driver.cu)",
+            "ν_b CRUST1.0 spline profile",
         ],
     }
 

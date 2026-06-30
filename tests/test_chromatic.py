@@ -30,7 +30,7 @@ def test_day_night_phases():
 
 def test_full_synthesis():
     report = full_chromatic_synthesis(lat=45.0, lon=-90.0)
-    assert report["version"] == "5.2α"
+    assert report["version"] == "5.2β"
     assert "skin" in report
     assert report["summary"]["skin_undertone"] == "greenish-golden"
     assert len(report["testable_predictions"]) >= 5

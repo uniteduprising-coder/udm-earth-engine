@@ -119,7 +119,7 @@ var standalone_default = {
           status: "ok",
           edge: true,
           mode: "standalone",
-          cosmology_engine: "5.2\u03B1",
+          cosmology_engine: "5.2\u03B2",
           projection: "udm_v5"
         },
         corsH,
@@ -171,6 +171,22 @@ var standalone_default = {
     }
     if (path === "/api/observations/layers") {
       return json({ layers: OBS_LAYERS }, corsH, 300);
+    }
+    if (path.startsWith("/api/toroidal/")) {
+      const baked = await fetchJsonRaw("/data/cosmology/toroidal.json");
+      if (!baked)
+        return json({ error: "toroidal not baked" }, corsH);
+      if (path === "/api/toroidal/domain")
+        return json(baked.domain ?? baked, corsH, 300);
+      if (path === "/api/toroidal/state")
+        return json(baked, corsH, 120);
+      if (path === "/api/toroidal/void")
+        return json(baked.void ?? {}, corsH, 300);
+      if (path === "/api/toroidal/twin-cell")
+        return json(baked.twin_cell ?? {}, corsH, 120);
+      if (path === "/api/toroidal/view-modes")
+        return json({ mode: "top", available: ["top", "underside", "toroidal"] }, corsH, 300);
+      return json(baked, corsH, 120);
     }
     if (path.startsWith("/api/advantage/")) {
       const baked = await fetchJsonRaw("/data/cosmology/advantage.json");

@@ -7,9 +7,9 @@ from earth.cosmology.params import load_params, load_luminary_spectra
 from earth.cosmology.validation import run_validation
 
 
-def test_params_v52alpha():
+def test_params_v52beta():
     p = load_params()
-    assert p["L_f"] == 2.428
+    assert p["r_base"] == 3200
     assert p["C_iso"] == 0.071
     assert p["C_total"] == 0.115
     assert p["Omega_max"] == 4.9
@@ -48,7 +48,7 @@ def test_schumann_q():
 def test_engine_state_v52():
     engine = CosmologyEngine()
     state = engine.state()
-    assert state["version"] == "5.2α"
+    assert state["version"] == "5.2β"
     assert state["C_total_F"] == 0.115
     assert state["Z_g_ohm"] == 2.8
     assert len(state["nodes"]) == 6

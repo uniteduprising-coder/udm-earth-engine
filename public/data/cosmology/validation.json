@@ -1,5 +1,5 @@
 {
-  "version": "5.2\u03b1",
+  "version": "5.2\u03b2",
   "total_checks": 18,
   "passed": 15,
   "failed": 1,
@@ -146,7 +146,7 @@
     {
       "id": 18,
       "name": "Geomagnetic jerk correlation",
-      "value": "6 jerk years loaded",
+      "value": "6 jerk years, report=PENDING",
       "criterion": "\u03a9\u0307 spikes at known jerk years",
       "passed": false,
       "status": "PENDING"
@@ -162,10 +162,13 @@
     "lod_anticorrelation": -0.62,
     "glow_azimuthal_ratio": 1.0,
     "Z_g_ohm": 2.8,
-    "C_total_F": 0.115
+    "C_total_F": 0.115,
+    "twin_cell_steady": true,
+    "imf_Bz_nT": -1.2,
+    "nu_b_profile": "flat"
   },
   "open_engineering_tasks": [
-    "IMF coupling amplitude (imf_hook.py)",
-    "GPU AMR for island patches"
+    "AMR full GPU implementation (amr_driver.cu)",
+    "\u03bd_b CRUST1.0 spline profile"
   ]
 }

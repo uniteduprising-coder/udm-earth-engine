@@ -162,7 +162,7 @@ def export_advantage_json() -> Path:
     """Bake advantage dashboard payload for edge CDN."""
     engine = get_engine()
     payload = {
-        "version": "5.2α",
+        "version": "5.2β",
         "blueprint": "competitive_advantage",
         "generated_at": datetime.now(UTC).isoformat(),
         "summary": reality_mode_summary(engine),

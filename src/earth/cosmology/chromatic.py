@@ -217,7 +217,7 @@ def full_chromatic_synthesis(
         r_mi, theta_rad = cyl["r_mi"], cyl["theta_rad"]
 
     return {
-        "version": "5.2α",
+        "version": "5.2β",
         "synthesis": "day_night_terminator_chromatic",
         "solar": solar_geometry(P),
         "lunar": lunar_geometry(),

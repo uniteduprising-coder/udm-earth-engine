@@ -41,7 +41,7 @@ def test_difference_map():
 
 def test_reality_mode_summary():
     summary = reality_mode_summary()
-    assert summary["cosmology_version"] == "5.2α"
+    assert summary["cosmology_version"] == "5.2β"
     assert summary["score_pct"] > 0
     assert "validation" in summary
 

@@ -32,7 +32,7 @@ async def get_params():
         "source": "params.yml",
         "status": "all_constants_defined",
         "blocking_gaps": 0,
-        "version": "5.2α",
+        "version": "5.2β",
         "params": load_params(),
         "nodes": load_node_table(),
         "time": datetime.now(UTC).isoformat(),

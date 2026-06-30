@@ -318,13 +318,40 @@
     updateMetrics(s.la, s.lo, state.lstHours);
   }
 
+  async function updateChromatic(lat, lon) {
+    const el = $('#chromatic-panel');
+    if (!el) return;
+    try {
+      const data = await fetchJson(
+        `${API}/cosmology/chromatic?lat=${lat}&lon=${lon}&t_s=${state.simT}`
+      ).catch(() => fetchJson(`${DATA}/cosmology/chromatic.json`));
+      const s = data.state_at_point || {};
+      const sk = data.skin || {};
+      const sum = data.summary || {};
+      const phaseClass = `phase-${s.phase || 'night'}`;
+      el.innerHTML = [
+        `<span class="${phaseClass}"><strong>${(s.phase || '?').toUpperCase()}</strong></span>`,
+        `Subsolar dist ${(s.distance_from_subsolar_mi ?? '?')} mi`,
+        `Glow ${(s.I_glow_cd ?? '?')} cd · terminator ${(s.I_terminator_cd ?? '?')} cd`,
+        `Skin: ${sk.predicted_tone || sum.skin_undertone || '—'}`,
+        `Daylight: ${sum.daylight_color || 'golden-green'}`,
+        `Sky: ${sum.sky_color || 'pale golden-green'}`,
+      ].join('<br>');
+      el.classList.remove('muted');
+    } catch {
+      el.textContent = 'Chromatic synthesis unavailable';
+    }
+  }
+
   function updateMetrics(lat, lon, lst) {
     const p = projectFlat(lat, lon, lst, state.projectionMode);
-    $('#m-r').textContent = (p.r_mi ?? 0).toFixed(1);
-    $('#m-theta').textContent = (((p.theta_rad ?? 0) * 180) / Math.PI).toFixed(1);
-    const glow = glowProxy(p.r_mi || 70, p.theta_rad || 0, state.simT, state.params);
+    const cyl = geoToCyl(lat, lon);
+    $('#m-r').textContent = (cyl.r_mi ?? 0).toFixed(1);
+    $('#m-theta').textContent = ((cyl.theta_rad * 180) / Math.PI).toFixed(1);
+    const glow = glowProxy(cyl.r_mi || 70, cyl.theta_rad || 0, state.simT, state.params);
     $('#m-glow').textContent = glow.toFixed(0);
     if (state.cosmology) $('#m-omega').textContent = (state.cosmology.Omega0 ?? 2.45).toFixed(3);
+    updateChromatic(lat, lon);
   }
 
   let lstTimer = null;

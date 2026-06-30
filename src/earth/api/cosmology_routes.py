@@ -5,6 +5,12 @@ from typing import Any
 
 from fastapi import APIRouter, Body, HTTPException, Query
 
+from earth.cosmology.chromatic import (
+    day_night_state,
+    full_chromatic_synthesis,
+    solar_geometry,
+    terminator_profile,
+)
 from earth.cosmology.coordinates import geo_to_cylindrical, project_site
 from earth.cosmology.engine import get_engine, reset_engine
 from earth.cosmology.observations import list_observation_layers, load_1982_stations
@@ -121,6 +127,42 @@ async def soviet_1982():
 @router.get("/cosmology/spectra")
 async def luminary_spectra():
     return {"lines": load_luminary_spectra(), "nodes": ["Sun", "Moon"]}
+
+
+@router.get("/cosmology/chromatic")
+async def cosmology_chromatic(
+    lat: float | None = Query(None, ge=-90, le=90),
+    lon: float | None = Query(None, ge=-180, le=180),
+    r_mi: float | None = Query(None, ge=0),
+    theta_rad: float | None = Query(None),
+    t_s: float = Query(0.0, ge=0),
+):
+    """Day/night, terminator, and chromatic synthesis (v5.2α)."""
+    if lat is not None and lon is not None:
+        return full_chromatic_synthesis(lat=lat, lon=lon, t_s=t_s)
+    return full_chromatic_synthesis(
+        r_mi=r_mi or 70.0,
+        theta_rad=theta_rad if theta_rad is not None else 0.785,
+        t_s=t_s,
+    )
+
+
+@router.get("/cosmology/daynight")
+async def cosmology_daynight(
+    lat: float = Query(..., ge=-90, le=90),
+    lon: float = Query(..., ge=-180, le=180),
+    t_s: float = Query(0.0, ge=0),
+):
+    cyl = geo_to_cylindrical(lat, lon)
+    return day_night_state(cyl["r_mi"], cyl["theta_rad"], t_s=t_s)
+
+
+@router.get("/cosmology/terminator")
+async def cosmology_terminator(t_s: float = Query(0.0, ge=0)):
+    return {
+        "solar": solar_geometry(),
+        "terminator": terminator_profile(t_s=t_s),
+    }
 
 
 @router.post("/cosmology/reset")

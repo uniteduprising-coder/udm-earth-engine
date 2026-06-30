@@ -82,13 +82,18 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
   font-size: 0.75rem; color: var(--muted); border-top: 1px solid var(--border);
 }
 
-.card-cosmo summary, .card-perspective summary, .card-advanced summary {
+.card-cosmo summary, .card-perspective summary, .card-chromatic summary, .card-advanced summary {
   cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px;
 }
 .card-cosmo summary::-webkit-details-marker,
 .card-perspective summary::-webkit-details-marker,
+.card-chromatic summary::-webkit-details-marker,
 .card-advanced summary::-webkit-details-marker { display: none; }
-.card-cosmo summary h2, .card-perspective summary h2, .card-advanced summary h2 { margin: 0; display: inline; }
+.card-cosmo summary h2, .card-perspective summary h2, .card-chromatic summary h2, .card-advanced summary h2 { margin: 0; display: inline; }
+.chromatic-panel { font-size: 0.78rem; line-height: 1.5; }
+.chromatic-panel .phase-day { color: #fcd34d; }
+.chromatic-panel .phase-twilight { color: #f59e0b; }
+.chromatic-panel .phase-night { color: #38bdf8; }
 .cosmo-panel { margin-top: 8px; }
 .slider-row { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; margin-bottom: 8px; color: var(--muted); }
 .slider-row input[type=range] { flex: 1; }

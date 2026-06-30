@@ -18,7 +18,7 @@ def test_model_structure_exists():
 
 
 def test_udm_coordinate_system():
-    cx, cy, r_outer = 767.0, 766.0, 766.0
+    cx, cy, r_outer = 1024.0, 1022.0, 1012.0
     rho, theta = plate_to_rho_theta(cx, cy, cx, cy, r_outer)
     assert rho == 0.0
     assert phi_udm_from_rho(0.0) == 90.0
@@ -34,7 +34,8 @@ def test_disk_solver_runs():
         cfg = yaml.safe_load(f)
     disk = solve_disk(cfg)
     assert disk["plate_lock"] is True
-    assert disk["center_px_initial"] == [767, 766]
+    assert disk["center_px_initial"] == [1024, 1022]
+    assert disk["plate_present"] is True
 
 
 def test_control_points_minimum():

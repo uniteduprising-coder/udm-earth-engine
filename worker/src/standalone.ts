@@ -1,4 +1,4 @@
-/** Single-file edge worker — deployable without wrangler assets binding. */
+/** Single-file edge worker — UDM Cosmology Engine v5.1 + static atlas */
 
 const GITHUB_RAW =
   "https://raw.githubusercontent.com/uniteduprising-coder/udm-earth-engine/master/public";
@@ -17,7 +17,7 @@ function cors(request: Request): Record<string, string> {
   const allow = ALLOWED.has(origin) ? origin : "https://uniteduprising.com";
   return {
     "Access-Control-Allow-Origin": allow,
-    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   };
 }
@@ -26,6 +26,16 @@ function json(data: unknown, corsH: Record<string, string>, cacheSec = 0): Respo
   const headers: Record<string, string> = { "Content-Type": "application/json", ...corsH };
   if (cacheSec > 0) headers["Cache-Control"] = `public, max-age=${cacheSec}, stale-while-revalidate=${cacheSec * 2}`;
   return new Response(JSON.stringify(data), { headers });
+}
+
+async function fetchRaw(path: string): Promise<Response> {
+  return fetch(`${GITHUB_RAW}${path}`, { cf: { cacheTtl: 3600 } });
+}
+
+async function fetchJsonRaw<T>(path: string): Promise<T | null> {
+  const r = await fetchRaw(path);
+  if (!r.ok) return null;
+  return r.json() as Promise<T>;
 }
 
 function julianDay(d: Date): number {
@@ -79,6 +89,20 @@ async function geoBridge() {
   return out;
 }
 
+const OBS_LAYERS = [
+  { key: "soviet_1982", label: "1982 Soviet Stations", active: true },
+  { key: "mercator_1569", label: "Mercator 1569 Coastlines", active: true },
+  { key: "fine_1531", label: "Finé 1531 Landmarks", active: true },
+  { key: "swarm_mag", label: "SWARM Magnetic Anomaly", active: false },
+  { key: "aurora_hist", label: "Historical Aurorae (1880–1930)", active: false },
+  { key: "glow_reports", label: "Independent Glow Reports", active: false },
+  { key: "mt_conductivity", label: "MT Conductivity Data", active: false },
+  { key: "river_deltas", label: "Arctic River Deltas", active: false },
+  { key: "grace_gravity", label: "GRACE Gravity Anomaly", active: false },
+  { key: "schumann_elf", label: "Schumann ELF Spectra", active: false },
+  { key: "lod_iers", label: "LOD Residuals (IERS)", active: false },
+];
+
 const MIME: Record<string, string> = {
   ".html": "text/html;charset=utf-8",
   ".css": "text/css;charset=utf-8",
@@ -101,7 +125,18 @@ export default {
     if (path === "/embed") path = "/";
 
     if (path === "/api/health") {
-      return json({ service: "udm-earth-engine", status: "ok", edge: true, mode: "standalone" }, corsH, 30);
+      return json(
+        {
+          service: "udm-earth-engine",
+          status: "ok",
+          edge: true,
+          mode: "standalone",
+          cosmology_engine: "5.1",
+          projection: "udm_v5",
+        },
+        corsH,
+        30
+      );
     }
     if (path === "/api/live/ephemeris") return json(sunMoon(), corsH, 120);
     if (path === "/api/live/geo") {
@@ -118,6 +153,40 @@ export default {
       return res;
     }
 
+    if (path === "/api/params") {
+      const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/params.json");
+      return json(baked ?? { error: "params not baked" }, corsH, 120);
+    }
+    if (path === "/api/cosmology/state") {
+      const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/state.json");
+      return json(baked ?? { error: "state not baked" }, corsH, 60);
+    }
+    if (path === "/api/validate" || path === "/api/run_full_validation") {
+      const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/validation.json");
+      if (path === "/api/run_full_validation" && baked) {
+        baked.generated_at = new Date().toISOString();
+      }
+      return json(baked ?? { error: "validation not baked" }, corsH, 60);
+    }
+    if (path === "/api/observations/layers") {
+      return json({ layers: OBS_LAYERS }, corsH, 300);
+    }
+    if (path === "/api/update" && request.method === "POST") {
+      const key = url.searchParams.get("key");
+      const val = url.searchParams.get("val");
+      return json(
+        {
+          ok: true,
+          edge: true,
+          note: "Edge worker cannot persist params.yml — use local Python API for authoritative updates",
+          updated: key ? [key] : [],
+          key,
+          val: val ? Number(val) : null,
+        },
+        corsH
+      );
+    }
+
     const assetPath = path === "/" ? "/index.html" : path;
     const upstream = `${GITHUB_RAW}${assetPath}`;
     const cache = caches.default;
@@ -131,7 +200,7 @@ export default {
     out.headers.set("Content-Type", mime(assetPath));
     out.headers.set("X-Edge", "udm-earth-engine");
     Object.entries(corsH).forEach(([k, v]) => out.headers.set(k, v));
-    if (assetPath.includes("/data/layers/")) {
+    if (assetPath.includes("/data/layers/") || assetPath.includes("/data/cosmology/")) {
       out.headers.set("Cache-Control", "public, max-age=86400, immutable");
     } else if (assetPath.endsWith("manifest.json")) {
       out.headers.set("Cache-Control", "public, max-age=300");

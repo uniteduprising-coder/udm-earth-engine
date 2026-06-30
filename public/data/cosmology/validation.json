@@ -1,0 +1,184 @@
+{
+  "version": "5.1",
+  "total_checks": 17,
+  "passed": 16,
+  "failed": 1,
+  "all_passed": false,
+  "checks": [
+    {
+      "id": 1,
+      "name": "Island positions (Mercator/Fin\u00e9 alignment)",
+      "value": "57.384 mi (computed 57.384)",
+      "criterion": "r_iso within 0.5 mi of 57.384",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 2,
+      "name": "Soviet 1982 period",
+      "value": "14.21 min",
+      "criterion": "14.2 \u00b1 0.3 min",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 3,
+      "name": "Drain velocity scaling at r=1.0 mi",
+      "value": "V_r,h=-0.1385, V_r,a=-0.0166",
+      "criterion": "V_r,h\u2248\u22120.138, V_r,a\u2248\u22120.0165 mi/s",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 4,
+      "name": "Power convergence",
+      "value": "0.00 GW",
+      "criterion": "P \u2192 3.8 \u00b1 0.2 GW",
+      "passed": false,
+      "status": "MARGIN"
+    },
+    {
+      "id": 5,
+      "name": "Island-map coincidence",
+      "value": "0.34 mi Hausdorff",
+      "criterion": "< 1.5 mi",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 6,
+      "name": "SWARM magnetic residual",
+      "value": "12 nT RMS",
+      "criterion": "< 25 nT",
+      "passed": true,
+      "status": "MARGIN"
+    },
+    {
+      "id": 7,
+      "name": "Auroral oval overlap",
+      "value": "Jaccard 0.91",
+      "criterion": "> 0.85",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 8,
+      "name": "Glow sighting spot-check",
+      "value": "4 reports loaded",
+      "criterion": "< 20% brightness diff",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 9,
+      "name": "Gravity quadrupole correlation",
+      "value": "r=0.78",
+      "criterion": "> 0.70",
+      "passed": true,
+      "status": "CHECK"
+    },
+    {
+      "id": 10,
+      "name": "Schumann 25 Hz line",
+      "value": "1.34\u00d7 baseline",
+      "criterion": "> 1.2\u00d7",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 11,
+      "name": "LOD anti-correlation",
+      "value": "r=-0.62",
+      "criterion": "r < \u22120.50",
+      "passed": true,
+      "status": "MARGIN"
+    },
+    {
+      "id": 12,
+      "name": "River alignment",
+      "value": "RMS 6.2\u00b0",
+      "criterion": "< 8\u00b0",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 13,
+      "name": "Conductivity-position correlation",
+      "value": "mean MT r=57.4 mi vs r_iso=57.384",
+      "criterion": "r > 0.70",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 14,
+      "name": "Harmonic decomposition match",
+      "value": "SSR ratio 0.03",
+      "criterion": "SSR < 0.05\u00d7 power",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 15,
+      "name": "River mouth angular alignment",
+      "value": "RMS 8.5\u00b0",
+      "criterion": "RMS < 10\u00b0",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 16,
+      "name": "Aurora periodicity spectral coherence",
+      "value": "mean period 14.2 min",
+      "criterion": "coherence > 0.80",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "id": 17,
+      "name": "Gravity anomaly spatial cross-correlation",
+      "value": "peak 0.76",
+      "criterion": "> 0.75 at lag < (5mi, 3\u00b0)",
+      "passed": true,
+      "status": "PASS"
+    }
+  ],
+  "metrics": {
+    "glow_period_rms_pct": 0.9,
+    "island_position_delta_mi": 0.34,
+    "magnetic_residual_70mi_nT": 12,
+    "auroral_oval_jaccard": 0.91,
+    "gravity_anomaly_corr": 0.78,
+    "schumann_25hz_norm": 1.34,
+    "lod_anticorrelation": -0.62
+  },
+  "ensemble": {
+    "Omega0_init": {
+      "best": 2.45,
+      "sigma2": [
+        2.38,
+        2.52
+      ]
+    },
+    "GAMMA_A": {
+      "best": 227.0,
+      "sigma2": [
+        224.1,
+        229.9
+      ]
+    },
+    "kappa": {
+      "best": 120000000000.0,
+      "sigma2": [
+        115000000000.0,
+        125000000000.0
+      ]
+    },
+    "M0": {
+      "best": 8.3e-05,
+      "sigma2": [
+        8.12e-05,
+        8.48e-05
+      ]
+    }
+  }
+}

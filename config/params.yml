@@ -1,0 +1,88 @@
+# params.yml — UDM Cosmology Engine v5.0 authoritative parameter ledger
+# Auto-exported from UDM Evidence Vault (status = established)
+
+# --- Length standards & geometry ---
+L_f: 2.428
+r_base: 12.752
+h_peak: 6.070
+r_summit: 7.881
+C_base: 80.124
+R_disk: 12500
+z_roof: 700
+R_earth: 3959
+
+# --- Stator Islands ---
+r_iso: 57.384
+a_iso: 0.45
+sigma_theta: 0.015
+d_eps_iso: 800
+sigma_iso: 8.5
+eps0: 8.854187817e-12
+mu0: 1.25663706212e-6
+
+# --- Hydro vortex ---
+GAMMA_H: 24.6
+sigma_h: 2.1
+Q_h: 0.87
+W_h: 0.02
+
+# --- Aetheric vortex ---
+GAMMA_A: 227.0
+sigma_a: 0.9
+Q_a: 0.104
+rho_a0: 1.2e-6
+lambda_abs: 210
+LUM_BETA: 3400
+LUM_GAMMA: 0.02
+C_d: 0.018
+T_a: 5800
+nu_a: 4.7e-5
+
+# --- Electromagnetic ---
+M0: 8.3e-5
+sigma_eff: 2.5e-3
+sigma_eff_min: 1.0e-3
+sigma_eff_max: 5.0e-3
+omega_res: 157.08
+L_geo: 1.45
+C_disk: 0.044
+C_iso: 0.087
+C_total: 0.131
+L_eff: 3.09e-4
+B_mod_amp: 0.2
+
+# --- Torque & rotation ---
+kappa: 1.2e11
+Omega0_init: 2.45
+Omega_max: 5.0
+eta_shear: 0.01
+I_max: 1.0e6
+P_target: 3.8
+P_tolerance: 0.2
+T_em_divergence_limit: 0.5
+
+# --- Aetheric pressure wave ---
+omega_a: 0.00737
+m_a: 4
+T_a_period_min: 14.2
+T_a_period_tol: 0.3
+
+# --- Numerical ---
+DT_MACRO: 15
+MICRO_DT_MAX: 0.02
+CFL_LIMIT: 0.85
+r_sink: 0.01
+r_sink_a: 0.005
+MAX_MACRO: 5760
+macro_reduce_threshold: 0.1
+macro_reduce_steps: 3
+
+# --- Material (disk) ---
+sigma_disk: 1.2e-3
+c_s: 340
+
+# --- v5.1 enhancements ---
+E_crit: 1000
+validate_spectral: false
+data_assimilation: false
+prediction_mode: false

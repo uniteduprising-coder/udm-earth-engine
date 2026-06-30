@@ -21,7 +21,9 @@ async def health():
         "service": "udm-earth-engine",
         "status": "ok",
         "time": datetime.now(UTC).isoformat(),
-        "projection": "udm_flat",
+        "projection": "udm_v5",
+        "cosmology_engine": "5.1",
+        "coordinate_basis": "cylindrical (r, theta, z)",
     }
 
 

@@ -43,7 +43,8 @@
         <div class="ctl-more-panel">
           <label>Projection
             <select id="projection-select">
-              <option value="udm_flat" selected>UDM Flat</option>
+              <option value="udm_v5" selected>UDM v5 Cylindrical</option>
+              <option value="udm_flat">UDM Flat (legacy)</option>
               <option value="wgs84">WGS84 compare</option>
             </select>
           </label>
@@ -74,11 +75,36 @@
       <div class="card card-metrics">
         <h2>UDM at cursor</h2>
         <dl class="metrics">
-          <dt>W(φ)</dt><dd id="m-w">—</dd>
-          <dt>Pressure A</dt><dd id="m-a">—</dd>
-          <dt>Coupling Y</dt><dd id="m-y">—</dd>
+          <dt>r (mi)</dt><dd id="m-r">—</dd>
+          <dt>θ (deg)</dt><dd id="m-theta">—</dd>
+          <dt>Ω₀</dt><dd id="m-omega">—</dd>
+          <dt>Glow I</dt><dd id="m-glow">—</dd>
         </dl>
       </div>
+      <details class="card card-cosmo" open>
+        <summary><h2>Cosmology Engine v5.1</h2></summary>
+        <div class="cosmo-panel">
+          <label class="slider-row">Ω₀ init
+            <input type="range" id="omega-slider" min="0" max="5" step="0.01" value="2.45" />
+            <span id="omega-label">2.45</span>
+          </label>
+          <label class="slider-row">σ_eff
+            <input type="range" id="sigma-slider" min="1" max="5" step="0.1" value="2.5" />
+            <span id="sigma-label">2.5e-3</span>
+          </label>
+          <div class="cosmo-stats" id="cosmo-stats">Loading engine…</div>
+          <button id="btn-validate" type="button">Run full validation</button>
+        </div>
+      </details>
+      <details class="card card-perspective">
+        <summary><h2>Perspective Tool</h2></summary>
+        <div id="perspective-layers" class="layer-toggles muted">Loading layers…</div>
+        <div id="perspective-metrics" class="perspective-metrics"></div>
+      </details>
+      <details class="card card-advanced">
+        <summary><h2>Advanced Validation</h2></summary>
+        <div id="advanced-validation" class="advanced-panel muted">Run validation to populate</div>
+      </details>
     </aside>
   </main>
 

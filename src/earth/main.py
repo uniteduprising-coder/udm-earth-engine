@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from earth.api.cosmology_routes import bake_public_assets, router as cosmology_router
 from earth.api.routes import router
 from earth.config import ROOT, get_settings
 from earth.scheduler import FeedScheduler
@@ -25,6 +26,10 @@ async def lifespan(app: FastAPI):
     import asyncio
 
     global _scheduler
+    try:
+        bake_public_assets()
+    except Exception:
+        pass
     _scheduler = FeedScheduler()
     _scheduler.start()
     asyncio.create_task(_scheduler.refresh_all())
@@ -35,7 +40,7 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     settings = get_settings()
-    app = FastAPI(title="UDM Earth Engine", version="0.1.0", lifespan=lifespan)
+    app = FastAPI(title="UDM Earth Engine", version="5.1.0", lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origin_list,
@@ -43,23 +48,26 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    app.include_router(router, prefix="/api")
+    app.include_router(cosmology_router, prefix="/api")
     app.include_router(router)
+    app.include_router(cosmology_router)
 
-    frontend = ROOT / "frontend"
-    assets = frontend / "assets"
-    if assets.exists():
-        app.mount("/assets", StaticFiles(directory=assets), name="assets")
+    public = ROOT / "public"
+    if public.exists():
+        app.mount("/data", StaticFiles(directory=public / "data"), name="data")
+        app.mount("/assets", StaticFiles(directory=public / "assets"), name="assets")
 
     @app.get("/")
     async def index():
-        path = frontend / "index.html"
+        path = public / "index.html"
         if path.exists():
             return FileResponse(path)
-        return {"service": "udm-earth-engine", "ui": "frontend/index.html missing"}
+        return {"service": "udm-earth-engine", "ui": "public/index.html missing"}
 
     @app.get("/embed")
     async def embed():
-        path = frontend / "index.html"
+        path = public / "index.html"
         if path.exists():
             return FileResponse(path)
         return {"service": "udm-earth-engine", "embed": True}

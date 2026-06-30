@@ -18,7 +18,7 @@ KAPPA_COUPLING = 0.0514
 A_CALIB_MMHG = 0.1699
 EARTH_RADIUS_KM = 6371.0
 
-ProjectionMode = Literal["udm_flat", "wgs84"]
+ProjectionMode = Literal["udm_v5", "udm_flat", "wgs84"]
 
 
 @dataclass(frozen=True)
@@ -54,14 +54,34 @@ def project_flat(
     lon: float,
     *,
     lst_hours: float = 12.0,
-    mode: ProjectionMode = "udm_flat",
+    mode: ProjectionMode = "udm_v5",
 ) -> dict:
     """
-    Project lat/lon to UDM flat plane coordinates (km) for rendering.
+    Project lat/lon to UDM coordinates for rendering.
 
-    Longitude spread scales with |W(φ)| and stator phase.
-    Latitude pulls toward Bloch node (φ = −19.45°) weighted by winding intensity.
+    udm_v5: cylindrical bijection per Cosmology Engine v5.0 (§9.1).
+    udm_flat: legacy Frame-U winding projection.
     """
+    if mode == "udm_v5":
+        from earth.cosmology.coordinates import project_site
+
+        rec = project_site(lat, lon, mode="udm_v5")
+        x_km = rec["x_mi"] * 1.609344
+        y_km = rec["y_mi"] * 1.609344
+        return {
+            "mode": mode,
+            "lat_raw": lat,
+            "lon_raw": lon,
+            "lat_udm": rec["lat_udm"],
+            "lon_udm": rec["lon_udm"],
+            "r_mi": rec["r_mi"],
+            "theta_rad": rec["theta_rad"],
+            "x_km": round(x_km, 4),
+            "y_km": round(y_km, 4),
+            "L_f": 2.428,
+            "lst_hours": lst_hours,
+        }
+
     if mode == "wgs84":
         x_km = lon * (math.pi / 180.0) * EARTH_RADIUS_KM * math.cos(math.radians(lat))
         y_km = lat * (math.pi / 180.0) * EARTH_RADIUS_KM

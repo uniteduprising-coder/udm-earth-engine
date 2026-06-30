@@ -54,6 +54,11 @@ def provenance_summary() -> dict[str, Any]:
             "E_break reclassified as T4 generic air breakdown (not basalt lab)",
         ],
         "sourced": load_sourced_constants(),
+        "celestial_governance": {
+            "document": "North Axis Aperture and Celestial Governance",
+            "config": str(ROOT / "config" / "celestial_governance.yaml"),
+            "api": "/api/celestial/governance",
+        },
         "encyclopedia_path": str(ENCYCLOPEDIA_MD),
         "params_path": str(ENCYCLOPEDIA_YAML),
     }

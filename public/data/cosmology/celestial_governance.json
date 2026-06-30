@@ -1,0 +1,304 @@
+{
+  "document": "North Axis Aperture and Celestial Governance",
+  "compiled": "2026-06-30",
+  "version": "5.2\u03b2",
+  "north_axis_aperture": {
+    "class": "axis_aperture_register",
+    "alias": "North Fixed Star",
+    "function": "visible registration of northern axis aperture \u2014 axial, not luminous",
+    "formula": "\u03b1_N = \u03c6 + R_f + A_o + V_p",
+    "defaults": {
+      "R_f": 0.0,
+      "A_o": 0.0,
+      "V_p": 0.0
+    },
+    "reference_chain": [
+      "North Axis Aperture",
+      "Polar Vortex",
+      "Central Mountain / Rupes Nigra Register",
+      "Realm Stator Field"
+    ]
+  },
+  "stellar_lattice": {
+    "tier": "T2",
+    "class": "fixed_optical_node",
+    "body_type": "non-material optical field signature",
+    "reference_axis": "north_axis_aperture",
+    "motion_type": "apparent rotation around axial center",
+    "measurements": [
+      "apparent altitude",
+      "azimuth",
+      "magnitude",
+      "color signature",
+      "spectral signature",
+      "rotation radius from axial center",
+      "seasonal visibility"
+    ],
+    "measurement_feeds": [
+      "star-trail radius",
+      "magnitude",
+      "color signature",
+      "spectral signature",
+      "seasonal visibility",
+      "rotation timing"
+    ]
+  },
+  "optical_planets": {
+    "tier": "T2",
+    "class": "moving_optical_node",
+    "body_type": "non-material projected field signature",
+    "track": "ecliptic circuit",
+    "bodies": [
+      "Mercury",
+      "Venus",
+      "Mars",
+      "Uranus",
+      "Neptune"
+    ],
+    "roles": {
+      "Mercury": "timing/phase marker",
+      "Venus": "high-luminance brightness/phase marker",
+      "Mars": "red-field resonance marker",
+      "Uranus": "long-cycle field marker",
+      "Neptune": "long-cycle field marker"
+    },
+    "measurements": [
+      "apparent angular diameter",
+      "brightness curve",
+      "phase behavior",
+      "retrograde timing",
+      "ecliptic position",
+      "occultation timing",
+      "spectral signature"
+    ]
+  },
+  "saturn": {
+    "tier": "T2",
+    "class": "physical_governor",
+    "role": "step_down_frequency_regulator",
+    "body_type": "physical / semi-physical governance body",
+    "alias": "Step-Down Governor",
+    "structures": [
+      "rings",
+      "polar geometry",
+      "harmonic boundary system"
+    ],
+    "functions": [
+      "field regulation",
+      "frequency reduction",
+      "harmonic gating",
+      "upper-system governance"
+    ],
+    "measurement_feeds": [
+      "ring inclination cycle",
+      "polar geometry timing",
+      "brightness cycle",
+      "ecliptic position",
+      "resonance correlation"
+    ]
+  },
+  "jupiter": {
+    "tier": "T2",
+    "class": "physical_magnetic_commutator",
+    "role": "charge_flywheel_and_field_distributor",
+    "body_type": "physical governance body",
+    "alias": "Magnetic Commutator / Charge Flywheel",
+    "functions": [
+      "magnetic commutation",
+      "charge storage",
+      "rotational field timing",
+      "ecliptic distribution",
+      "pulse gating",
+      "lower-system synchronization"
+    ],
+    "measurement_feeds": [
+      "rotation timing",
+      "magnetic pulse timing",
+      "brightness cycle",
+      "moon/field interaction timing",
+      "ecliptic position",
+      "correlation with Schumann, geomagnetic, and polar data"
+    ]
+  },
+  "sun_moon": {
+    "tier": "T2",
+    "sun": {
+      "class": "local_discharge_body",
+      "role": "day-cycle discharge"
+    },
+    "moon": {
+      "class": "local_counter_discharge_body",
+      "role": "night-cycle reflective-resonant discharge"
+    }
+  },
+  "polar_vortex": {
+    "tier": "T3",
+    "class": "axial_receiver",
+    "role": "terrestrial expression of north-axis input",
+    "measurement_feeds": [
+      "vortex center",
+      "four-node basin geometry",
+      "rotation timing",
+      "pressure anomaly",
+      "magnetic anomaly",
+      "bathymetric alignment"
+    ]
+  },
+  "hierarchy": [
+    "North Axis Aperture",
+    "Polar Vortex",
+    "Central Mountain / Rupes Nigra Register",
+    "Saturnian Step-Down Governance",
+    "Jovian Magnetic Commutation",
+    "Sun-Moon Discharge Pair",
+    "Optical Planetary Nodes",
+    "Fixed Stellar Optical Lattice"
+  ],
+  "classification_table": [
+    {
+      "object": "North Fixed Star",
+      "classification": "axis_aperture_register",
+      "function": "true north orientation point"
+    },
+    {
+      "object": "Polar Vortex",
+      "classification": "axial_receiver",
+      "function": "terrestrial expression of north-axis input"
+    },
+    {
+      "object": "Central Mountain / Rupes Nigra",
+      "classification": "induction_register",
+      "function": "central stator/field anchor"
+    },
+    {
+      "object": "Stars",
+      "classification": "fixed_optical_nodes",
+      "function": "rotating optical lattice"
+    },
+    {
+      "object": "Mercury",
+      "classification": "optical_ecliptic_node",
+      "function": "timing/phase marker"
+    },
+    {
+      "object": "Venus",
+      "classification": "high_luminance_optical_node",
+      "function": "brightness/phase marker"
+    },
+    {
+      "object": "Mars",
+      "classification": "optical_resonance_node",
+      "function": "red-field resonance marker"
+    },
+    {
+      "object": "Uranus",
+      "classification": "outer_optical_node",
+      "function": "long-cycle field marker"
+    },
+    {
+      "object": "Neptune",
+      "classification": "outer_optical_node",
+      "function": "long-cycle field marker"
+    },
+    {
+      "object": "Saturn",
+      "classification": "physical_step_down_governor",
+      "function": "frequency regulation"
+    },
+    {
+      "object": "Jupiter",
+      "classification": "physical_magnetic_commutator",
+      "function": "charge distribution and rotational field timing"
+    },
+    {
+      "object": "Sun",
+      "classification": "local_discharge_body",
+      "function": "day-cycle discharge"
+    },
+    {
+      "object": "Moon",
+      "classification": "local_counter_discharge_body",
+      "function": "night-cycle reflective-resonant discharge"
+    }
+  ],
+  "measurement_feeds": {
+    "north_axis_aperture": [
+      "observed altitude of North Fixed Star by latitude",
+      "azimuthal deviation from true north",
+      "star-trail center point",
+      "polar vortex center alignment",
+      "axial offset over time"
+    ],
+    "stellar_lattice": [
+      "star-trail radius",
+      "magnitude",
+      "color signature",
+      "spectral signature",
+      "seasonal visibility",
+      "rotation timing"
+    ],
+    "saturn": [
+      "ring inclination cycle",
+      "polar geometry timing",
+      "brightness cycle",
+      "ecliptic position",
+      "resonance correlation"
+    ],
+    "jupiter": [
+      "rotation timing",
+      "magnetic pulse timing",
+      "brightness cycle",
+      "moon/field interaction timing",
+      "ecliptic position",
+      "correlation with Schumann, geomagnetic, and polar data"
+    ],
+    "polar_vortex": [
+      "vortex center",
+      "four-node basin geometry",
+      "rotation timing",
+      "pressure anomaly",
+      "magnetic anomaly",
+      "bathymetric alignment"
+    ]
+  },
+  "working_statement": "North Fixed Star = axis aperture orientation lock. Stars = fixed optical lattice. Most planets = ecliptic optical nodes. Saturn = step-down governor. Jupiter = magnetic commutator / charge flywheel. Polar vortex = terrestrial axial receiver.",
+  "altitude_curve": [
+    {
+      "phi_deg": -60.0,
+      "alpha_N_deg": -60.0,
+      "residual_deg": 0.0
+    },
+    {
+      "phi_deg": -30.0,
+      "alpha_N_deg": -30.0,
+      "residual_deg": 0.0
+    },
+    {
+      "phi_deg": 0.0,
+      "alpha_N_deg": 0.0,
+      "residual_deg": 0.0
+    },
+    {
+      "phi_deg": 30.0,
+      "alpha_N_deg": 30.0,
+      "residual_deg": 0.0
+    },
+    {
+      "phi_deg": 45.0,
+      "alpha_N_deg": 45.0,
+      "residual_deg": 0.0
+    },
+    {
+      "phi_deg": 60.0,
+      "alpha_N_deg": 60.0,
+      "residual_deg": 0.0
+    },
+    {
+      "phi_deg": 90.0,
+      "alpha_N_deg": 90.0,
+      "residual_deg": 0.0
+    }
+  ],
+  "governance_doc_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\docs\\North_Axis_Aperture_and_Celestial_Governance.md",
+  "governance_yaml_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\config\\celestial_governance.yaml"
+}

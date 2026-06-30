@@ -66,6 +66,52 @@ export async function handleCosmologyApi(
   if (path === "/api/observations/layers") {
     return json({ layers: OBS_LAYERS }, cors, 300);
   }
+  if (path.startsWith("/api/celestial/")) {
+    const baked = await fetchBakedJson(env, "/data/cosmology/celestial_governance.json");
+    if (!baked) {
+      return json(
+        {
+          document: "North Axis Aperture and Celestial Governance",
+          note: "Run scripts/bake_cosmology.py to bake",
+        },
+        cors,
+        120
+      );
+    }
+    if (path === "/api/celestial/governance") return json(baked, cors, 300);
+    if (path === "/api/celestial/hierarchy") return json({ hierarchy: baked.hierarchy ?? [] }, cors, 300);
+    if (path === "/api/celestial/classification") {
+      return json({ classification_table: baked.classification_table ?? [] }, cors, 300);
+    }
+    if (path === "/api/celestial/measurements") {
+      return json({ measurement_feeds: baked.measurement_feeds ?? {} }, cors, 300);
+    }
+    if (path === "/api/celestial/north-axis") {
+      const lat = Number(url.searchParams.get("lat") ?? "NaN");
+      if (!Number.isFinite(lat)) {
+        return json({ error: "lat query parameter required (degrees)" }, cors, 400);
+      }
+      const defaults = (baked.north_axis_aperture as { defaults?: Record<string, number> })?.defaults ?? {};
+      const rf = Number(url.searchParams.get("R_f") ?? defaults.R_f ?? 0);
+      const ao = Number(url.searchParams.get("A_o") ?? defaults.A_o ?? 0);
+      const vp = Number(url.searchParams.get("V_p") ?? defaults.V_p ?? 0);
+      const alpha = Math.round((lat + rf + ao + vp) * 10000) / 10000;
+      return json(
+        {
+          phi_deg: lat,
+          alpha_N_deg: alpha,
+          R_f: rf,
+          A_o: ao,
+          V_p: vp,
+          residual_deg: Math.round((alpha - lat) * 10000) / 10000,
+          matches_latitude_rule: Math.abs(alpha - lat) < 0.01,
+        },
+        cors,
+        120
+      );
+    }
+    return json(baked, cors, 300);
+  }
   if (path.startsWith("/api/encyclopedia")) {
     const baked = await fetchBakedJson(env, "/data/cosmology/encyclopedia.json");
     if (!baked) {

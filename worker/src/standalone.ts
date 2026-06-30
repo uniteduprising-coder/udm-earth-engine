@@ -188,6 +188,47 @@ export default {
     if (path === "/api/observations/layers") {
       return json({ layers: OBS_LAYERS }, corsH, 300);
     }
+    if (path.startsWith("/api/celestial/")) {
+      const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/celestial_governance.json");
+      if (!baked) {
+        return json(
+          { document: "North Axis Aperture and Celestial Governance", note: "Run scripts/bake_cosmology.py to bake" },
+          corsH,
+          120
+        );
+      }
+      if (path === "/api/celestial/governance") return json(baked, corsH, 300);
+      if (path === "/api/celestial/hierarchy") return json({ hierarchy: baked.hierarchy ?? [] }, corsH, 300);
+      if (path === "/api/celestial/classification") {
+        return json({ classification_table: baked.classification_table ?? [] }, corsH, 300);
+      }
+      if (path === "/api/celestial/measurements") {
+        return json({ measurement_feeds: baked.measurement_feeds ?? {} }, corsH, 300);
+      }
+      if (path === "/api/celestial/north-axis") {
+        const lat = Number(url.searchParams.get("lat") ?? "NaN");
+        if (!Number.isFinite(lat)) return json({ error: "lat query parameter required (degrees)" }, corsH, 400);
+        const defaults = (baked.north_axis_aperture as { defaults?: Record<string, number> })?.defaults ?? {};
+        const rf = Number(url.searchParams.get("R_f") ?? defaults.R_f ?? 0);
+        const ao = Number(url.searchParams.get("A_o") ?? defaults.A_o ?? 0);
+        const vp = Number(url.searchParams.get("V_p") ?? defaults.V_p ?? 0);
+        const alpha = Math.round((lat + rf + ao + vp) * 10000) / 10000;
+        return json(
+          {
+            phi_deg: lat,
+            alpha_N_deg: alpha,
+            R_f: rf,
+            A_o: ao,
+            V_p: vp,
+            residual_deg: Math.round((alpha - lat) * 10000) / 10000,
+            matches_latitude_rule: Math.abs(alpha - lat) < 0.01,
+          },
+          corsH,
+          120
+        );
+      }
+      return json(baked, corsH, 300);
+    }
     if (path.startsWith("/api/encyclopedia")) {
       const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/encyclopedia.json");
       if (!baked) {

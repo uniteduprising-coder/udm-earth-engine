@@ -161,6 +161,23 @@ export default {
       const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/state.json");
       return json(baked ?? { error: "state not baked" }, corsH, 60);
     }
+    if (
+      path === "/api/cosmology/chromatic" ||
+      path === "/api/cosmology/terminator" ||
+      path === "/api/cosmology/daynight"
+    ) {
+      const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/chromatic.json");
+      if (path === "/api/cosmology/daynight" && baked?.state_at_point) {
+        const lat = url.searchParams.get("lat");
+        const lon = url.searchParams.get("lon");
+        return json(
+          { ...(baked.state_at_point as object), lat: lat ? Number(lat) : null, lon: lon ? Number(lon) : null },
+          corsH,
+          60
+        );
+      }
+      return json(baked ?? { error: "chromatic not baked" }, corsH, 120);
+    }
     if (path === "/api/validate" || path === "/api/run_full_validation") {
       const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/validation.json");
       if (path === "/api/run_full_validation" && baked) {

@@ -52,7 +52,7 @@
   "params_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\config\\udm_engine_params.yaml",
   "ingest": {
     "ok": true,
-    "ingested_at": "2026-06-30T19:39:57.786542+00:00",
+    "ingested_at": "2026-06-30T19:54:04.833575+00:00",
     "files": {
       "encyclopedia_md": true,
       "encyclopedia_yaml": true,

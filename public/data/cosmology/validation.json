@@ -1,9 +1,9 @@
 {
   "version": "5.2\u03b2",
   "total_checks": 18,
-  "passed": 15,
+  "passed": 16,
   "failed": 1,
-  "pending": 2,
+  "pending": 1,
   "all_passed": false,
   "blocking_gaps": 0,
   "checks": [
@@ -146,10 +146,10 @@
     {
       "id": 18,
       "name": "Geomagnetic jerk correlation",
-      "value": "6 jerk years, report=PENDING",
+      "value": "15 jerk years, report=PASS",
       "criterion": "\u03a9\u0307 spikes at known jerk years",
-      "passed": false,
-      "status": "PENDING"
+      "passed": true,
+      "status": "PASS"
     }
   ],
   "metrics": {
@@ -164,7 +164,7 @@
     "Z_g_ohm": 2.8,
     "C_total_F": 0.115,
     "twin_cell_steady": true,
-    "imf_Bz_nT": -1.2,
+    "imf_Bz_nT": -3.724,
     "nu_b_profile": "flat"
   },
   "open_engineering_tasks": [

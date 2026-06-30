@@ -8,7 +8,8 @@
     "dev": "wrangler dev",
     "dev:worker": "wrangler dev",
     "deploy": "wrangler deploy",
-    "predeploy": "py -3 scripts/bake_atlas.py"
+    "predeploy": "py -3 scripts/bake_atlas.py && npm run build:planar",
+    "build:planar": "cd planar-engine && npm install && npm run build"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241127.0",

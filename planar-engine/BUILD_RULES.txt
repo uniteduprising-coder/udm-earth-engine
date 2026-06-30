@@ -1,0 +1,14 @@
+UDM DISK KERNEL — AGENT DIRECTIVE (paste at top of every build prompt)
+
+This is NOT a geospatial globe app. This is a custom Cartesian planar simulation
+that ingests Earth-labeled source data but renders ONLY in UDM planar coordinates.
+
+ABSOLUTE RULES:
+- No SphereGeometry for world body (markers only)
+- No Cesium, Mapbox globe, EPSG:4326/3857, Web Mercator, haversine, antimeridian
+- lat/lon enters ONLY via src/core/udmProjection.ts → sourceLatLonToUDM()
+- World body = circular disk BufferGeometry (concentric rings + radial segments)
+- x = r*cos(theta), y = r*sin(theta), z = displacement only
+- PLANAR DISK MODE: TRUE | SPHERICAL MODE: FALSE
+
+Stack: Vite + React + TS + Three.js + R3F + Leaflet CRS.Simple + deck.gl Cartesian

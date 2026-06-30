@@ -72,14 +72,23 @@ export async function handleCosmologyApi(
     return asset;
   }
   if (
+    path === "/planar" ||
+    path === "/planar/" ||
+    path.startsWith("/planar/") ||
     path === "/simulate" ||
     path === "/simulate.html" ||
     path === "/globe" ||
     path === "/globe.html" ||
     path === "/view"
   ) {
-    const req = new Request("https://earth.uniteduprising.com/simulate.html", { method: "GET" });
-    return env.ASSETS.fetch(req);
+    const assetPath = path.startsWith("/planar") ? path : "/planar/";
+    const req = new Request(`https://earth.uniteduprising.com${assetPath === "/planar" ? "/planar/" : assetPath}`, {
+      method: "GET",
+    });
+    const res = await env.ASSETS.fetch(req);
+    if (res.ok) return res;
+    const fallback = new Request("https://earth.uniteduprising.com/planar/index.html", { method: "GET" });
+    return env.ASSETS.fetch(fallback);
   }
   if (path === "/api/simulation/state") {
     const baked = await fetchBakedJson(env, "/data/cosmology/state.json");

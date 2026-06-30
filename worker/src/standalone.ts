@@ -254,13 +254,17 @@ export default {
       }
     }
     if (
+      path === "/planar" ||
+      path === "/planar/" ||
+      path.startsWith("/planar/") ||
       path === "/simulate" ||
       path === "/simulate.html" ||
       path === "/globe" ||
       path === "/globe.html" ||
       path === "/view"
     ) {
-      const asset = await fetchRaw("/simulate.html");
+      const assetPath = path.startsWith("/planar") ? (path.endsWith("/") ? `${path}index.html` : path) : "/planar/index.html";
+      const asset = await fetchRaw(assetPath.startsWith("/planar") ? assetPath : "/planar/index.html");
       if (asset.ok) {
         const out = new Response(asset.body, asset);
         out.headers.set("Content-Type", "text/html;charset=utf-8");

@@ -107,14 +107,21 @@ def create_app() -> FastAPI:
             return FileResponse(path)
         return {"service": "udm-earth-engine", "toroid": "public/toroid.html missing"}
 
+    @app.get("/planar")
+    @app.get("/planar/{rest:path}")
     @app.get("/simulate")
     @app.get("/globe")
     @app.get("/view")
-    async def planar_simulation_viewer():
-        path = public / "simulate.html"
-        if path.exists():
-            return FileResponse(path)
-        return {"service": "udm-earth-engine", "simulate": "public/simulate.html missing"}
+    async def planar_simulation_viewer(rest: str = ""):
+        planar_index = public / "planar" / "index.html"
+        if planar_index.exists():
+            if rest and (public / "planar" / rest).is_file():
+                return FileResponse(public / "planar" / rest)
+            return FileResponse(planar_index)
+        legacy = public / "simulate.html"
+        if legacy.exists():
+            return FileResponse(legacy)
+        return {"service": "udm-earth-engine", "planar": "run npm run build:planar"}
 
     return app
 

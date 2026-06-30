@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UDM Toroidal Model — Procedural</title>
+  <link rel="stylesheet" href="/assets/toroid.css" />
+</head>
+<body>
+  <header class="td-header">
+    <div>
+      <h1>UDM v5.2β Toroidal Model</h1>
+      <p id="td-sub">Procedural geometry + NASA live layers</p>
+    </div>
+    <button id="td-menu" type="button" class="td-menu-btn" aria-label="Toggle controls">☰</button>
+  </header>
+
+  <aside id="td-panel" class="td-panel">
+    <section>
+      <h2>View</h2>
+      <button type="button" data-view="polar">Polar (inflow)</button>
+      <button type="button" data-view="profile">Toroid profile</button>
+      <button type="button" data-view="underside">Underside (outflow)</button>
+      <button type="button" data-view="cross">Cross-section</button>
+    </section>
+    <section>
+      <h2>Base</h2>
+      <label><input type="checkbox" id="ly-procedural" checked /> UDM procedural core</label>
+      <label><input type="checkbox" id="ly-geocolor" checked /> Continents (VIIRS true color)</label>
+    </section>
+    <section>
+      <h2>Observational filters (T1)</h2>
+      <label><input type="checkbox" data-layer="thermal" /> Thermal / SST</label>
+      <input type="range" data-opacity="thermal" min="0" max="100" value="65" />
+      <label><input type="checkbox" data-layer="weather" /> Weather / IR clouds</label>
+      <input type="range" data-opacity="weather" min="0" max="100" value="45" />
+      <label><input type="checkbox" data-layer="ocean" /> Ocean currents / SST</label>
+      <input type="range" data-opacity="ocean" min="0" max="100" value="55" />
+      <label><input type="checkbox" data-layer="jets" /> Jet streams / 10m wind</label>
+      <input type="range" data-opacity="jets" min="0" max="100" value="50" />
+      <label><input type="checkbox" data-layer="imf" checked /> Magnetic / IMF (live Bz)</label>
+      <input type="range" data-opacity="imf" min="0" max="100" value="35" />
+    </section>
+    <section>
+      <h2>Build</h2>
+      <button id="td-build" type="button">Rebuild + fetch NASA layers</button>
+      <div id="td-scale" class="td-mono"></div>
+    </section>
+    <section>
+      <h2>Terminations</h2>
+      <div id="td-terms" class="td-mono">Loading…</div>
+    </section>
+  </aside>
+
+  <main id="td-canvas-wrap"></main>
+  <footer class="td-footer">
+    <span id="td-status">Initializing…</span>
+  </footer>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="/assets/toroid.js"></script>
+</body>
+</html>

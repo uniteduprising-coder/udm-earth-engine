@@ -1,0 +1,72 @@
+{
+  "layers": {
+    "geocolor": {
+      "id": "geocolor",
+      "label": "True color / continents",
+      "gibs_layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "ok": true,
+      "url": "/data/procedural/layers/geocolor.png",
+      "isolated_url": "/data/procedural/layers/geocolor_isolated.png"
+    },
+    "thermal": {
+      "id": "thermal",
+      "label": "Sea surface temperature",
+      "gibs_layer": "GHRSST_L4_MUR_Sea_Surface_Temperature",
+      "ok": true,
+      "url": "/data/procedural/layers/thermal.png",
+      "isolated_url": "/data/procedural/layers/thermal_isolated.png"
+    },
+    "weather": {
+      "id": "weather",
+      "label": "Infrared clouds (GOES)",
+      "gibs_layer": "GOES-East_ABI_Band13",
+      "ok": true,
+      "url": "/data/procedural/layers/weather.png",
+      "isolated_url": "/data/procedural/layers/weather_isolated.png"
+    },
+    "ocean": {
+      "id": "ocean",
+      "label": "Ocean temperature",
+      "gibs_layer": "OSPOGHRSSTGlobal_Sea_Surface_Temperature",
+      "ok": true,
+      "url": "/data/procedural/layers/ocean.png",
+      "isolated_url": "/data/procedural/layers/ocean_isolated.png"
+    },
+    "jets": {
+      "id": "jets",
+      "label": "10m wind / jet streams",
+      "gibs_layer": "MERRA2_10m_U_Wind_Vectors",
+      "ok": false,
+      "url": "/data/procedural/layers/jets.png"
+    }
+  },
+  "fetched_at": "2026-06-30T22:03:13.859392+00:00",
+  "imf": {
+    "ok": true,
+    "bz_gsm_nT": -3.724,
+    "Bz_nT": -3.724,
+    "source": "noaa_swpc"
+  },
+  "catalog": {
+    "geocolor": {
+      "label": "True color / continents",
+      "default_opacity": 0.92
+    },
+    "thermal": {
+      "label": "Sea surface temperature",
+      "default_opacity": 0.65
+    },
+    "weather": {
+      "label": "Infrared clouds (GOES)",
+      "default_opacity": 0.45
+    },
+    "ocean": {
+      "label": "Ocean temperature",
+      "default_opacity": 0.55
+    },
+    "jets": {
+      "label": "10m wind / jet streams",
+      "default_opacity": 0.5
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "generated_at": "2026-06-30T22:03:13.615479+00:00",
+  "method": "procedural_from_scratch",
+  "plate_images_used": false,
+  "output": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_PROCEDURAL_MODEL\\renders\\udm_procedural_polar.png",
+  "terminations": {
+    "provenance": "procedural_from_scratch_no_plate_images",
+    "disk": {
+      "width_px": 2048,
+      "height_px": 2044,
+      "center": [
+        1024.0,
+        1022.0
+      ],
+      "outer_radius_px": 1012.0
+    },
+    "anchors": {
+      "earth_equatorial_circumference_km": 40075.0,
+      "pole_to_equator_km": 6378.13,
+      "km_per_px": 6.3025,
+      "french_miles_per_px": 3.2337,
+      "R_earth_mi": 3959.0,
+      "rupes_nigra_circumference_fm": 33.0
+    },
+    "island_bearings_deg": [
+      45,
+      135,
+      225,
+      315
+    ],
+    "features": [
+      {
+        "name": "rupes_nigra_outer",
+        "rho": 0.001607,
+        "mi": 6.3606,
+        "km": 10.25,
+        "french_miles": 5.26,
+        "px_from_center": 1.63,
+        "source": "lore: 33 French miles circumference"
+      },
+      {
+        "name": "island_inner_start",
+        "rho": 0.014381,
+        "mi": 56.934,
+        "km": 91.72,
+        "french_miles": 47.06,
+        "px_from_center": 14.55,
+        "source": "udm_engine_params.yaml r_iso - a_iso"
+      },
+      {
+        "name": "island_outer_termination",
+        "rho": 0.014608,
+        "mi": 57.834,
+        "km": 93.17,
+        "french_miles": 47.81,
+        "px_from_center": 14.78,
+        "source": "udm_engine_params.yaml r_iso + a_iso"
+      },
+      {
+        "name": "hydro_vortex_sigma",
+        "rho": 0.00053,
+        "mi": 2.1,
+        "km": 3.38,
+        "french_miles": 1.74,
+        "px_from_center": 0.54,
+        "source": "udm_engine_params.yaml sigma_h"
+      },
+      {
+        "name": "bloch_wall_equator",
+        "rho": 0.808285,
+        "mi": 3200.0,
+        "km": 5155.35,
+        "french_miles": 2645.13,
+        "px_from_center": 817.98,
+        "source": "udm_engine_params.yaml r_base"
+      },
+      {
+        "name": "toroidal_rim",
+        "rho": 3.157363,
+        "mi": 12500.0,
+        "km": 20138.09,
+        "french_miles": 10332.52,
+        "px_from_center": 3195.25,
+        "source": "udm_engine_params.yaml R_disk"
+      },
+      {
+        "name": "rho_band_north_axis",
+        "rho": 0.0,
+        "mi": 0.0,
+        "km": 0.0,
+        "french_miles": 0.0,
+        "px_from_center": 0.0,
+        "source": "udm_master_plate.yaml rho_bands"
+      },
+      {
+        "name": "rho_band_arctic",
+        "rho": 0.13,
+        "mi": 514.67,
+        "km": 829.16,
+        "french_miles": 425.43,
+        "px_from_center": 131.56,
+        "source": "udm_master_plate.yaml rho_bands"
+      },
+      {
+        "name": "rho_band_northern_tropic",
+        "rho": 0.37,
+        "mi": 1464.83,
+        "km": 2359.91,
+        "french_miles": 1210.83,
+        "px_from_center": 374.44,
+        "source": "udm_master_plate.yaml rho_bands"
+      },
+      {
+        "name": "rho_band_equator_bloch_wall",
+        "rho": 0.5,
+        "mi": 1979.5,
+        "km": 3189.07,
+        "french_miles": 1636.26,
+        "px_from_center": 506.0,
+        "source": "udm_master_plate.yaml rho_bands"
+      },
+      {
+        "name": "rho_band_southern_tropic",
+        "rho": 0.63,
+        "mi": 2494.17,
+        "km": 4018.22,
+        "french_miles": 2061.69,
+        "px_from_center": 637.56,
+        "source": "udm_master_plate.yaml rho_bands"
+      },
+      {
+        "name": "rho_band_outer_antarctic",
+        "rho": 0.87,
+        "mi": 3444.33,
+        "km": 5548.98,
+        "french_miles": 2847.09,
+        "px_from_center": 880.44,
+        "source": "udm_master_plate.yaml rho_bands"
+      },
+      {
+        "name": "rho_band_southern_return",
+        "rho": 1.0,
+        "mi": 3959.0,
+        "km": 6378.13,
+        "french_miles": 3272.52,
+        "px_from_center": 1012.0,
+        "source": "udm_master_plate.yaml rho_bands"
+      }
+    ],
+    "flow": {
+      "Q_h_mi3_s": 0.87,
+      "Q_b_mi3_s": -0.87,
+      "Gamma_h": 24.6,
+      "lobe_count": 4
+    }
+  }
+}

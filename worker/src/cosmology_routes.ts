@@ -71,6 +71,36 @@ export async function handleCosmologyApi(
     const asset = await env.ASSETS.fetch(req);
     return asset;
   }
+  if (path === "/globe" || path === "/globe.html") {
+    const req = new Request("https://earth.uniteduprising.com/globe.html", { method: "GET" });
+    return env.ASSETS.fetch(req);
+  }
+  if (path === "/toroid" || path === "/toroid.html") {
+    const req = new Request("https://earth.uniteduprising.com/toroid.html", { method: "GET" });
+    return env.ASSETS.fetch(req);
+  }
+  if (path.startsWith("/api/procedural/")) {
+    if (path === "/api/procedural/status") {
+      const baked = await fetchBakedJson(env, "/data/procedural/manifest.json");
+      return json(baked ?? { ok: false, message: "Run procedural build" }, cors, 120);
+    }
+    if (path === "/api/procedural/layers") {
+      const baked = await fetchBakedJson(env, "/data/procedural/layers.json");
+      return json(baked ?? { layers: {}, message: "Run procedural build" }, cors, 120);
+    }
+    if (path === "/api/procedural/terminations") {
+      const baked = await fetchBakedJson(env, "/data/procedural/terminations.json");
+      return json(baked ?? { error: "terminations not published" }, cors, 300);
+    }
+    if (path === "/api/procedural/build" && request.method === "POST") {
+      return json(
+        { ok: false, edge: true, note: "POST /api/procedural/build runs on Python API — edge serves baked assets only" },
+        cors
+      );
+    }
+    const baked = await fetchBakedJson(env, "/data/procedural/manifest.json");
+    return json(baked ?? { error: "procedural not published" }, cors, 120);
+  }
   if (path.startsWith("/api/realtime/")) {
     const baked = await fetchBakedJson(env, "/data/realtime/manifest.json");
     if (path === "/api/realtime/status") return json(baked ?? { plate_lock: true }, cors, 60);

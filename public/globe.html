@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UDM Cloud Globe — NASA GIBS</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cesium@1.118.2/Build/Cesium/Widgets/widgets.css" />
+  <link rel="stylesheet" href="/assets/globe.css" />
+</head>
+<body>
+  <header class="gb-header">
+    <div>
+      <h1>UDM Cloud Globe</h1>
+      <p>Hosted 3D Earth · NASA GIBS live layers · no local software</p>
+    </div>
+    <nav class="gb-links">
+      <a href="/">Atlas map</a>
+      <a href="/realtime">Realtime plate</a>
+      <a href="/toroid">Toroid model</a>
+      <a href="https://worldview.earthdata.nasa.gov/" target="_blank" rel="noopener">NASA Worldview</a>
+    </nav>
+  </header>
+
+  <aside class="gb-panel">
+    <h2>Imagery (cloud)</h2>
+    <label>Base layer
+      <select id="gb-base">
+        <option value="geocolor" selected>VIIRS true color</option>
+        <option value="modis">MODIS Terra color</option>
+        <option value="thermal">Sea surface temperature</option>
+        <option value="weather">IR clouds</option>
+      </select>
+    </label>
+    <button id="gb-refresh" type="button">Refresh today&apos;s tiles</button>
+
+    <h2>Overlays</h2>
+    <label><input type="checkbox" data-overlay="thermal" /> SST overlay</label>
+    <input type="range" data-opacity="thermal" min="0" max="100" value="55" />
+    <label><input type="checkbox" data-overlay="weather" /> IR clouds overlay</label>
+    <input type="range" data-opacity="weather" min="0" max="100" value="40" />
+
+    <h2>UDM</h2>
+    <button id="gb-pole" type="button">Fly to North aperture</button>
+    <div id="gb-meta" class="gb-mono">Loading UDM scale…</div>
+    <p class="gb-note">
+      For Unreal-quality rendering in a browser, use
+      <a href="https://cesium.com/platform/cesium-for-unreal/" target="_blank" rel="noopener">Cesium for Unreal</a>
+      with Pixel Streaming (Arcware, Eagle 3D, Azure).
+    </p>
+  </aside>
+
+  <div id="gb-map"></div>
+  <footer class="gb-footer">
+    <span id="gb-status">Loading Cesium…</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/cesium@1.118.2/Build/Cesium/Cesium.js"></script>
+  <script src="/assets/gibs_cesium.js"></script>
+  <script src="/assets/globe.js"></script>
+</body>
+</html>

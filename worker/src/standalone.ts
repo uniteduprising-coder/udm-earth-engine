@@ -244,6 +244,55 @@ export default {
       }
       return json(baked, corsH, 300);
     }
+    if (path === "/realtime" || path === "/realtime.html") {
+      const asset = await fetchRaw("/realtime.html");
+      if (asset.ok) {
+        const out = new Response(asset.body, asset);
+        out.headers.set("Content-Type", "text/html;charset=utf-8");
+        Object.entries(corsH).forEach(([k, v]) => out.headers.set(k, v));
+        return out;
+      }
+    }
+    if (path === "/globe" || path === "/globe.html") {
+      const asset = await fetchRaw("/globe.html");
+      if (asset.ok) {
+        const out = new Response(asset.body, asset);
+        out.headers.set("Content-Type", "text/html;charset=utf-8");
+        Object.entries(corsH).forEach(([k, v]) => out.headers.set(k, v));
+        return out;
+      }
+    }
+    if (path === "/toroid" || path === "/toroid.html") {
+      const asset = await fetchRaw("/toroid.html");
+      if (asset.ok) {
+        const out = new Response(asset.body, asset);
+        out.headers.set("Content-Type", "text/html;charset=utf-8");
+        Object.entries(corsH).forEach(([k, v]) => out.headers.set(k, v));
+        return out;
+      }
+    }
+    if (path.startsWith("/api/procedural/")) {
+      if (path === "/api/procedural/status") {
+        const baked = await fetchJsonRaw<Record<string, unknown>>("/data/procedural/manifest.json");
+        return json(baked ?? { ok: false, message: "Run procedural build" }, corsH, 120);
+      }
+      if (path === "/api/procedural/layers") {
+        const baked = await fetchJsonRaw<Record<string, unknown>>("/data/procedural/layers.json");
+        return json(baked ?? { layers: {}, message: "Run procedural build" }, corsH, 120);
+      }
+      if (path === "/api/procedural/terminations") {
+        const baked = await fetchJsonRaw<Record<string, unknown>>("/data/procedural/terminations.json");
+        return json(baked ?? { error: "terminations not published" }, corsH, 300);
+      }
+      if (path === "/api/procedural/build" && request.method === "POST") {
+        return json(
+          { ok: false, edge: true, note: "POST /api/procedural/build runs on Python API — edge serves baked assets only" },
+          corsH
+        );
+      }
+      const baked = await fetchJsonRaw<Record<string, unknown>>("/data/procedural/manifest.json");
+      return json(baked ?? { error: "procedural not published" }, corsH, 120);
+    }
     if (path.startsWith("/api/toroidal/")) {
       const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/toroidal.json");
       if (!baked) return json({ error: "toroidal not baked" }, corsH);

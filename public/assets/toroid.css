@@ -1,0 +1,89 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #0a0a0f;
+  color: #e8ecf4;
+  overflow: hidden;
+}
+.td-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.td-header h1 { margin: 0; font-size: 1.1rem; }
+.td-header p { margin: 0.2rem 0 0; font-size: 0.75rem; color: #8892a8; }
+.td-menu-btn {
+  display: none;
+  background: #1e2433;
+  border: 1px solid #334;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.td-panel {
+  position: fixed;
+  top: 3.5rem;
+  right: 0;
+  width: 280px;
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+  z-index: 15;
+  padding: 1rem;
+  background: rgba(16, 18, 28, 0.92);
+  border-left: 1px solid rgba(255,255,255,0.08);
+}
+.td-panel section { margin-bottom: 1rem; }
+.td-panel h2 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: #8892a8; margin: 0 0 0.5rem; }
+.td-panel button {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.35rem;
+  padding: 0.45rem 0.6rem;
+  background: #1a2030;
+  border: 1px solid #334155;
+  color: #e8ecf4;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+.td-panel button:hover { background: #243049; }
+.td-panel label { display: block; font-size: 0.85rem; margin: 0.35rem 0 0.1rem; cursor: pointer; }
+.td-panel input[type="range"] { width: 100%; margin: 0 0 0.5rem; accent-color: #3b82f6; }
+.td-mono { font-family: ui-monospace, monospace; font-size: 0.68rem; line-height: 1.45; white-space: pre-wrap; color: #a8b4cc; }
+#td-canvas-wrap { position: fixed; inset: 0; }
+#td-canvas-wrap canvas { display: block; width: 100% !important; height: 100% !important; }
+.td-footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 20;
+  padding: 0.5rem 1rem;
+  font-size: 0.72rem;
+  color: #8892a8;
+  background: rgba(10, 10, 15, 0.8);
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .td-menu-btn { display: block; }
+  .td-panel {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: 55vh;
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+  }
+  .td-panel.open { transform: translateY(0); }
+}

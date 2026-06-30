@@ -484,10 +484,15 @@
       state.measurePts = [];
       $('#btn-measure').textContent = state.measureMode ? 'Click two points…' : 'Measure distance';
     });
-    $('#btn-view').addEventListener('click', toggleView);
+    $('#btn-view')?.addEventListener('click', toggleView);
     $('#view-mode-select')?.addEventListener('change', (e) => {
+      const mode = e.target.value;
+      if (mode === 'top' || mode === 'underside' || mode === 'toroidal' || mode === 'cross_section') {
+        window.location.href = '/toroid';
+        return;
+      }
       if (!state.globeView) toggleView();
-      window._globeViewCtrl?.setMode(e.target.value === 'cross_section' ? 'toroidal' : e.target.value);
+      window._globeViewCtrl?.setMode(mode === 'cross_section' ? 'toroidal' : mode);
     });
     $('#omega-slider').addEventListener('input', (e) => {
       const v = +e.target.value;

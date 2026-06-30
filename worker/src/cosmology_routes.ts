@@ -71,12 +71,26 @@ export async function handleCosmologyApi(
     const asset = await env.ASSETS.fetch(req);
     return asset;
   }
-  if (path === "/planar" || path === "/planar/" || path === "/simulate" || path === "/globe" || path === "/view") {
+  if (
+    path === "/planar" ||
+    path === "/planar/" ||
+    path === "/disk" ||
+    path === "/disk.html" ||
+    path === "/simulate" ||
+    path === "/simulate.html" ||
+    path === "/globe" ||
+    path === "/globe.html" ||
+    path === "/view"
+  ) {
+    const req = new Request("https://earth.uniteduprising.com/disk.html", { method: "GET" });
+    return env.ASSETS.fetch(req);
+  }
+  if (path === "/planar/kernel" || path === "/planar/kernel.html") {
     const req = new Request("https://earth.uniteduprising.com/planar/kernel.html", { method: "GET" });
     return env.ASSETS.fetch(req);
   }
-  if (path === "/planar/app" || path === "/planar/app/" || path === "/planar/index.html") {
-    const req = new Request("https://earth.uniteduprising.com/planar/index.html", { method: "GET" });
+  if (path === "/planar/app" || path === "/planar/app/" || path === "/planar/app/index.html") {
+    const req = new Request("https://earth.uniteduprising.com/planar/app/index.html", { method: "GET" });
     return env.ASSETS.fetch(req);
   }
   if (path === "/api/simulation/state") {

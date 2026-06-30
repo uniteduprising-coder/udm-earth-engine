@@ -27,7 +27,7 @@ export default function App() {
           </p>
         </div>
         <nav>
-          <a href="/planar/kernel.html">Canvas kernel</a>
+          <a href="/planar/">Canvas kernel</a>
           <a href="/">Atlas</a>
           <a href="/realtime">Realtime</a>
         </nav>
@@ -59,7 +59,7 @@ export default function App() {
           <input type="checkbox" checked={flowDisp} onChange={(e) => setFlowDisp(e.target.checked)} />
           Hydro flow Z displacement (planar domain, not spherical)
         </label>
-        <p className="diag-meta">Fallback: <a href="/planar/kernel.html">/planar/kernel.html</a> (pure canvas, always works)</p>
+        <p className="diag-meta">Fallback: <a href="/planar/">/planar/</a> or <a href="/disk.html">/disk.html</a> (pure canvas, always works)</p>
       </div>
     </div>
   );

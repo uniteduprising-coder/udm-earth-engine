@@ -4,14 +4,14 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/planar/",
+  base: "/planar/app/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   build: {
-    outDir: "../public/planar",
+    outDir: "../public/planar/app",
     emptyOutDir: true,
   },
   server: {

@@ -253,8 +253,18 @@ export default {
         return out;
       }
     }
-    if (path === "/planar" || path === "/planar/" || path === "/simulate" || path === "/globe" || path === "/view") {
-      const asset = await fetchRaw("/planar/kernel.html");
+    if (
+      path === "/planar" ||
+      path === "/planar/" ||
+      path === "/disk" ||
+      path === "/disk.html" ||
+      path === "/simulate" ||
+      path === "/simulate.html" ||
+      path === "/globe" ||
+      path === "/globe.html" ||
+      path === "/view"
+    ) {
+      const asset = await fetchRaw("/disk.html");
       if (asset.ok) {
         const out = new Response(asset.body, asset);
         out.headers.set("Content-Type", "text/html;charset=utf-8");

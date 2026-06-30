@@ -1,13 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UDM Planar Simulation Engine</title>
-    <script type="module" crossorigin src="/planar/assets/index-pL6HySv9.js"></script>
-    <link rel="stylesheet" crossorigin href="/planar/assets/index-C1iFeSNW.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UDM Disk Kernel — Planar</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: system-ui, sans-serif; background: #060a10; color: #e8eef8; height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+    header, footer { padding: 0.5rem 0.75rem; background: #0a1018; border-bottom: 1px solid #1e3a5f; font-size: 0.8rem; }
+    footer { border-top: 1px solid #1e3a5f; border-bottom: none; }
+    main { display: grid; place-items: center; padding: 0.5rem; }
+    canvas { max-width: min(92vmin, 820px); max-height: min(92vmin, 820px); border-radius: 50%; box-shadow: 0 0 0 2px rgba(56,189,248,.35), 0 0 40px rgba(30,80,140,.3); cursor: grab; touch-action: none; }
+    .flags span { display: inline-block; margin-right: 0.5rem; font-family: monospace; font-size: 0.68rem; }
+    .ok { color: #6ee7b7; } .no { color: #fca5a5; }
+    a { color: #9ec8ff; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>UDM Disk Kernel</strong> — round flat planar disk · NOT a globe
+    <div class="flags">
+      <span class="ok">PLANAR DISK: TRUE</span>
+      <span class="no">SPHERICAL: FALSE</span>
+      <span class="no">GLOBE: FALSE</span>
+    </div>
+    <div><a href="/planar/app/">Full R3F app</a> · <a href="/">Atlas</a></div>
+  </header>
+  <main><canvas id="c" width="640" height="640"></canvas></main>
+  <footer id="status">Initializing…</footer>
+  <script>
+(function () {
+  const R_DISK = 12500;
+  const c = document.getElementById("c");
+  const ctx = c.getContext("2d");
+  const W = c.width, CX = W/2, CY = W/2, R = W/2 - 8;
+  const st = document.getElementById("status");
+
+  function geoToUDM(lat, lon) {
+    const colat = (90 - lat) * Math.PI / 180;
+    const rMi = (2 * colat / Math.PI) * R_DISK;
+    const theta = lon * Math.PI / 180;
+    const rho = Math.min(rMi / R_DISK, 1);
+    return { x: rho * Math.cos(theta), y: rho * Math.sin(theta) };
+  }
+
+  const TEST = [[90,0],[0,0],[45,90],[-45,-120]];
+  let tex = null, rot = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, W);
+    ctx.save();
+    ctx.beginPath(); ctx.arc(CX, CY, R, 0, Math.PI*2); ctx.clip();
+    ctx.fillStyle = "#0f1828"; ctx.fillRect(0,0,W,W);
+    if (tex && tex.complete) {
+      ctx.save(); ctx.translate(CX,CY); ctx.rotate(rot);
+      ctx.drawImage(tex,-R,-R,R*2,R*2); ctx.restore();
+    }
+    for (let i=1;i<=8;i++){ ctx.beginPath(); ctx.arc(CX,CY,(i/8)*R,0,Math.PI*2);
+      ctx.strokeStyle="rgba(59,130,246,.35)"; ctx.stroke(); }
+    for (let m=0;m<12;m++){ const t=m/12*Math.PI*2;
+      ctx.beginPath(); ctx.moveTo(CX,CY); ctx.lineTo(CX+R*Math.cos(t),CY+R*Math.sin(t));
+      ctx.strokeStyle="rgba(96,165,250,.45)"; ctx.stroke(); }
+    ctx.beginPath(); ctx.arc(CX,CY,6,0,Math.PI*2); ctx.fillStyle="#00ffd5"; ctx.fill();
+    TEST.forEach(([lat,lon])=>{ const u=geoToUDM(lat,lon);
+      ctx.beginPath(); ctx.arc(CX+u.x*R,CY+u.y*R,5,0,Math.PI*2);
+      ctx.fillStyle="#f59e0b"; ctx.fill(); });
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(CX,CY,R,0,Math.PI*2);
+    ctx.strokeStyle="rgba(56,189,248,.5)"; ctx.lineWidth=2; ctx.stroke();
+  }
+
+  const img = new Image();
+  img.onload = () => { tex=img; draw(); st.textContent="Ready — drag disk to rotate · texture OK"; };
+  img.onerror = () => { draw(); st.textContent="Ready — rings + points (texture optional)"; };
+  img.src = "/data/procedural/composite.png?" + Date.now();
+
+  let drag=false,lx=0;
+  c.onpointerdown = e => { drag=true; lx=e.clientX; c.setPointerCapture(e.pointerId); };
+  c.onpointerup = () => { drag=false; };
+  c.onpointermove = e => { if(!drag)return; rot+=(e.clientX-lx)*0.005; lx=e.clientX; draw(); };
+  draw();
+})();
+  </script>
+</body>
 </html>

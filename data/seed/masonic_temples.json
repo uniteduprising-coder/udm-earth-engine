@@ -1,0 +1,69 @@
+{
+  "description": "Masonic lodge and temple locations (seed set — expand via scraper)",
+  "sites": [
+    {
+      "id": "mason_louisville_320",
+      "name": "Louisville Masonic Temple (320 E Broadway)",
+      "lat": 38.2452,
+      "lon": -85.7511,
+      "lodge": "Louisville",
+      "jurisdiction": "Kentucky"
+    },
+    {
+      "id": "mason_indianapolis_525",
+      "name": "Indianapolis Scottish Rite Cathedral",
+      "lat": 39.7684,
+      "lon": -86.1581,
+      "lodge": "Indianapolis",
+      "jurisdiction": "Indiana"
+    },
+    {
+      "id": "mason_cincinnati_317",
+      "name": "Cincinnati Masonic Center",
+      "lat": 39.1031,
+      "lon": -84.512,
+      "lodge": "Cincinnati",
+      "jurisdiction": "Ohio"
+    },
+    {
+      "id": "mason_nashville_100",
+      "name": "Grand Lodge of Tennessee (Nashville)",
+      "lat": 36.1627,
+      "lon": -86.7816,
+      "lodge": "Nashville",
+      "jurisdiction": "Tennessee"
+    },
+    {
+      "id": "mason_st_louis_368",
+      "name": "St. Louis Masonic Temple",
+      "lat": 38.627,
+      "lon": -90.1994,
+      "lodge": "St. Louis",
+      "jurisdiction": "Missouri"
+    },
+    {
+      "id": "mason_newark_oh_430",
+      "name": "Newark Ohio Masonic Temple",
+      "lat": 40.0581,
+      "lon": -82.4013,
+      "lodge": "Newark",
+      "jurisdiction": "Ohio"
+    },
+    {
+      "id": "mason_kansas_city_816",
+      "name": "Kansas City Masonic Temple",
+      "lat": 39.0997,
+      "lon": -94.5786,
+      "lodge": "Kansas City",
+      "jurisdiction": "Missouri"
+    },
+    {
+      "id": "mason_philadelphia_1",
+      "name": "Grand Lodge of Pennsylvania (Philadelphia)",
+      "lat": 39.9526,
+      "lon": -75.1652,
+      "lodge": "Philadelphia",
+      "jurisdiction": "Pennsylvania"
+    }
+  ]
+}

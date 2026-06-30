@@ -1,0 +1,14 @@
+name = "udm-earth-engine"
+main = "worker/src/index.ts"
+compatibility_date = "2024-11-01"
+
+[placement]
+mode = "smart"
+
+[vars]
+SERVICE_NAME = "udm-earth-engine"
+UPSTREAM_ORIGIN = "https://earth-origin.uniteduprising.com"
+
+[[routes]]
+pattern = "earth.uniteduprising.com/*"
+zone_name = "uniteduprising.com"

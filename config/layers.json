@@ -1,0 +1,94 @@
+{
+  "layers": [
+    {
+      "id": "pyramids",
+      "label": "Pyramids",
+      "icon": "△",
+      "color": "#f59e0b",
+      "handler": "sites_kml",
+      "filter": { "structure_types": ["pyramid"], "name_contains": ["pyramid", "ziggurat", "mastaba"] },
+      "enabled": true
+    },
+    {
+      "id": "star_forts",
+      "label": "Star Forts",
+      "icon": "✦",
+      "color": "#ef4444",
+      "handler": "sites_kml",
+      "filter": {
+        "structure_types": ["named_fort", "documented_historic_fort", "unmarked_star_fort"],
+        "name_contains": ["star fort", "star-fort", "bastion"]
+      },
+      "enabled": true
+    },
+    {
+      "id": "earthworks",
+      "label": "Earthworks",
+      "icon": "◎",
+      "color": "#84cc16",
+      "handler": "sites_kml",
+      "filter": {
+        "structure_types": ["earthwork_or_mound"],
+        "geometry_types": ["Octagon", "Concentric Ridges", "Effigy", "Octagon/Circle", "Circle/Woodhenge"]
+      },
+      "enabled": true
+    },
+    {
+      "id": "mounds",
+      "label": "Mounds",
+      "icon": "⛰",
+      "color": "#a16207",
+      "handler": "sites_kml",
+      "filter": {
+        "structure_types": ["earthwork_or_mound"],
+        "name_contains": ["mound", "effigy", "serpent", "octagon"]
+      },
+      "enabled": true
+    },
+    {
+      "id": "anomalies",
+      "label": "Anomalies",
+      "icon": "◈",
+      "color": "#facc15",
+      "handler": "sites_kml",
+      "filter": {
+        "structure_types": ["anomaly_cluster_site", "unnamed_measurement"],
+        "kml_layer_labels": ["yellow_anomaly_cluster"]
+      },
+      "enabled": true
+    },
+    {
+      "id": "suppressed_events",
+      "label": "Suppressed Events / Finds",
+      "icon": "⊘",
+      "color": "#a855f7",
+      "handler": "suppressed_events",
+      "enabled": true
+    },
+    {
+      "id": "masonic_temples",
+      "label": "Masonic Temple Locations",
+      "icon": "⬡",
+      "color": "#3b82f6",
+      "handler": "masonic_temples",
+      "enabled": true
+    },
+    {
+      "id": "forensic_mc04_mc05",
+      "label": "Forensic MC-04 / MC-05",
+      "icon": "🔬",
+      "color": "#06b6d4",
+      "handler": "forensic_bridge",
+      "enabled": true
+    },
+    {
+      "id": "all_sites",
+      "label": "All Mysterious Sites",
+      "icon": "🌐",
+      "color": "#64748b",
+      "handler": "sites_kml",
+      "filter": {},
+      "enabled": true
+    }
+  ]
+}

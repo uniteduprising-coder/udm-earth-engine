@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UDM Earth — United Uprising</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/assets/earth.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>UDM Earth</h1>
+      <p>Frame-U flat projection · realtime connectors</p>
+    </div>
+    <div class="controls">
+      <label>Layer
+        <select id="layer-select"></select>
+      </label>
+      <label>Projection
+        <select id="projection-select">
+          <option value="udm_flat" selected>UDM Flat</option>
+          <option value="wgs84">WGS84 (compare)</option>
+        </select>
+      </label>
+      <label>LST <input type="range" id="lst-slider" min="0" max="24" step="0.5" value="12" /> <span id="lst-label">12:00</span></label>
+      <button id="btn-refresh" type="button">↻ Refresh</button>
+      <button id="btn-measure" type="button">📏 Measure</button>
+      <button id="btn-view" type="button">🌐 Globe</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section id="map-panel" class="panel map-panel">
+      <div id="map"></div>
+    </section>
+    <section id="globe-panel" class="panel globe-panel hidden">
+      <canvas id="globe-canvas"></canvas>
+    </section>
+    <aside class="sidebar">
+      <div class="card">
+        <h2>UDM Metrics</h2>
+        <dl id="udm-metrics">
+          <dt>W(φ)</dt><dd id="m-w">—</dd>
+          <dt>A(φ) mmHg</dt><dd id="m-a">—</dd>
+          <dt>Y coupling</dt><dd id="m-y">—</dd>
+          <dt>Bloch node</dt><dd id="m-node">−19.45°</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Realtime</h2>
+        <div id="feed-status" class="feed-list">Loading…</div>
+      </div>
+      <div class="card">
+        <h2>Selection</h2>
+        <pre id="site-detail">Click a marker</pre>
+      </div>
+      <div class="card nasa-card hidden" id="nasa-card">
+        <h2>NASA EPIC</h2>
+        <img id="nasa-epic-img" alt="Earth disc" />
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <span id="status-line">earth.uniteduprising.com · port 8790</span>
+    <span id="layer-count"></span>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="/assets/earth.js"></script>
+</body>
+</html>

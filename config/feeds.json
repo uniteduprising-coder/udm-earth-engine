@@ -1,0 +1,44 @@
+{
+  "feeds": [
+    {
+      "id": "nasa_epic_latest",
+      "name": "NASA EPIC — Earth Disc (latest)",
+      "type": "poll",
+      "handler": "nasa_epic",
+      "interval_seconds": 3600,
+      "enabled": true
+    },
+    {
+      "id": "sun_moon_ephemeris",
+      "name": "Sun / Moon Ephemeris",
+      "type": "poll",
+      "handler": "ephemeris",
+      "interval_seconds": 300,
+      "enabled": true
+    },
+    {
+      "id": "geo_stream_bridge",
+      "name": "Geo Stream Bridge (Schumann, NASA DONKI, Weather)",
+      "type": "poll",
+      "handler": "geo_stream_bridge",
+      "interval_seconds": 300,
+      "enabled": true
+    },
+    {
+      "id": "sites_layers",
+      "name": "Site Layers (KML enriched + seeds)",
+      "type": "poll",
+      "handler": "sites_layers",
+      "interval_seconds": 86400,
+      "enabled": true
+    },
+    {
+      "id": "udm_winding_grid",
+      "name": "UDM Winding Grid (render shader data)",
+      "type": "poll",
+      "handler": "udm_grid",
+      "interval_seconds": 3600,
+      "enabled": true
+    }
+  ]
+}

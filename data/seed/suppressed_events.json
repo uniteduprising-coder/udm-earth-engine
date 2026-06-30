@@ -1,0 +1,50 @@
+{
+  "description": "Suppressed events and forensic finds linked to geographic areas",
+  "sites": [
+    {
+      "id": "supp_falls_ohio_silver_creek",
+      "name": "Silver Creek star-fort — suppressed survey (MC-04)",
+      "lat": 38.285877,
+      "lon": -85.790889,
+      "thread": "MC-04",
+      "category": "suppressed_find",
+      "notes": "Falls of Ohio forensic thread — star-fort geometry under sediment lens"
+    },
+    {
+      "id": "supp_kansas_buried_steamboats",
+      "name": "Kansas buried steamboat field (MC-05)",
+      "lat": 39.0473,
+      "lon": -94.6789,
+      "thread": "MC-05",
+      "category": "suppressed_find",
+      "notes": "Sediment entombment logistics — side-scan scope pending FOIA"
+    },
+    {
+      "id": "supp_port_royal_liquefaction",
+      "name": "Port Royal liquefaction event (1692)",
+      "lat": 17.9374,
+      "lon": -76.8409,
+      "thread": "MC-05",
+      "category": "suppressed_event",
+      "notes": "Submerged capital — sediment entombment analogue"
+    },
+    {
+      "id": "supp_newark_earthworks_buried",
+      "name": "Newark earthworks — buried octagon extent",
+      "lat": 40.0407,
+      "lon": -82.4307,
+      "thread": "MC-04",
+      "category": "suppressed_find",
+      "notes": "Octagon/circle complex — impedance-matching earthwork transducer"
+    },
+    {
+      "id": "supp_corn_island_submerged",
+      "name": "Corn Island submerged structures (MC-04)",
+      "lat": 38.264378,
+      "lon": -85.771328,
+      "thread": "MC-04",
+      "category": "suppressed_find",
+      "notes": "Ohio River paleo-channel entombment"
+    }
+  ]
+}

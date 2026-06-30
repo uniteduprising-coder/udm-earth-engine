@@ -1,0 +1,188 @@
+# ============================================================
+# UDM COSMOLOGY ENGINE — udm_engine_params.yaml
+# Merged v5.2α + v5.2β. Every key tagged with provenance tier.
+#   T1 = empirically sourced (external instrument/survey)
+#   T2 = structural framework (your model's defined geometry)
+#   T3 = observational pattern match, unconfirmed
+#   T4 = simulation parameter, session-derived (inferential bridge, not measured)
+# See UDM_Master_Encyclopedia.md for full explanation and caveats.
+# ============================================================
+
+# --- CORE RADII (FULL TOROIDAL DOMAIN) — T2 -------------------------------
+r_base: 3200            # mi
+R_disk: 12500            # mi
+z_max: 700               # mi
+z_T: 3200                # mi  (below-cell apex depth, positive convention)
+R_earth: 3959            # mi  (geographic coordinate mapping reference)
+
+# --- MAGNETIC — T4 ---------------------------------------------------------
+B0: 8.2e-6                # Tesla
+M0: 8.3e-5                # T*mi^2
+B_mod_amp: 0.2
+mu0: 1.25663706212e-6     # H/m, true physical constant (T1)
+
+# --- DIELECTRIC — T4 (geometry T2) -----------------------------------------
+eps0: 8.854187817e-12     # F/m, true physical constant (T1)
+eps_disk_factor: 2.5
+eps_bump: 800
+r_iso: 57.384             # mi
+a_iso: 0.45                # mi
+sigma_theta: 0.015         # rad
+island_depth: 14           # mi
+Z_g: 2.8                   # Ohm  -- back-solved, no independent resistivity survey cited
+sigma_iso: 8.5              # S/m
+sigma_iso_depth_scale: 10   # mi
+E_crit: 1.0e3               # V/m
+
+# --- RESONANCE (LC CIRCUIT) — T4, anchored to T1 Schumann freq -------------
+C_disk: 0.044              # F
+C_iso: 0.071                # F
+C_total: 0.115               # F
+L_geo: 1.45                  # H
+L_eff: 3.5242e-4             # H  -- RESOLVED by direct calculation: 1/((2*pi*25)^2 * C_total) = 3.5242e-4 exactly.
+                              # v5.2alpha's 3.09e-4 was an arithmetic error, not an alternate value. Not ambiguous anymore.
+omega_res: 157.08             # rad/s
+f_res: 25                      # Hz  -- T1: real Schumann resonance frequency
+
+# --- ROTOR & DRAG — T4 ------------------------------------------------------
+Omega0: 2.45                  # rad/s
+Omega_max: 4.9                 # rad/s  -- derived via circular reference to Z_g/E_break, see caveat
+I_rot: 2.3e24                   # kg*m^2
+kappa: 1.2e11
+eta_shear: 0.01                  # 1/s
+P_target: 3.8                     # GW
+P_tolerance: 0.2                   # GW
+sigma_eff: 2.5e-3                   # S/m
+sigma_eff_min: 1.0e-3
+sigma_eff_max: 5.0e-3
+
+# --- UPPER HYDRO VORTEX — T4 -------------------------------------------------
+Gamma_h: 24.6                # mi^2/s
+Q_h: 0.87                      # mi^3/s -- tied to T3 sediment-band observation
+sigma_h: 2.1                    # mi
+W_h: 0.02                        # mi/s
+nu_h: 4.7e-5                       # m^2/s
+
+# --- BELOW-CELL HYDRO VORTEX — T4 (symmetry-derived from upper) --------------
+Gamma_b: 24.6                 # mi^2/s
+Q_b: -0.87                      # mi^3/s
+W_b: 0.015                        # mi/s
+nu_b: 5.9e-5                        # m^2/s  -- placeholder ratio (1.25x nu_h), flagged for CRUST1.0 replacement
+nu_b_profile: "flat"                  # TODO
+
+# --- UPPER AETHER FIELD — T4 ---------------------------------------------------
+rho0: 1.2e-6                  # kg/m^3
+Gamma_a: 227.0                  # mi^2/s
+Q_a: 0.104                        # mi^3/s
+sigma_a: 0.9                        # mi
+T_a: 5800                             # K
+R_gas: 287                              # J/(kg*K), true physical constant (T1)
+nu_a: 4.7e-5                              # m^2/s
+lambda_abs: 210                             # mi
+LUM_BETA: 3400                                # cd*s^2/mi^2
+LUM_GAMMA: 0.02
+C_d: 0.018
+
+# --- BELOW-CELL AETHER — T4 (symmetry-derived) --------------------------------
+rho_below_factor: 0.3
+glow_below_scale: 400            # mi
+nu_a_below: 5.9e-5                 # m^2/s
+
+# --- MASS EXCHANGE — T4 ----------------------------------------------------------
+Km: 0.0013                    # kg/m^3/s, "first estimate"
+Km_below: -0.0013               # kg/m^3/s, sign-flipped mirror assumption
+Km_sweep_range: 0.5               # +/-50% auto-tune sweep, NOT YET RUN
+Km_rmse_target: 0.05
+
+# --- OPTICAL / FIRMAMENT — T4, partially T1-adjacent (Schumann Q) ----------------
+n_real0: 1.00125
+n_imag0: 5.0e-5                # derived from Schumann Q~10 only, latitude dependence UNTESTED
+n_real_scale: 300                # mi
+n_imag_scale: 300                  # mi
+n_H_abs: 300                          # mi, tunable
+
+# --- AETHER WAVE (UPPER) — T1-adjacent (tied to cited 1982 lidar period) ----------
+omega_a: 0.007371             # rad/s (852s = 14.2 min)
+m_a: 4
+T_a_period_min: 14.2
+T_a_period_tol: 0.3
+
+# --- AETHER WAVE (BELOW) — T4, symmetry assumption ---------------------------------
+omega_a_below: 0.007371
+phase_shift_below: 3.14159        # rad (pi)
+m_a_below: 4
+
+# --- IMF COUPLING — LIVE FEED VERIFIED WORKING 2026-06-30 -------------------------
+# Endpoint corrected: services.swpc.noaa.gov/json/omni/hourly.json was DEAD (404).
+# Real working endpoint: services.swpc.noaa.gov/products/solar-wind/mag-1-day.json
+# Confirmed live by direct fetch 2026-06-30. See imf_hook.py companion file.
+imf_scale: 0.6                  # single empirical event (1973 Explorer-50), not a fitted constant
+imf_lowpass_hours: 3
+imf_fetch_interval: 15            # s
+
+# --- EXTERIOR VOID — T2/T4, rendering + modeling choice -------------------------------
+void_rho: 1.0e12
+void_sigma: 0.0
+void_n: 1.0e6
+void_opacity: 1.0
+
+# --- DIELECTRIC BREAKDOWN — RESOLVED PROVENANCE 2026-06-30 -----------------
+# Searched basalt dielectric breakdown literature: solid/composite basalt
+# breaks down at 330-780 kV/cm (33-78 kV/mm), an order of magnitude HIGHER
+# than 25 kV/cm. No basalt-specific source matches 25 kV/cm.
+# 25-30 kV/cm IS the standard textbook breakdown field for AIR at 1 atm.
+# This constant is almost certainly a generic air-breakdown value, not a
+# basalt-aether lab measurement as originally labeled. Kept at 25 for engine
+# continuity but reclassified: T4 generic-physics borrow, not T1 lab spec.
+E_break: 25                  # kV/cm -- see note above; verify against real basalt data before treating as material-specific
+Omega_abort: 4.9                # rad/s
+I_max: 1.0e6                      # cd
+
+# --- NUMERICS — engineering, not physics -------------------------------------------------
+theta_global_N: 512
+theta_refine_factor: 8
+CFL_max: 0.02                  # s
+DT_MACRO: 15                     # s
+multigrid_levels: 6
+r_sink: 0.01                       # mi
+r_sink_a: 0.005                      # mi
+MAX_MACRO: 5760                        # 24h simulated
+macro_reduce_threshold: 0.1
+macro_reduce_steps: 3
+
+# --- ADAPTIVE MESH REFINEMENT — NOT IMPLEMENTED ----------------------------------------
+amr_enabled: false              # header-only stub, do not enable
+amr_levels: 3
+amr_patch_size: 32
+
+# --- SPECTRAL RENDERING — engineering ---------------------------------------------------
+spectral_bins: 81
+spectral_start_nm: 380
+spectral_end_nm: 780
+spectral_step_nm: 5
+cone_L_peak: 560
+cone_M_peak: 530
+cone_S_peak: 420
+
+# --- SOURCED EMPIRICAL CONSTANTS (T1) — keep separate from engine tuning above ----------
+sidereal:
+  A_phi_amplitude: 0.1699        # mm Hg
+  A_phi_phase_deg: 70.55         # degrees, peak latitude
+  miller_k: 0.0514                  # winding constant
+  zero_crossing_lat_deg: -19.45        # degrees S
+  anti_apex_transit_ST: 16.9              # hours
+  miller_maris_alignment_error_deg: 1.5
+
+devils_backbone:
+  cox_wall_length_m: 44.97
+  cox_1873_documented_m: 45.72
+  error_pct: 1.6
+  heading_deg: 252.71
+  elevation_min_m: 182.3
+  elevation_max_m: 184.4
+  wall_depth_thickness_m: null     # NOT MEASURED -- do not backfill
+
+polar_vortex_sediment:
+  lobe_count: 4
+  status: "T3 - observational pattern match, NOT quantitatively confirmed"
+  termini: ["Labrador Sea/NAMOC", "Laptev/East Siberian Sea", "Indus Fan", "West Africa/Cape Verde"]

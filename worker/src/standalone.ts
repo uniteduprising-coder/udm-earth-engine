@@ -188,6 +188,21 @@ export default {
     if (path === "/api/observations/layers") {
       return json({ layers: OBS_LAYERS }, corsH, 300);
     }
+    if (path.startsWith("/api/encyclopedia")) {
+      const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/encyclopedia.json");
+      if (!baked) {
+        return json(
+          {
+            document: "UDM Master Encyclopedia",
+            tiers: { T1: "empirically sourced", T4: "simulation parameter" },
+            note: "Run scripts/ingest_encyclopedia.py to bake",
+          },
+          corsH,
+          120
+        );
+      }
+      return json(baked, corsH, 300);
+    }
     if (path.startsWith("/api/toroidal/")) {
       const baked = await fetchJsonRaw<Record<string, unknown>>("/data/cosmology/toroidal.json");
       if (!baked) return json({ error: "toroidal not baked" }, corsH);

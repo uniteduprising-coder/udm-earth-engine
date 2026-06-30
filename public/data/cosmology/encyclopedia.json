@@ -1,0 +1,121 @@
+{
+  "document": "UDM Master Encyclopedia",
+  "compiled": "2026-06-30",
+  "tiers": {
+    "T1": "Empirically sourced \u2014 fixed ground-truth input",
+    "T2": "Structural framework \u2014 world-model skeleton",
+    "T3": "Observational pattern match \u2014 render, flag unconfirmed",
+    "T4": "Simulation parameter \u2014 tunable, not externally validated"
+  },
+  "validation_corrected": {
+    "constants_defined_pct": 100,
+    "constants_validated_pct": "partial \u2014 4 T1-adjacent checks",
+    "checks_passing": "16/18 defined, 2 pending data (GRACE, jerk correlation run)",
+    "blocking_gaps": 0
+  },
+  "resolutions_2026_06_30": [
+    "L_eff = 3.5242e-4 H (\u03b2 correct, \u03b1 arithmetic error)",
+    "IMF live feed: NOAA SWPC mag-1-day.json verified",
+    "Geomagnetic jerk catalogue updated from published sources",
+    "E_break reclassified as T4 generic air breakdown (not basalt lab)"
+  ],
+  "sourced": {
+    "sidereal": {
+      "A_phi_amplitude": 0.1699,
+      "A_phi_phase_deg": 70.55,
+      "miller_k": 0.0514,
+      "zero_crossing_lat_deg": -19.45,
+      "anti_apex_transit_ST": 16.9,
+      "miller_maris_alignment_error_deg": 1.5
+    },
+    "devils_backbone": {
+      "cox_wall_length_m": 44.97,
+      "cox_1873_documented_m": 45.72,
+      "error_pct": 1.6,
+      "heading_deg": 252.71,
+      "elevation_min_m": 182.3,
+      "elevation_max_m": 184.4,
+      "wall_depth_thickness_m": null
+    },
+    "polar_vortex_sediment": {
+      "lobe_count": 4,
+      "status": "T3 - observational pattern match, NOT quantitatively confirmed",
+      "termini": [
+        "Labrador Sea/NAMOC",
+        "Laptev/East Siberian Sea",
+        "Indus Fan",
+        "West Africa/Cape Verde"
+      ]
+    }
+  },
+  "encyclopedia_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\docs\\UDM_Master_Encyclopedia.md",
+  "params_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\config\\udm_engine_params.yaml",
+  "ingest": {
+    "ok": true,
+    "ingested_at": "2026-06-30T19:39:57.786542+00:00",
+    "files": {
+      "encyclopedia_md": true,
+      "encyclopedia_yaml": true,
+      "geomagnetic_jerks": true
+    },
+    "imf_status": "live",
+    "imf_Bz_nT": -3.724,
+    "jerk_report_status": "PASS",
+    "km_optimal": 0.00065,
+    "validation_score": "16/18",
+    "provenance": {
+      "document": "UDM Master Encyclopedia",
+      "compiled": "2026-06-30",
+      "tiers": {
+        "T1": "Empirically sourced \u2014 fixed ground-truth input",
+        "T2": "Structural framework \u2014 world-model skeleton",
+        "T3": "Observational pattern match \u2014 render, flag unconfirmed",
+        "T4": "Simulation parameter \u2014 tunable, not externally validated"
+      },
+      "validation_corrected": {
+        "constants_defined_pct": 100,
+        "constants_validated_pct": "partial \u2014 4 T1-adjacent checks",
+        "checks_passing": "16/18 defined, 2 pending data (GRACE, jerk correlation run)",
+        "blocking_gaps": 0
+      },
+      "resolutions_2026_06_30": [
+        "L_eff = 3.5242e-4 H (\u03b2 correct, \u03b1 arithmetic error)",
+        "IMF live feed: NOAA SWPC mag-1-day.json verified",
+        "Geomagnetic jerk catalogue updated from published sources",
+        "E_break reclassified as T4 generic air breakdown (not basalt lab)"
+      ],
+      "sourced": {
+        "sidereal": {
+          "A_phi_amplitude": 0.1699,
+          "A_phi_phase_deg": 70.55,
+          "miller_k": 0.0514,
+          "zero_crossing_lat_deg": -19.45,
+          "anti_apex_transit_ST": 16.9,
+          "miller_maris_alignment_error_deg": 1.5
+        },
+        "devils_backbone": {
+          "cox_wall_length_m": 44.97,
+          "cox_1873_documented_m": 45.72,
+          "error_pct": 1.6,
+          "heading_deg": 252.71,
+          "elevation_min_m": 182.3,
+          "elevation_max_m": 184.4,
+          "wall_depth_thickness_m": null
+        },
+        "polar_vortex_sediment": {
+          "lobe_count": 4,
+          "status": "T3 - observational pattern match, NOT quantitatively confirmed",
+          "termini": [
+            "Labrador Sea/NAMOC",
+            "Laptev/East Siberian Sea",
+            "Indus Fan",
+            "West Africa/Cape Verde"
+          ]
+        }
+      },
+      "encyclopedia_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\docs\\UDM_Master_Encyclopedia.md",
+      "params_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\config\\udm_engine_params.yaml"
+    },
+    "L_eff_H": 0.00035242
+  }
+}

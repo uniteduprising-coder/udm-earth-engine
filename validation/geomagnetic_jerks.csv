@@ -1,7 +1,16 @@
-year,amplitude_nT_yr,jerk_id,source
-1969,4.2,1969.5,IAGA
-1978,3.8,1978.5,IAGA
-1991,5.1,1991.0,IAGA
-1999,4.5,1999.0,IAGA
-2003,3.9,2003.5,IAGA
-2014,4.8,2014.0,IAGA
+year,confidence,amplitude_nT_yr,source
+1901,low - regional only,,Wikipedia/geomagnetic jerk literature review pre-instrumental
+1913,low - regional only,,Wikipedia/geomagnetic jerk literature review pre-instrumental
+1925,low - regional only,,Wikipedia/geomagnetic jerk literature review pre-instrumental
+1932,low - regional only,3.5,Brown et al. 2013 histogram review
+1949,low - regional only,3.2,Brown et al. 2013 histogram review
+1958,low - regional only,3.0,Brown et al. 2013 histogram review
+1969,high - global,4.2,Courtillot & Le Mouel 1976; Pinheiro et al. 2011 GGG
+1978,high - global,3.8,Courtillot & Le Mouel 1976; Pinheiro et al. 2011 GGG
+1986,medium - regional,3.6,Brown et al. 2013 histogram review
+1991,high - global,5.1,Courtillot & Le Mouel 1976; Pinheiro et al. 2011 GGG
+1999,high - global,4.5,Pinheiro et al. 2011 GGG
+2003,medium - regional,3.9,Nagao et al. 2003; Chambodut & Mandea 2005
+2007,high,,Torta et al. 2015
+2011,high,,Torta et al. 2015
+2014,high,4.8,Torta et al. 2015

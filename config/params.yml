@@ -41,7 +41,7 @@ C_disk: 0.044
 C_iso: 0.071
 C_total: 0.115
 L_geo: 1.45
-L_eff: 3.524e-4
+L_eff: 3.5242e-4
 omega_res: 157.08
 f_res: 25
 

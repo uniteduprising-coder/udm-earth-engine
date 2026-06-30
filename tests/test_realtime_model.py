@@ -45,5 +45,5 @@ def test_control_points_minimum():
     with (MODEL_ROOT / "config" / "udm_master_plate.yaml").open(encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
     cp = build_control_points(cfg)
-    assert cp["count"] >= 12
-    assert cp["grade"] == "crude"
+    assert cp["count"] >= 48
+    assert cp["grade"] in ("usable", "strong", "forensic")

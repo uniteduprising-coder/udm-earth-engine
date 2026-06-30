@@ -15,10 +15,12 @@ from earth.realtime.disk_solver import solve_disk
 from earth.realtime.features import build_unwrapped_plate, extract_feature_edges
 from earth.realtime.grid import build_grid_geojson
 from earth.realtime.paths import CONFIG, DERIVED, LOGS, MODEL_ROOT, ensure_dirs
+from earth.realtime.publish import publish_to_public
 from earth.realtime.render import render_outputs
 from earth.realtime.sources import check_all_sources, pull_gfz_kp, pull_swpc
 from earth.realtime.transform_mesh import build_transform_mesh
 from earth.realtime.validation import run_validation
+from earth.realtime.warp import warp_live_layers
 
 
 def load_plate_config() -> dict[str, Any]:
@@ -40,7 +42,7 @@ async def run_realtime_pipeline() -> dict[str, Any]:
 
     disk = solve_disk(plate_cfg)
     grid_paths = build_grid_geojson(plate_cfg)
-    features = extract_feature_edges(plate_cfg)
+    features = extract_feature_edges(plate_cfg, disk)
     unwrap = build_unwrapped_plate(plate_cfg, disk)
     control = build_control_points(plate_cfg)
     mesh = build_transform_mesh(plate_cfg, control)
@@ -48,9 +50,10 @@ async def run_realtime_pipeline() -> dict[str, Any]:
     source_status = await check_all_sources()
     swpc = await pull_swpc()
     gfz = await pull_gfz_kp()
+    warp_result = await warp_live_layers(disk, plate_cfg)
 
     validation = run_validation(disk, control, mesh, source_status)
-    renders = render_outputs(plate_cfg, swpc, disk)
+    renders = render_outputs(plate_cfg, swpc, disk, warp_result)
 
     report = {
         "ok": True,
@@ -74,7 +77,9 @@ async def run_realtime_pipeline() -> dict[str, Any]:
         "pulls": {
             "swpc": swpc,
             "gfz_kp": gfz,
+            "warp": warp_result,
         },
+        "warp": warp_result,
         "source_status_summary": {
             name: s.get("status") if isinstance(s, dict) else s
             for name, s in source_status.get("sources", {}).items()
@@ -86,7 +91,7 @@ async def run_realtime_pipeline() -> dict[str, Any]:
                 "master_plates_missing" if not disk.get("plate_present") else None,
                 "central_zoom_plate_missing" if not (MODEL_ROOT / "plates" / plate_cfg["central_zoom_plate"]["file"]).exists() else None,
                 "feature_extraction_pending" if features["status"] != "ok" else None,
-                "atmospheric_warp_pending" if renders.get("plate_missing") else None,
+                "atmospheric_warp_pending" if not warp_result.get("layers", {}).get("geocolor", {}).get("ok") else None,
                 *control.get("missing_categories", []),
             ]
             if item
@@ -100,6 +105,8 @@ async def run_realtime_pipeline() -> dict[str, Any]:
             if isinstance(v, dict) and v.get("status") in ("stale", "offline", "blocked")
         ],
     }
+
+    report["published"] = publish_to_public(disk, report)
 
     report_path = LOGS / "latest_run_report.json"
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")

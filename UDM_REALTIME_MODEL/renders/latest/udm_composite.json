@@ -3,19 +3,20 @@
   "base": "1000083851.jpg",
   "overlays": {
     "geocolor": {
-      "status": "pending_plate_and_mesh"
+      "status": "ok",
+      "source": "nasa_gibs_viirs"
     },
     "infrared": {
-      "status": "pending_plate_and_mesh"
+      "status": "pending"
     },
     "water_vapor": {
-      "status": "pending_plate_and_mesh"
+      "status": "pending"
     }
   },
   "field": {
     "mag": {
       "ok": true,
-      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\mag_20260630T204729.json",
+      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\mag_20260630T205109.json",
       "normalized": {
         "source": "https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json",
         "key": "mag",
@@ -25,7 +26,7 @@
     },
     "plasma": {
       "ok": true,
-      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\plasma_20260630T204729.json",
+      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\plasma_20260630T205109.json",
       "normalized": {
         "source": "https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json",
         "key": "plasma"
@@ -33,7 +34,7 @@
     },
     "kp": {
       "ok": true,
-      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\kp_20260630T204729.json",
+      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\kp_20260630T205110.json",
       "normalized": {
         "source": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json",
         "key": "kp",
@@ -42,7 +43,7 @@
     },
     "aurora": {
       "ok": true,
-      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\aurora_20260630T204730.json",
+      "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\aurora_20260630T205110.json",
       "normalized": {
         "source": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
         "key": "aurora"
@@ -56,5 +57,42 @@
     ],
     "outer_radius_px_initial": 1012,
     "plate_present": true
+  },
+  "warp": {
+    "layers": {
+      "geocolor": {
+        "ok": true,
+        "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_live_geocolor.png",
+        "samples": 3013576,
+        "opacity": 0.72,
+        "provisional_mesh": true
+      },
+      "composite": {
+        "ok": true,
+        "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_composite.png"
+      }
+    },
+    "gibs_fetch": {
+      "ok": true,
+      "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\nasa_gibs\\viirs\\truecolor_20260630T205112.png",
+      "metadata": {
+        "source_name": "nasa_gibs",
+        "source_url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+        "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+        "timestamp_utc": "2026-06-30T20:51:12.719758+00:00",
+        "projection": "EPSG:4326",
+        "bbox": [
+          -180,
+          -90,
+          180,
+          90
+        ],
+        "width": 2048,
+        "height": 1024,
+        "raw_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\nasa_gibs\\viirs\\truecolor_20260630T205112.png",
+        "geometry_policy": "overlay_only"
+      }
+    },
+    "warp_mesh": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_noaa_warp_mesh.json"
   }
 }

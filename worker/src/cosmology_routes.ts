@@ -66,6 +66,20 @@ export async function handleCosmologyApi(
   if (path === "/api/observations/layers") {
     return json({ layers: OBS_LAYERS }, cors, 300);
   }
+  if (path === "/realtime" || path === "/realtime.html") {
+    const req = new Request("https://earth.uniteduprising.com/realtime.html", { method: "GET" });
+    const asset = await env.ASSETS.fetch(req);
+    return asset;
+  }
+  if (path.startsWith("/api/realtime/")) {
+    const baked = await fetchBakedJson(env, "/data/realtime/manifest.json");
+    if (path === "/api/realtime/status") return json(baked ?? { plate_lock: true }, cors, 60);
+    if (path === "/api/realtime/disk") {
+      const disk = await fetchBakedJson(env, "/data/realtime/disk.json");
+      return json(disk ?? { error: "run pipeline" }, cors, 120);
+    }
+    return json(baked ?? { error: "realtime not published" }, cors, 60);
+  }
   if (path.startsWith("/api/celestial/")) {
     const baked = await fetchBakedJson(env, "/data/cosmology/celestial_governance.json");
     if (!baked) {

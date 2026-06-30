@@ -1,0 +1,113 @@
+{
+  "plate_lock": true,
+  "viewer": "/realtime",
+  "assets": {
+    "composite.png": "/data/realtime/composite.png",
+    "geocolor.png": "/data/realtime/geocolor.png",
+    "base_plate.jpg": "/data/realtime/base_plate.jpg",
+    "unwrapped.png": "/data/realtime/unwrapped.png",
+    "central_zoom.jpg": "/data/realtime/central_zoom.jpg",
+    "disk.json": "/data/realtime/disk.json",
+    "spaceweather.json": "/data/realtime/spaceweather.json",
+    "report.json": "/data/realtime/report.json"
+  },
+  "disk": {
+    "solved_at": "2026-06-30T20:51:01.195111+00:00",
+    "plate_lock": true,
+    "plate_file": "1000083851.jpg",
+    "plate_present": true,
+    "center_px_initial": [
+      1024,
+      1022
+    ],
+    "outer_radius_px_initial": 1012,
+    "center_px_refined": [
+      1023.6,
+      1022.0
+    ],
+    "outer_radius_px_refined": 1011.6,
+    "refinement_reason": "centroid_and_r98_from_plate",
+    "rim_thickness_px_estimate": null,
+    "edge_falloff": null,
+    "cx": 1024.0,
+    "cy": 1022.0,
+    "r_outer": 1012.0,
+    "width_px": 2048,
+    "height_px": 2044,
+    "center_shift_px": 0.43,
+    "rim_mean_brightness": 144.92,
+    "image_size": [
+      2048,
+      2044
+    ]
+  },
+  "report_summary": {
+    "control_grade": "forensic",
+    "validation": {
+      "total": 7,
+      "passed": 7,
+      "checks": [
+        {
+          "id": "plate_lock",
+          "name": "Plate lock preserved",
+          "passed": true,
+          "status": "PASS"
+        },
+        {
+          "id": "center",
+          "name": "North Axis Aperture at center",
+          "passed": true,
+          "status": "PASS",
+          "initial": [
+            1024,
+            1022
+          ],
+          "refined": [
+            1023.6,
+            1022.0
+          ]
+        },
+        {
+          "id": "equator_ring",
+          "name": "Equator Bloch Wall ring at rho=0.5",
+          "passed": true,
+          "status": "PASS",
+          "note": "ring generated; alignment residuals not forced"
+        },
+        {
+          "id": "control_points",
+          "name": "Control point count",
+          "passed": true,
+          "status": "PASS",
+          "count": 437,
+          "grade": "forensic"
+        },
+        {
+          "id": "transform_error",
+          "name": "Transform mesh pixel error",
+          "passed": true,
+          "status": "PASS",
+          "avg_px_error": 0.0,
+          "provisional": true
+        },
+        {
+          "id": "source_health",
+          "name": "Source health",
+          "passed": true,
+          "status": "PASS",
+          "online_count": 6
+        },
+        {
+          "id": "udm_compatibility",
+          "name": "UDM math compatibility (additive overlays only)",
+          "passed": true,
+          "status": "PASS",
+          "jupiter_enabled": false,
+          "saturn_governor": true
+        }
+      ],
+      "plate_lock_preserved": true
+    },
+    "needs_manual_review": []
+  }
+}

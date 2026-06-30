@@ -1,0 +1,4 @@
+{
+  "source": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
+  "key": "aurora"
+}

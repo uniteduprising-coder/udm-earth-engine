@@ -1,0 +1,70 @@
+# PURPOSE: This file distributes the geomagnetic planetary three-hour index Kp and associated geomagnetic indices as well as relevant solar indices.
+# LICENSE: CC BY 4.0, except for the sunspot numbers contained in this file, which have the CC BY-NC 4.0 license
+# SOURCE: Geomagnetic Observatory Niemegk, GFZ Helmholtz Centre for Geosciences
+# PLEASE CITE: Matzka, J., Stolle, C., Yamazaki, Y., Bronkalla, O. and Morschhauser, A., 2021. The geomagnetic Kp index 
+# and derived indices of geomagnetic activity. Space Weather, https://doi.org/10.1029/2020SW002641
+#
+# Kp, ap and Ap
+# The three-hourly equivalent planetary amplitude ap is derived from Kp and the daily equivalent planetary amplitude Ap is the daily mean of ap.
+# Kp is unitless. Ap and ap are unitless and can be multiplied by 2 nT to yield the average geomagnetic disturbance at 50 degree geomagnetic latitude.
+# Kp, ap and Ap were introduced by Bartels (1949, 1957) and are produced by Geomagnetic Observatory Niemegk, GFZ Helmholtz Centre for Geosciences.
+# Described in: Matzka et al. (2021), see reference above.
+# Data publication: Matzka, J., Bronkalla, O., Tornow, K., Elger, K. and Stolle, C., 2021. Geomagnetic Kp index. V. 1.0. GFZ Data Services, 
+# https://doi.org/10.5880/Kp.0001
+# Note: the most recent values are nowcast values and will be replaced by definitive values as soon as they become available.
+# 
+# International Sunspot Number SN
+# The international sunspot number SN (written with subscript N) is given as the daily total sunspot number version 2.0 introduced in 2015.
+# The sunspot data is available under the licence CC BY-NC 4.0 from WDC-SILSO, Royal Observatory of Belgium, Brussels. Described in:
+# Clette, F., Lefevre, L., 2016. The New Sunspot Number: assembling all corrections. Solar Physics, 291, https://doi.org/10.1007/s11207-016-1014-y 
+# Note: the most recent values are preliminary and replaced by definitive values as soon as they become available.
+#
+# F10.7 Solar Radio Flux
+# Local noon-time observed (F10.7obs) and adjusted (F10.7adj) solar radio flux F10.7 in s.f.u. (10^-22 W m^-2 Hz^-1) is provided by 
+# Dominion Radio Astrophysical Observatory and Natural Resources Canada.
+# Described in: Tapping, K.F., 2013. The 10.7 cm solar radio flux (F10.7). Space Weather, 11, 394-406, https://doi.org/10.1002/swe.20064 
+# Note: For ionospheric and atmospheric studies the use of F10.7obs is recommended.
+# 
+# Short file description (for a detailed file description, see Kp_ap_Ap_SN_F107_format.txt):
+# 40 header lines, all starting with #
+# ASCII, blank separated and fixed length, missing data indicated by -1.000 for Kp, -1 for ap and SN, -1.0 for F10.7
+# YYYY MM DD is date of UT day, days is days since 1932-01-01 00:00 UT to start of UT day, days_m is days since 1932-01-01 00:00 UT to midday of UT day
+# BSR is Bartels solar rotation number, dB is day within BSR 
+# Kp1 to Kp8 (Kp for the eight eighth of the UT day), ap1 to ap8 (ap for the eight eighth of the UT day), Ap, SN, F10.7obs, F10.7adj
+# D indicates if the Kp and SN values are definitive or preliminary. D=0: Kp and SN preliminary; D=1: Kp definitive, SN preliminary; D=2 Kp and SN definitive
+#
+#
+# The format for each line is (i stands for integer, f for float):
+#iii ii ii iiiii fffff.f iiii ii ff.fff ff.fff ff.fff ff.fff ff.fff ff.fff ff.fff ff.fff iiii iiii iiii iiii iiii iiii iiii iiii  iiii iii ffffff.f ffffff.f i
+# The parameters in each line are:
+#YYY MM DD  days  days_m  Bsr dB    Kp1    Kp2    Kp3    Kp4    Kp5    Kp6    Kp7    Kp8  ap1  ap2  ap3  ap4  ap5  ap6  ap7  ap8    Ap  SN F10.7obs F10.7adj D
+2026 06 01 34485 34485.5 2629 16  1.333  1.000  1.333  1.333  2.667  3.000  2.333  1.333    5    4    5    5   12   15    9    5     8 116    131.9    135.6 0
+2026 06 02 34486 34486.5 2629 17  2.333  1.667  1.333  1.000  1.333  1.000  2.333  1.667    9    6    5    4    5    4    9    6     6 127    146.1    150.3 0
+2026 06 03 34487 34487.5 2629 18  2.667  2.333  1.667  2.000  1.333  2.000  2.333  3.000   12    9    6    7    5    7    9   15     9 142    146.8    151.0 0
+2026 06 04 34488 34488.5 2629 19  2.667  2.333  0.333  0.333  1.667  1.000  0.333  1.000   12    9    2    2    6    4    2    4     5 150    147.9    152.2 0
+2026 06 05 34489 34489.5 2629 20  1.000  3.000  1.667  2.667  5.333  6.333  5.000  5.000    4   15    6   12   56   94   48   48    35 147    140.5    144.6 0
+2026 06 06 34490 34490.5 2629 21  4.667  3.667  4.333  2.667  3.667  2.667  1.667  2.333   39   22   32   12   22   12    6    9    19 154    137.9    141.9 0
+2026 06 07 34491 34491.5 2629 22  2.667  1.667  1.667  2.333  1.333  2.000  0.667  1.667   12    6    6    9    5    7    3    6     7 148    134.2    138.2 0
+2026 06 08 34492 34492.5 2629 23  1.000  2.000  2.333  2.333  2.667  1.333  1.333  1.667    4    7    9    9   12    5    5    6     7 149    130.7    134.7 0
+2026 06 09 34493 34493.5 2629 24  2.000  2.333  1.667  2.000  2.667  3.667  3.333  2.667    7    9    6    7   12   22   18   12    12 132    129.5    133.5 0
+2026 06 10 34494 34494.5 2629 25  1.667  1.000  1.000  2.667  2.667  1.667  1.333  1.333    6    4    4   12   12    6    5    5     7 113    124.0    127.8 0
+2026 06 11 34495 34495.5 2629 26  0.667  2.333  3.333  3.000  2.667  2.333  5.000  4.000    3    9   18   15   12    9   48   27    18  93    127.4    131.4 0
+2026 06 12 34496 34496.5 2629 27  3.000  3.333  3.667  3.000  3.000  1.667  2.000  2.667   15   18   22   15   15    6    7   12    14  79    128.3    132.3 0
+2026 06 13 34497 34497.5 2630  1  3.000  3.000  2.333  2.667  2.667  2.333  3.667  2.333   15   15    9   12   12    9   22    9    13  52    121.5    125.3 0
+2026 06 14 34498 34498.5 2630  2  2.000  1.667  1.333  2.000  1.333  1.333  1.333  1.333    7    6    5    7    5    5    5    5     6  67    127.6    131.6 0
+2026 06 15 34499 34499.5 2630  3  1.667  1.000  1.000  0.667  0.667  0.333  1.333  1.667    6    4    4    3    3    2    5    6     4  75    117.0    120.7 0
+2026 06 16 34500 34500.5 2630  4  2.000  1.333  1.000  1.000  2.333  2.333  2.000  0.667    7    5    4    4    9    9    7    3     6  79    112.8    116.4 0
+2026 06 17 34501 34501.5 2630  5  1.333  1.333  2.000  2.333  2.000  1.333  0.333  1.000    5    5    7    9    7    5    2    4     6  61    110.5    114.1 0
+2026 06 18 34502 34502.5 2630  6  2.000  1.000  0.667  0.667  1.333  1.333  1.667  2.667    7    4    3    3    5    5    6   12     6  58    110.7    114.3 0
+2026 06 19 34503 34503.5 2630  7  3.000  2.333  1.000  1.667  1.333  0.667  1.000  1.667   15    9    4    6    5    3    4    6     6  68    110.8    114.3 0
+2026 06 20 34504 34504.5 2630  8  2.667  1.667  1.667  1.333  2.000  1.667  1.667  1.333   12    6    6    5    7    6    6    5     7  85    112.5    116.2 0
+2026 06 21 34505 34505.5 2630  9  1.333  1.333  1.000  0.667  0.667  1.000  1.333  1.000    5    5    4    3    3    4    5    4     4  68    128.0    132.2 0
+2026 06 22 34506 34506.5 2630 10  1.000  0.667  0.333  1.333  1.333  1.000  2.000  2.000    4    3    2    5    5    4    7    7     5  76    121.5    125.5 0
+2026 06 23 34507 34507.5 2630 11  1.000  0.333  0.333  1.333  3.000  3.000  2.000  1.000    4    2    2    5   15   15    7    4     7  85    130.4    134.7 0
+2026 06 24 34508 34508.5 2630 12  2.000  2.000  2.667  3.000  2.667  3.000  3.000  3.667    7    7   12   15   12   15   15   22    13  99    137.4    141.9 0
+2026 06 25 34509 34509.5 2630 13  4.000  5.000  3.667  2.333  3.667  3.000  4.000  3.000   27   48   22    9   22   15   27   15    23  95    155.9    161.1 0
+2026 06 26 34510 34510.5 2630 14  3.333  2.333  2.333  0.667  2.333  3.000  3.000  2.667   18    9    9    3    9   15   15   12    11 116    162.7    168.1 0
+2026 06 27 34511 34511.5 2630 15  2.667  1.667  1.333  0.667  1.333  1.333  1.000  1.667   12    6    5    3    5    5    4    6     6 126    187.9    194.1 0
+2026 06 28 34512 34512.5 2630 16  1.667  1.667  0.667  1.000  0.333  0.333  0.333  1.333    6    6    3    4    2    2    2    5     4 149    186.1    192.3 0
+2026 06 29 34513 34513.5 2630 17  1.000  0.667  0.667  0.667  0.667  0.333  0.333  0.667    4    3    3    3    3    2    2    3     3 149    195.4    201.9 0
+2026 06 30 34514 34514.5 2630 18  0.333  0.333  0.667  4.000  3.333  4.667  4.000 -1.000    2    2    3   27   18   39   27   -1    -1 136     -1.0     -1.0 0

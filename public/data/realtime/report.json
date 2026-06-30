@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "started_at": "2026-06-30T20:51:01.195111+00:00",
-  "finished_at": "2026-06-30T20:51:40.733980+00:00",
+  "started_at": "2026-06-30T20:47:19.765562+00:00",
+  "finished_at": "2026-06-30T20:47:30.976572+00:00",
   "model_root": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL",
   "plate_lock_preserved": true,
   "plates_present": {
@@ -11,7 +11,7 @@
   "derived": {
     "disk_solution": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_disk_solution.json",
     "control_points": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_control_points.csv",
-    "control_grade": "forensic",
+    "control_grade": "crude",
     "mesh_nodes": 325,
     "meridians": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_meridians.geojson",
     "parallels": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_parallels.geojson",
@@ -29,11 +29,11 @@
   },
   "pulls": {
     "swpc": {
-      "pulled_at": "2026-06-30T20:51:09.347015+00:00",
+      "pulled_at": "2026-06-30T20:47:29.236151+00:00",
       "files": {
         "mag": {
           "ok": true,
-          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\mag_20260630T205109.json",
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\mag_20260630T204729.json",
           "normalized": {
             "source": "https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json",
             "key": "mag",
@@ -43,7 +43,7 @@
         },
         "plasma": {
           "ok": true,
-          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\plasma_20260630T205109.json",
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\plasma_20260630T204729.json",
           "normalized": {
             "source": "https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json",
             "key": "plasma"
@@ -51,7 +51,7 @@
         },
         "kp": {
           "ok": true,
-          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\kp_20260630T205110.json",
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\kp_20260630T204729.json",
           "normalized": {
             "source": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json",
             "key": "kp",
@@ -60,7 +60,7 @@
         },
         "aurora": {
           "ok": true,
-          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\aurora_20260630T205110.json",
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\aurora_20260630T204730.json",
           "normalized": {
             "source": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
             "key": "aurora"
@@ -72,81 +72,7 @@
       "ok": true,
       "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\gfz_kp\\kp_nowcast_20260630.txt",
       "lines": 70
-    },
-    "warp": {
-      "layers": {
-        "geocolor": {
-          "ok": true,
-          "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_live_geocolor.png",
-          "samples": 3013576,
-          "opacity": 0.72,
-          "provisional_mesh": true
-        },
-        "composite": {
-          "ok": true,
-          "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_composite.png"
-        }
-      },
-      "gibs_fetch": {
-        "ok": true,
-        "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\nasa_gibs\\viirs\\truecolor_20260630T205112.png",
-        "metadata": {
-          "source_name": "nasa_gibs",
-          "source_url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
-          "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
-          "timestamp_utc": "2026-06-30T20:51:12.719758+00:00",
-          "projection": "EPSG:4326",
-          "bbox": [
-            -180,
-            -90,
-            180,
-            90
-          ],
-          "width": 2048,
-          "height": 1024,
-          "raw_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\nasa_gibs\\viirs\\truecolor_20260630T205112.png",
-          "geometry_policy": "overlay_only"
-        }
-      },
-      "warp_mesh": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_noaa_warp_mesh.json"
     }
-  },
-  "warp": {
-    "layers": {
-      "geocolor": {
-        "ok": true,
-        "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_live_geocolor.png",
-        "samples": 3013576,
-        "opacity": 0.72,
-        "provisional_mesh": true
-      },
-      "composite": {
-        "ok": true,
-        "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_composite.png"
-      }
-    },
-    "gibs_fetch": {
-      "ok": true,
-      "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\nasa_gibs\\viirs\\truecolor_20260630T205112.png",
-      "metadata": {
-        "source_name": "nasa_gibs",
-        "source_url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
-        "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
-        "timestamp_utc": "2026-06-30T20:51:12.719758+00:00",
-        "projection": "EPSG:4326",
-        "bbox": [
-          -180,
-          -90,
-          180,
-          90
-        ],
-        "width": 2048,
-        "height": 1024,
-        "raw_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\nasa_gibs\\viirs\\truecolor_20260630T205112.png",
-        "geometry_policy": "overlay_only"
-      }
-    },
-    "warp_mesh": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_noaa_warp_mesh.json"
   },
   "source_status_summary": {
     "noaa_nesdis_earth_realtime": "online",
@@ -195,8 +121,8 @@
         "name": "Control point count",
         "passed": true,
         "status": "PASS",
-        "count": 437,
-        "grade": "forensic"
+        "count": 12,
+        "grade": "crude"
       },
       {
         "id": "transform_error",
@@ -225,27 +151,20 @@
     "plate_lock_preserved": true
   },
   "renders": {
-    "rendered_at": "2026-06-30T20:51:40.718330+00:00",
+    "rendered_at": "2026-06-30T20:47:30.967035+00:00",
     "files": {
       "spaceweather": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_live_spaceweather.json",
       "base_plate_ref": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_base_plate_ref.jpg",
-      "geocolor": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_live_geocolor.png",
-      "composite_png": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_composite.png",
       "composite_manifest": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_composite.json"
     }
   },
-  "needs_manual_review": [],
+  "needs_manual_review": [
+    "feature_extraction_pending",
+    "fourfold_central_island_divisions",
+    "mid_ocean_ridge_intersections",
+    "vortex_arm_intersections",
+    "forensic_bathymetry_locks"
+  ],
   "failed": [],
-  "stale": [],
-  "published": {
-    "composite.png": "/data/realtime/composite.png",
-    "geocolor.png": "/data/realtime/geocolor.png",
-    "base_plate.jpg": "/data/realtime/base_plate.jpg",
-    "unwrapped.png": "/data/realtime/unwrapped.png",
-    "central_zoom.jpg": "/data/realtime/central_zoom.jpg",
-    "disk.json": "/data/realtime/disk.json",
-    "spaceweather.json": "/data/realtime/spaceweather.json",
-    "report.json": "/data/realtime/report.json",
-    "manifest": "/data/realtime/manifest.json"
-  }
+  "stale": []
 }

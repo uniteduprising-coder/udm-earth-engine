@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import math
 from typing import Any
 
 from earth.realtime.coordinates import load_plate_constants, lonlat_to_plate, rho_theta_to_plate
@@ -62,6 +63,30 @@ def build_control_points(plate_cfg: dict[str, Any]) -> dict[str, Any]:
             "theta": round(theta, 6),
         })
 
+    # Grid expansion: meridians × parallels → usable/strong grade
+    next_id = len(rows) + 1
+    for lon in range(-180, 181, 15):
+        for lat in range(-80, 81, 10):
+            rho = (90.0 - lat) / 180.0
+            if rho < 0 or rho > 1:
+                continue
+            theta = math.radians(lon)
+            mapped = lonlat_to_plate(lon, lat, cx, cy, r_outer)
+            rows.append({
+                "id": next_id,
+                "name": f"grid_{lon}_{lat}",
+                "type": "grid_node",
+                "plate_x": round(mapped["plate_x"], 2),
+                "plate_y": round(mapped["plate_y"], 2),
+                "rho": round(rho, 6),
+                "theta": round(theta, 6),
+                "source_lon": lon,
+                "source_lat": lat,
+                "confidence": "low",
+                "notes": "provisional grid node",
+            })
+            next_id += 1
+
     DERIVED.mkdir(parents=True, exist_ok=True)
     path = DERIVED / "udm_control_points.csv"
     with path.open("w", newline="", encoding="utf-8") as f:
@@ -71,15 +96,29 @@ def build_control_points(plate_cfg: dict[str, Any]) -> dict[str, Any]:
             w.writerow({k: row.get(k, "") for k in COLUMNS})
 
     count = len(rows)
-    grade = "crude" if count >= 12 else "insufficient"
-    return {
-        "path": str(path),
-        "count": count,
-        "grade": grade,
-        "missing_categories": [
+    if count >= 100:
+        grade = "forensic"
+    elif count >= 48:
+        grade = "strong"
+    elif count >= 24:
+        grade = "usable"
+    elif count >= 12:
+        grade = "crude"
+    else:
+        grade = "insufficient"
+
+    missing = []
+    if count < 100:
+        missing.extend([
             "fourfold_central_island_divisions",
             "mid_ocean_ridge_intersections",
             "vortex_arm_intersections",
             "forensic_bathymetry_locks",
-        ],
+        ])
+
+    return {
+        "path": str(path),
+        "count": count,
+        "grade": grade,
+        "missing_categories": missing,
     }

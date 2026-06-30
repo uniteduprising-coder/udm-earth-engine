@@ -87,6 +87,13 @@ def create_app() -> FastAPI:
             return FileResponse(path)
         return {"service": "udm-earth-engine", "embed": True}
 
+    @app.get("/realtime")
+    async def realtime_viewer():
+        path = public / "realtime.html"
+        if path.exists():
+            return FileResponse(path)
+        return {"service": "udm-earth-engine", "realtime": "public/realtime.html missing"}
+
     return app
 
 

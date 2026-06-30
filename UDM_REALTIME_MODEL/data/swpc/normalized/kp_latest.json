@@ -1,0 +1,5 @@
+{
+  "source": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json",
+  "key": "kp",
+  "kp": "-1.82"
+}

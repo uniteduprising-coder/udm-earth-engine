@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UDM Real-Time Earth Model</title>
+  <link rel="stylesheet" href="/assets/realtime.css" />
+</head>
+<body>
+  <header class="rt-header">
+    <div>
+      <h1>UDM Real-Time Earth Model</h1>
+      <p id="rt-sub">Plate-locked master geometry · live overlays only</p>
+    </div>
+    <div class="rt-actions">
+      <button id="btn-refresh" type="button">Refresh pipeline</button>
+      <a href="/" class="rt-link">← Atlas map</a>
+    </div>
+  </header>
+
+  <main class="rt-layout">
+    <section class="rt-viewer">
+      <div class="rt-canvas-wrap">
+        <img id="rt-composite" alt="UDM composite" src="/data/realtime/composite.png" />
+        <img id="rt-base" class="hidden" alt="Base plate" src="/data/realtime/base_plate.jpg" />
+        <img id="rt-geocolor" class="hidden" alt="GeoColor overlay" src="/data/realtime/geocolor.png" />
+      </div>
+      <div class="rt-layers">
+        <label><input type="radio" name="view" value="composite" checked /> Composite</label>
+        <label><input type="radio" name="view" value="base" /> Master plate</label>
+        <label><input type="radio" name="view" value="geocolor" /> VIIRS overlay</label>
+        <label><input type="radio" name="view" value="central" /> Central zoom</label>
+        <label><input type="radio" name="view" value="unwrapped" /> Polar unwrap</label>
+      </div>
+    </section>
+
+    <aside class="rt-sidebar">
+      <div class="rt-card">
+        <h2>Plate lock</h2>
+        <div id="rt-disk" class="rt-mono">Loading…</div>
+      </div>
+      <div class="rt-card">
+        <h2>Space weather</h2>
+        <div id="rt-swpc" class="rt-mono">Loading…</div>
+      </div>
+      <div class="rt-card">
+        <h2>Pipeline</h2>
+        <div id="rt-report" class="rt-mono">Loading…</div>
+      </div>
+      <div class="rt-card">
+        <h2>Sources</h2>
+        <div id="rt-sources" class="rt-mono">Loading…</div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="rt-footer">
+    <span id="rt-status">Ready</span>
+  </footer>
+
+  <script src="/assets/realtime.js" defer></script>
+</body>
+</html>

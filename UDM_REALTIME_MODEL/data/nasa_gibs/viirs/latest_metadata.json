@@ -1,0 +1,17 @@
+{
+  "source_name": "nasa_gibs",
+  "source_url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+  "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+  "timestamp_utc": "2026-06-30T20:51:12.719758+00:00",
+  "projection": "EPSG:4326",
+  "bbox": [
+    -180,
+    -90,
+    180,
+    90
+  ],
+  "width": 2048,
+  "height": 1024,
+  "raw_path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\nasa_gibs\\viirs\\truecolor_20260630T205112.png",
+  "geometry_policy": "overlay_only"
+}

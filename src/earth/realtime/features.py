@@ -1,36 +1,88 @@
-"""Step 2–3: Feature edges and polar unwrap (plate-dependent)."""
+"""Step 2–3: Feature edges and polar unwrap."""
 
 from __future__ import annotations
 
 import json
-from pathlib import Path
+import math
 from typing import Any
 
 from earth.realtime.coordinates import load_plate_constants
 from earth.realtime.paths import DERIVED, PLATES
 
 
-def extract_feature_edges(plate_cfg: dict[str, Any]) -> dict[str, Any]:
-    disk = plate_cfg["full_disk_plate"]
-    path = PLATES / disk["file"]
-    geojson = {
+def extract_feature_edges(plate_cfg: dict[str, Any], disk: dict[str, Any] | None = None) -> dict[str, Any]:
+    disk = disk or {}
+    disk_file = plate_cfg["full_disk_plate"]
+    path = PLATES / disk_file["file"]
+
+    geojson: dict[str, Any] = {
         "type": "FeatureCollection",
         "features": [],
-        "metadata": {
-            "status": "scaffold",
-            "note": "Edge detection requires master plate + Pillow/OpenCV pass",
-        },
+        "metadata": {"status": "needs_manual_review", "plate": disk_file["file"]},
     }
-    if path.exists():
-        geojson["metadata"]["status"] = "pending_extraction"
-        geojson["metadata"]["plate"] = disk["file"]
-    else:
-        geojson["metadata"]["status"] = "needs_manual_review"
+
+    if not path.exists():
+        DERIVED.mkdir(parents=True, exist_ok=True)
+        out = DERIVED / "udm_feature_edges.geojson"
+        out.write_text(json.dumps(geojson, indent=2), encoding="utf-8")
+        return {"path": str(out), "feature_count": 0, "status": "needs_manual_review"}
+
+    try:
+        from PIL import Image, ImageFilter
+
+        c = load_plate_constants(plate_cfg)
+        if disk.get("center_px_refined"):
+            c["cx"] = float(disk["center_px_refined"][0])
+            c["cy"] = float(disk["center_px_refined"][1])
+            c["r_outer"] = float(disk.get("outer_radius_px_refined", c["r_outer"]))
+
+        img = Image.open(path).convert("L")
+        edges = img.filter(ImageFilter.FIND_EDGES)
+        ep = edges.load()
+        w, h = edges.size
+        cx, cy, r_outer = c["cx"], c["cy"], c["r_outer"]
+
+        # Sample edge points within disk (stride for performance)
+        coords: list[list[float]] = []
+        stride = 6
+        for y in range(0, h, stride):
+            for x in range(0, w, stride):
+                dx, dy = x - cx, cy - y
+                if math.hypot(dx, dy) > r_outer:
+                    continue
+                if ep[x, y] > 40:
+                    coords.append([float(x), float(y)])
+
+        # Downsample to max 2000 points for GeoJSON size
+        if len(coords) > 2000:
+            step = len(coords) // 2000
+            coords = coords[::step]
+
+        if coords:
+            geojson["features"].append({
+                "type": "Feature",
+                "properties": {"type": "bathymetric_edge_sample", "count": len(coords)},
+                "geometry": {"type": "MultiPoint", "coordinates": coords},
+            })
+
+        geojson["metadata"] = {
+            "status": "ok",
+            "plate": disk_file["file"],
+            "edge_points": len(coords),
+            "method": "pillow_find_edges",
+        }
+    except ImportError:
+        geojson["metadata"]["status"] = "pillow_required"
 
     DERIVED.mkdir(parents=True, exist_ok=True)
     out = DERIVED / "udm_feature_edges.geojson"
     out.write_text(json.dumps(geojson, indent=2), encoding="utf-8")
-    return {"path": str(out), "feature_count": 0, "status": geojson["metadata"]["status"]}
+    return {
+        "path": str(out),
+        "feature_count": len(geojson["features"]),
+        "status": geojson["metadata"]["status"],
+        "edge_points": geojson["metadata"].get("edge_points", 0),
+    }
 
 
 def build_unwrapped_plate(plate_cfg: dict[str, Any], disk_solution: dict[str, Any]) -> dict[str, Any]:
@@ -42,9 +94,13 @@ def build_unwrapped_plate(plate_cfg: dict[str, Any], disk_solution: dict[str, An
 
     try:
         from PIL import Image
-        import math
 
         c = load_plate_constants(plate_cfg)
+        if disk_solution.get("center_px_refined"):
+            c["cx"] = float(disk_solution["center_px_refined"][0])
+            c["cy"] = float(disk_solution["center_px_refined"][1])
+            c["r_outer"] = float(disk_solution.get("outer_radius_px_refined", c["r_outer"]))
+
         img = Image.open(path).convert("RGB")
         w_out, h_out = 720, 360
         unwrapped = Image.new("RGB", (w_out, h_out))

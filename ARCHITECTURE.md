@@ -1,32 +1,33 @@
-# UDM Earth Engine — Architecture Map
+# UDM Earth Engine — Edge Architecture
 
-| Path | Layer | Description |
-|------|-------|-------------|
-| `src/earth/main.py` | entry | FastAPI + scheduler + static UI |
-| `src/earth/projection/udm.py` | core | W(φ) flat projection math |
-| `src/earth/api/routes.py` | api | layers, feeds, refresh, projection |
-| `src/earth/handlers/` | adapter | NASA EPIC, ephemeris, KML layers, geo bridge |
-| `config/layers.json` | data | Layer dropdown registry |
-| `config/feeds.json` | data | Poll feed registry |
-| `frontend/` | ui | Leaflet map + Three.js globe |
-| `worker/` | edge | CF Worker → `earth.uniteduprising.com` |
-
-## Ports & Subdomain
-
-| Env | URL |
-|-----|-----|
-| Local | `http://127.0.0.1:8790` |
-| Production | `https://earth.uniteduprising.com` |
-
-## Data Flow
+## User hot path (zero bottleneck)
 
 ```
-Startup / POST /v1/refresh → handlers.fetch() → data/cache/*.json
-UI → GET /v1/layer/{id} → GeoJSON with UDM-corrected coordinates
-Enki connector → same API + /embed iframe
+Browser
+  ├─ GET /                    → static HTML (edge)
+  ├─ GET /data/manifest.json  → layer menu (5 min cache)
+  ├─ GET /data/layers/{id}.json → compact sites (24h immutable)
+  ├─ UDM projection           → 100% client-side
+  └─ GET /api/live/*          → async after map visible
 ```
 
-## Enki Integration
+## Why this is fast
 
-- `connectors/earth_connector.py` in Enki desktop repo
-- Launch: Enki desktop UDM tab · Terminal Agent toolbar · Mission Control tile
+1. **No per-click API** — layer switch uses in-memory cache
+2. **No Python on request path** — bake runs in CI or manually
+3. **Canvas map** — `preferCanvas: true` for hundreds of markers
+4. **Prefetch** — idle-time loads remaining layers
+5. **LST slider** — debounced client re-project only
+
+## Repo layout
+
+| Path | Role |
+|------|------|
+| `public/` | Cloudflare static assets (UI + baked data) |
+| `scripts/bake_atlas.py` | KML → compact JSON |
+| `worker/` | Edge API (live feeds only) |
+| `src/earth/` | Optional Python ingest (off hot path) |
+
+## Deploy
+
+`git push` → GitHub Actions → `bake_atlas.py` → `wrangler deploy` → `earth.uniteduprising.com`

@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "built_at": "2026-06-30T17:35:33.657328+00:00",
+  "projection": "udm_flat_client",
+  "constants": {
+    "PHI_WIND_DEG": 70.55,
+    "PHI_NODE_DEG": -19.45,
+    "ALPHA_ANTI_H": 16.9,
+    "KAPPA": 0.0514
+  },
+  "layers": [
+    {
+      "id": "pyramids",
+      "label": "Pyramids",
+      "icon": "\u25b3",
+      "color": "#f59e0b",
+      "count": 4
+    },
+    {
+      "id": "star_forts",
+      "label": "Star Forts",
+      "icon": "\u2726",
+      "color": "#ef4444",
+      "count": 327
+    },
+    {
+      "id": "earthworks",
+      "label": "Earthworks",
+      "icon": "\u25ce",
+      "color": "#84cc16",
+      "count": 116
+    },
+    {
+      "id": "mounds",
+      "label": "Mounds",
+      "icon": "\u26f0",
+      "color": "#a16207",
+      "count": 116
+    },
+    {
+      "id": "anomalies",
+      "label": "Anomalies",
+      "icon": "\u25c8",
+      "color": "#facc15",
+      "count": 24
+    },
+    {
+      "id": "suppressed_events",
+      "label": "Suppressed Events / Finds",
+      "icon": "\u2298",
+      "color": "#a855f7",
+      "count": 5
+    },
+    {
+      "id": "masonic_temples",
+      "label": "Masonic Temple Locations",
+      "icon": "\u2b21",
+      "color": "#3b82f6",
+      "count": 8
+    },
+    {
+      "id": "forensic_mc04_mc05",
+      "label": "Forensic MC-04 / MC-05",
+      "icon": "\ud83d\udd2c",
+      "color": "#06b6d4",
+      "count": 12
+    },
+    {
+      "id": "all_sites",
+      "label": "All Mysterious Sites",
+      "icon": "\ud83c\udf10",
+      "color": "#64748b",
+      "count": 1221
+    }
+  ],
+  "totals": {
+    "pyramids": 4,
+    "star_forts": 327,
+    "earthworks": 116,
+    "mounds": 116,
+    "anomalies": 24,
+    "suppressed_events": 5,
+    "masonic_temples": 8,
+    "forensic_mc04_mc05": 12,
+    "all_sites": 1221
+  }
+}

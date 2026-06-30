@@ -1,14 +1,22 @@
 import { corsHeaders } from "./cors";
+import { geoBridge, sunMoonEphemeris } from "./live";
 
 export interface Env {
-  UPSTREAM_ORIGIN: string;
+  GEO_API?: string;
+  ASSETS: Fetcher;
 }
 
-function applyCors(response: Response, cors: Record<string, string>): Response {
-  const out = new Response(response.body, response);
+function withCors(res: Response, cors: Record<string, string>): Response {
+  const out = new Response(res.body, res);
   Object.entries(cors).forEach(([k, v]) => out.headers.set(k, v));
-  out.headers.set("X-Edge-Proxy", "udm-earth-engine");
+  out.headers.set("X-Edge", "udm-earth-engine");
   return out;
+}
+
+function json(data: unknown, cors: Record<string, string>, cacheSec = 0): Response {
+  const headers: Record<string, string> = { "Content-Type": "application/json", ...cors };
+  if (cacheSec > 0) headers["Cache-Control"] = `public, max-age=${cacheSec}, stale-while-revalidate=${cacheSec * 2}`;
+  return new Response(JSON.stringify(data), { headers });
 }
 
 export default {
@@ -19,29 +27,39 @@ export default {
     }
 
     const url = new URL(request.url);
-    const upstream = new URL(url.pathname + url.search, env.UPSTREAM_ORIGIN);
-    const isCacheable =
-      request.method === "GET" &&
-      (url.pathname === "/health" ||
-        url.pathname.startsWith("/v1/stream/") ||
-        url.pathname.startsWith("/v1/layer/"));
 
-    if (isCacheable) {
-      const cached = await caches.default.match(new Request(request.url, { method: "GET" }));
-      if (cached) return applyCors(cached, cors);
+    if (url.pathname === "/api/health") {
+      return json({ service: "udm-earth-engine", status: "ok", edge: true, mode: "static-atlas" }, cors, 30);
     }
 
-    const res = await fetch(upstream.toString(), {
-      method: request.method,
-      headers: request.headers,
-      body: request.body,
-    });
-
-    const out = applyCors(res, cors);
-    if (isCacheable) {
-      out.headers.set("Cache-Control", "public, max-age=30, stale-while-revalidate=120");
-      ctx.waitUntil(caches.default.put(new Request(request.url, { method: "GET" }), out.clone()));
+    if (url.pathname === "/api/live/ephemeris") {
+      return json(sunMoonEphemeris(), cors, 120);
     }
-    return out;
+
+    if (url.pathname === "/api/live/geo") {
+      const cache = caches.default;
+      const key = new Request(request.url, { method: "GET" });
+      const hit = await cache.match(key);
+      if (hit) return withCors(hit, cors);
+      const payload = await geoBridge(env);
+      const res = json(payload, cors, 60);
+      ctx.waitUntil(cache.put(key, res.clone()));
+      return res;
+    }
+
+    if (url.pathname.startsWith("/data/")) {
+      const asset = await env.ASSETS.fetch(request);
+      if (asset.status === 404) return withCors(asset, cors);
+      const out = new Response(asset.body, asset);
+      if (url.pathname.endsWith("manifest.json")) {
+        out.headers.set("Cache-Control", "public, max-age=300, stale-while-revalidate=600");
+      } else if (url.pathname.includes("/layers/")) {
+        out.headers.set("Cache-Control", "public, max-age=86400, immutable");
+      }
+      return withCors(out, cors);
+    }
+
+    const asset = await env.ASSETS.fetch(request);
+    return withCors(asset, cors);
   },
 };

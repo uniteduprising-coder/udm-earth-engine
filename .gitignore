@@ -7,3 +7,4 @@ node_modules/
 .wrangler/
 data/cache/*.json
 !.gitkeep
+# public/data is baked for CDN — commit it

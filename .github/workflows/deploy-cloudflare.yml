@@ -6,14 +6,29 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-worker:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bake layer atlas
+        run: |
+          pip install -r requirements.txt
+          PYTHONPATH=src python scripts/bake_atlas.py || echo "Using committed public/data fallback"
+        env:
+          KML_ENRICHED_PATH: ${{ vars.KML_ENRICHED_PATH || '' }}
+          FORENSIC_KML_PATH: ${{ vars.FORENSIC_KML_PATH || '' }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+
       - run: npm install
+
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}

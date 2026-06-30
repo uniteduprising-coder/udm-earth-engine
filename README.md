@@ -1,30 +1,51 @@
 # UDM Earth Engine
 
-Independent but connectible Earth model for United Uprising — Google Maps / NASA-style layers with **UDM flat projection** (`W(φ)`, Bloch node, stator phase).
+**Edge-first** Earth map — pre-baked site layers on Cloudflare CDN, UDM projection in the browser (zero lag on layer/time changes).
 
-## Quick start
+## How it works (fast path)
+
+| What | Where | Latency |
+|------|--------|---------|
+| Map UI + site dots | `public/` → Cloudflare edge | ~50ms first paint |
+| Layer data | `/data/layers/*.json` (baked, immutable cache) | One small fetch per layer |
+| UDM warp / time slider | Browser only | **0ms** — no server round-trip |
+| Sun / moon / geo feeds | `/api/live/*` at edge | Background, non-blocking |
+
+No Python server required for users. Python is **bake + optional ingest** only.
+
+## Production
+
+**https://earth.uniteduprising.com**
+
+## Develop locally
 
 ```powershell
-cd C:\Users\User\united-uprising-ecosystem\udm-earth-engine
+cd udm-earth-engine
 py -3 -m pip install -r requirements.txt
 $env:PYTHONPATH="src"
-py -3 -m earth.main
+py -3 scripts/bake_atlas.py    # refresh public/data
+npm install
+npm run dev                   # wrangler dev → http://localhost:8787
 ```
 
-Open http://127.0.0.1:8790
+## Update site data
 
-## API
+```powershell
+py -3 scripts/bake_atlas.py
+git add public/data
+git push   # CI redeploys to Cloudflare
+```
 
-- `GET /v1/layers` — layer dropdown metadata
-- `GET /v1/layer/{id}` — GeoJSON with UDM-corrected coordinates
-- `POST /v1/refresh` — refresh all feeds + layers
-- `GET /v1/projection/project?lat=&lon=&lst_hours=`
+## Enki / Mission Control
 
-## Deploy
+- Enki opens `https://earth.uniteduprising.com` by default
+- Terminal Agent toolbar **🌍 Earth**
+- Mission Control embeds the same URL
 
-- GitHub: `uniteduprising-coder/udm-earth-engine`
-- Cloudflare Worker: `earth.uniteduprising.com` → origin on port 8790
+## Optional Python API (port 8790)
 
-## Enki
+Legacy ingest server for heavy refresh jobs — not on the user hot path:
 
-Use `connectors/earth_connector.py` or open `/embed` inside Enki Terminal Agent dashboard.
+```powershell
+$env:PYTHONPATH="src"; py -3 -m earth.main
+```

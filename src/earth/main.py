@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 
 from earth.api.advantage_routes import router as advantage_router
 from earth.api.celestial_routes import router as celestial_router
+from earth.api.realtime_routes import router as realtime_router
 from earth.api.encyclopedia_routes import router as encyclopedia_router
 from earth.api.toroidal_routes import router as toroidal_router
 from earth.api.cosmology_routes import bake_public_assets, router as cosmology_router
@@ -58,12 +59,14 @@ def create_app() -> FastAPI:
     app.include_router(toroidal_router, prefix="/api")
     app.include_router(encyclopedia_router, prefix="/api")
     app.include_router(celestial_router, prefix="/api")
+    app.include_router(realtime_router, prefix="/api")
     app.include_router(router)
     app.include_router(cosmology_router)
     app.include_router(advantage_router)
     app.include_router(toroidal_router)
     app.include_router(encyclopedia_router)
     app.include_router(celestial_router)
+    app.include_router(realtime_router)
 
     public = ROOT / "public"
     if public.exists():

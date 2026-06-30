@@ -1,0 +1,26 @@
+{
+  "solved_at": "2026-06-30T20:34:56.221633+00:00",
+  "plate_lock": true,
+  "plate_file": "1000083851.jpg",
+  "plate_present": false,
+  "center_px_initial": [
+    767,
+    766
+  ],
+  "outer_radius_px_initial": 766,
+  "center_px_refined": [
+    767,
+    766
+  ],
+  "outer_radius_px_refined": 766,
+  "refinement_reason": "using_yaml_initial_constants",
+  "rim_thickness_px_estimate": null,
+  "edge_falloff": null,
+  "cx": 767.0,
+  "cy": 766.0,
+  "r_outer": 766.0,
+  "width_px": 1536,
+  "height_px": 1533,
+  "status": "needs_manual_review",
+  "note": "Place 1000083851.jpg in UDM_REALTIME_MODEL/plates/"
+}

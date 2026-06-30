@@ -1,0 +1,5 @@
+data/**/raw/
+renders/latest/*.jpg
+renders/archive/
+logs/ingest_log.jsonl
+*.nc

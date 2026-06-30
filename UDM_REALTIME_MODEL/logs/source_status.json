@@ -1,0 +1,54 @@
+{
+  "checked_at": "2026-06-30T20:34:45.111262+00:00",
+  "sources": {
+    "noaa_nesdis_earth_realtime": {
+      "status": "online",
+      "http_code": 200,
+      "bytes": 74502,
+      "geometry_policy": "overlay_only"
+    },
+    "noaa_nowcoast_satellite": {
+      "status": "malformed",
+      "http_code": 403,
+      "bytes": 1087,
+      "geometry_policy": "overlay_only"
+    },
+    "noaa_goes_aws": {
+      "status": "needs_manual_review"
+    },
+    "nasa_gibs": {
+      "status": "online",
+      "http_code": 200,
+      "bytes": 2464859,
+      "geometry_policy": "overlay_only"
+    },
+    "swpc": {
+      "status": "online",
+      "http_code": 200,
+      "bytes": 98208,
+      "geometry_policy": "field_input"
+    },
+    "gfz_kp": {
+      "status": "online",
+      "http_code": 200,
+      "bytes": 8362,
+      "geometry_policy": "field_input"
+    },
+    "usgs_geomag": {
+      "status": "online",
+      "http_code": 200,
+      "bytes": 90507,
+      "geometry_policy": "station_points_to_udm"
+    },
+    "intermagnet": {
+      "status": "online",
+      "http_code": 200,
+      "bytes": 20499,
+      "geometry_policy": "station_points_to_udm"
+    },
+    "schumann": {
+      "status": "needs_manual_review",
+      "geometry_policy": "field_input"
+    }
+  }
+}

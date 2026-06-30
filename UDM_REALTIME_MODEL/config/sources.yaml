@@ -1,0 +1,68 @@
+sources:
+  noaa_nesdis_earth_realtime:
+    type: arcgis_or_web_map
+    url: https://www.nesdis.noaa.gov/imagery/satellite-maps/earth-real-time
+    role: live_atmospheric_texture
+    pull_method: discover_arcgis_services_via_network_or_documented_rest
+    update_minutes: 15
+    geometry_policy: overlay_only
+
+  noaa_nowcoast_satellite:
+    type: arcgis_rest_wms
+    rest_url: https://nowcoast.noaa.gov/arcgis/rest/services/nowcoast/sat_meteo_imagery_time/MapServer
+    wms_url: https://nowcoast.noaa.gov/arcgis/services/nowcoast/sat_meteo_imagery_time/MapServer/WMSServer
+    role: live_satellite_overlay
+    pull_method: f_pjson_then_export_or_wms_getmap
+    update_minutes: 15
+    geometry_policy: overlay_only
+
+  noaa_goes_aws:
+    type: s3_open_bucket
+    buckets:
+      goes_east: s3://noaa-goes19/
+      goes_west: s3://noaa-goes18/
+    role: raw_goes_data
+    pull_method: aws_s3_no_sign_request
+    geometry_policy: overlay_only
+
+  nasa_gibs:
+    type: wmts_wms
+    wmts: https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi
+    wms: https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi
+    role: global_true_color_polar_fill_fire_layers
+    pull_method: wmts_or_wms
+    geometry_policy: overlay_only
+
+  swpc:
+    type: json
+    base_url: https://services.swpc.noaa.gov/
+    endpoints:
+      mag: https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json
+      plasma: https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json
+      kp: https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json
+      aurora: https://services.swpc.noaa.gov/json/ovation_aurora_latest.json
+    role: space_weather_field_input
+    geometry_policy: field_input
+
+  gfz_kp:
+    type: txt
+    url: https://www-app3.gfz-potsdam.de/kp_index/Kp_ap_Ap_SN_F107_nowcast.txt
+    role: geomagnetic_index
+    geometry_policy: field_input
+
+  usgs_geomag:
+    type: api
+    url: https://www.usgs.gov/tools/web-service-geomagnetism-data
+    role: ground_geomagnetic_observatories
+    geometry_policy: station_points_to_udm
+
+  intermagnet:
+    type: portal_or_api
+    url: https://intermagnet.org/
+    role: global_geomagnetic_observatories
+    geometry_policy: station_points_to_udm
+
+  schumann:
+    type: user_supplied
+    role: resonance_field_input
+    geometry_policy: field_input

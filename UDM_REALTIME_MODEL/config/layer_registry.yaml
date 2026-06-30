@@ -1,0 +1,60 @@
+layers:
+  base_plate:
+    z_order: 0
+    source: plates/1000083851.jpg
+    mutable: false
+
+  central_aperture_detail:
+    z_order: 1
+    source: plates/1000083849.jpg
+    mutable: false
+
+  grid_meridians:
+    z_order: 10
+    source: derived/udm_meridians.geojson
+    blend: normal
+
+  grid_parallels:
+    z_order: 11
+    source: derived/udm_parallels.geojson
+    blend: normal
+
+  equator_bloch_wall:
+    z_order: 12
+    source: derived/udm_equator_ring.geojson
+    blend: additive
+
+  geocolor:
+    z_order: 40
+    source: noaa_nesdis_or_goes
+    blend: normal
+    opacity: 0.75
+
+  infrared:
+    z_order: 50
+    source: noaa_nesdis_or_goes
+    blend: screen
+    opacity: 0.55
+
+  water_vapor:
+    z_order: 60
+    source: noaa_nesdis_or_goes
+    blend: additive
+    opacity: 0.55
+
+  aurora:
+    z_order: 90
+    source: swpc_ovation
+    blend: additive
+    opacity: 0.65
+
+  jupiter_commutator:
+    z_order: 120
+    source: ephemeris_plus_field_correlation
+    blend: diagnostic_only
+    enabled: false
+
+  saturn_governor:
+    z_order: 130
+    source: ephemeris_plus_field_correlation
+    blend: diagnostic_only

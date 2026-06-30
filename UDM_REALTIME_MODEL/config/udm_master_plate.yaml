@@ -1,0 +1,68 @@
+# Immutable UDM master plate constants — geometry lock
+# External data may NOT redefine these; only refinement metadata is additive.
+
+plate_lock: true
+geometry_policy: overlay_only
+
+full_disk_plate:
+  file: 1000083851.jpg
+  width_px: 1536
+  height_px: 1533
+  center_px_initial: [767, 766]
+  outer_radius_px_initial: 766
+  role: immutable_udm_master_geometry
+
+central_zoom_plate:
+  file: 1000083849.jpg
+  width_px: 1151
+  height_px: 1536
+  center_px_initial: [575, 768]
+  role: north_axis_aperture_and_polar_basin_calibration
+
+coordinate_system:
+  dx: "x_px - Cx"
+  dy: "Cy - y_px"
+  rho: "sqrt(dx^2 + dy^2) / R_outer"
+  theta: "atan2(dx, dy)"
+  phi_udm: "90 - 180 * rho"
+
+rho_bands:
+  north_axis: 0.000
+  arctic: 0.130
+  northern_tropic: 0.370
+  equator_bloch_wall: 0.500
+  southern_tropic: 0.630
+  outer_antarctic: 0.870
+  southern_return: 1.000
+
+meridians:
+  type: angular_spokes_or_curved_field_lines
+  minor_interval_degrees: 1
+  major_interval_degrees: 15
+  origin: north_axis_aperture
+
+parallels:
+  type: annular_rings
+  minor_interval_degrees: 5
+  formula: "rho = (90 - phi_udm) / 180"
+
+equator:
+  type: annular_bloch_wall_candidate
+  rho: 0.5
+
+outer_boundary:
+  type: southern_return_ring
+  rho: 1.0
+
+north_axis:
+  class: axis_aperture_register
+  not_light_body: true
+
+jupiter:
+  class: physical_magnetic_commutator
+  enabled: false
+  default_gain: 0.0
+
+saturn:
+  class: physical_step_down_governor
+  enabled: true

@@ -1,0 +1,25 @@
+transform:
+  target: udm_plate_pixel_coordinates
+  primary: triangulated_affine_mesh
+  secondary: thin_plate_spline
+  provisional_lonlat_mapping:
+    note: "PROVISIONAL until forensic control points refine mesh — does NOT redefine plate"
+    phi_udm_from_lat: "lat_deg"
+    rho_from_phi: "(90 - phi_udm) / 180"
+    theta_from_lon: "lon_deg * pi / 180"
+  chain:
+    - source_data
+    - source_projection_or_source_coordinates
+    - source_pixel_or_lon_lat
+    - udm_transform_mesh
+    - udm_plate_x_y_rho_theta
+    - rendered_overlay_layer
+  forbidden:
+    - source_data_overwrite_udm_plate
+
+control_point_thresholds:
+  crude: 12
+  usable: 24
+  strong: 48
+  forensic: 100
+  max_pixel_error_px: 8.0

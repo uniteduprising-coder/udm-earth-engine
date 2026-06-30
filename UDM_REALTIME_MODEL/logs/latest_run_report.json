@@ -1,0 +1,170 @@
+{
+  "ok": true,
+  "started_at": "2026-06-30T20:34:38.929125+00:00",
+  "finished_at": "2026-06-30T20:34:46.827283+00:00",
+  "model_root": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL",
+  "plate_lock_preserved": true,
+  "plates_present": {
+    "full_disk": false,
+    "central_zoom": false
+  },
+  "derived": {
+    "disk_solution": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_disk_solution.json",
+    "control_points": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_control_points.csv",
+    "control_grade": "crude",
+    "mesh_nodes": 325,
+    "meridians": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_meridians.geojson",
+    "parallels": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_parallels.geojson",
+    "equator": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_equator_ring.geojson",
+    "feature_edges": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_feature_edges.geojson",
+    "unwrapped": {
+      "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\derived\\udm_unwrapped_plate.png",
+      "status": "needs_manual_review",
+      "written": false
+    }
+  },
+  "pulls": {
+    "swpc": {
+      "pulled_at": "2026-06-30T20:34:45.111262+00:00",
+      "files": {
+        "mag": {
+          "ok": true,
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\mag_20260630T203445.json",
+          "normalized": {
+            "source": "https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json",
+            "key": "mag",
+            "bz_gsm_nT": 3.92,
+            "time_tag": "2026-06-30 18:40:00.000"
+          }
+        },
+        "plasma": {
+          "ok": true,
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\plasma_20260630T203445.json",
+          "normalized": {
+            "source": "https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json",
+            "key": "plasma"
+          }
+        },
+        "kp": {
+          "ok": true,
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\kp_20260630T203445.json",
+          "normalized": {
+            "source": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json",
+            "key": "kp",
+            "kp": "-1.82"
+          }
+        },
+        "aurora": {
+          "ok": true,
+          "raw": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\swpc\\raw\\aurora_20260630T203445.json",
+          "normalized": {
+            "source": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
+            "key": "aurora"
+          }
+        }
+      }
+    },
+    "gfz_kp": {
+      "ok": true,
+      "path": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\data\\gfz_kp\\kp_nowcast_20260630.txt",
+      "lines": 70
+    }
+  },
+  "source_status_summary": {
+    "noaa_nesdis_earth_realtime": "online",
+    "noaa_nowcoast_satellite": "malformed",
+    "noaa_goes_aws": "needs_manual_review",
+    "nasa_gibs": "online",
+    "swpc": "online",
+    "gfz_kp": "online",
+    "usgs_geomag": "online",
+    "intermagnet": "online",
+    "schumann": "needs_manual_review"
+  },
+  "validation": {
+    "total": 7,
+    "passed": 7,
+    "checks": [
+      {
+        "id": "plate_lock",
+        "name": "Plate lock preserved",
+        "passed": true,
+        "status": "PASS"
+      },
+      {
+        "id": "center",
+        "name": "North Axis Aperture at center",
+        "passed": true,
+        "status": "PASS",
+        "initial": [
+          767,
+          766
+        ],
+        "refined": [
+          767,
+          766
+        ]
+      },
+      {
+        "id": "equator_ring",
+        "name": "Equator Bloch Wall ring at rho=0.5",
+        "passed": true,
+        "status": "PASS",
+        "note": "ring generated; alignment residuals not forced"
+      },
+      {
+        "id": "control_points",
+        "name": "Control point count",
+        "passed": true,
+        "status": "PASS",
+        "count": 12,
+        "grade": "crude"
+      },
+      {
+        "id": "transform_error",
+        "name": "Transform mesh pixel error",
+        "passed": true,
+        "status": "PASS",
+        "avg_px_error": 0.0,
+        "provisional": true
+      },
+      {
+        "id": "source_health",
+        "name": "Source health",
+        "passed": true,
+        "status": "PASS",
+        "online_count": 6
+      },
+      {
+        "id": "udm_compatibility",
+        "name": "UDM math compatibility (additive overlays only)",
+        "passed": true,
+        "status": "PASS",
+        "jupiter_enabled": false,
+        "saturn_governor": true
+      }
+    ],
+    "plate_lock_preserved": true
+  },
+  "renders": {
+    "rendered_at": "2026-06-30T20:34:46.827283+00:00",
+    "files": {
+      "spaceweather": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_live_spaceweather.json",
+      "base_plate_ref": null,
+      "composite_manifest": "C:\\Users\\User\\united-uprising-ecosystem\\udm-earth-engine\\UDM_REALTIME_MODEL\\renders\\latest\\udm_composite.json"
+    },
+    "plate_missing": true
+  },
+  "needs_manual_review": [
+    "master_plates_missing",
+    "central_zoom_plate_missing",
+    "feature_extraction_pending",
+    "atmospheric_warp_pending",
+    "fourfold_central_island_divisions",
+    "mid_ocean_ridge_intersections",
+    "vortex_arm_intersections",
+    "forensic_bathymetry_locks"
+  ],
+  "failed": [],
+  "stale": []
+}

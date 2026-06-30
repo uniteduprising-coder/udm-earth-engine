@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "bake": "py -3 scripts/bake_atlas.py",
+    "build:worker": "esbuild worker/src/standalone.ts --bundle --format=esm --platform=browser --target=es2022 --outfile=worker/dist/standalone.mjs",
     "dev": "wrangler dev",
     "dev:worker": "wrangler dev",
     "deploy": "wrangler deploy",

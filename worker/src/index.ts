@@ -1,4 +1,5 @@
 import { corsHeaders } from "./cors";
+import { handleCosmologyApi } from "./cosmology_routes";
 import { geoBridge, sunMoonEphemeris } from "./live";
 
 export interface Env {
@@ -29,7 +30,18 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/health") {
-      return json({ service: "udm-earth-engine", status: "ok", edge: true, mode: "static-atlas" }, cors, 30);
+      return json(
+        {
+          service: "udm-earth-engine",
+          status: "ok",
+          edge: true,
+          mode: "static-atlas",
+          cosmology_engine: "5.2β",
+          projection: "udm_v5",
+        },
+        cors,
+        30
+      );
     }
 
     if (url.pathname === "/api/live/ephemeris") {
@@ -46,6 +58,9 @@ export default {
       ctx.waitUntil(cache.put(key, res.clone()));
       return res;
     }
+
+    const cosmology = await handleCosmologyApi(request, env, cors);
+    if (cosmology) return cosmology;
 
     if (url.pathname.startsWith("/data/")) {
       const asset = await env.ASSETS.fetch(request);

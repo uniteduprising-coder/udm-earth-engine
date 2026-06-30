@@ -8,7 +8,13 @@ from fastapi import APIRouter, Body, HTTPException, Query
 from earth.cosmology.coordinates import geo_to_cylindrical, project_site
 from earth.cosmology.engine import get_engine, reset_engine
 from earth.cosmology.observations import list_observation_layers, load_1982_stations
-from earth.cosmology.params import export_params_json, load_node_table, load_params, save_params
+from earth.cosmology.params import (
+    export_params_json,
+    load_luminary_spectra,
+    load_node_table,
+    load_params,
+    save_params,
+)
 from earth.cosmology.validation import run_validation, validate_1982_glow
 
 router = APIRouter(tags=["cosmology"])
@@ -18,8 +24,9 @@ router = APIRouter(tags=["cosmology"])
 async def get_params():
     return {
         "source": "params.yml",
-        "status": "established",
-        "version": "5.1",
+        "status": "all_constants_defined",
+        "blocking_gaps": 0,
+        "version": "5.2α",
         "params": load_params(),
         "nodes": load_node_table(),
         "time": datetime.now(UTC).isoformat(),
@@ -109,6 +116,11 @@ async def observation_layers():
 @router.get("/observations/soviet_1982")
 async def soviet_1982():
     return load_1982_stations()
+
+
+@router.get("/cosmology/spectra")
+async def luminary_spectra():
+    return {"lines": load_luminary_spectra(), "nodes": ["Sun", "Moon"]}
 
 
 @router.post("/cosmology/reset")

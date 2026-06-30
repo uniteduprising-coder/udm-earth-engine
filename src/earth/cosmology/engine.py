@@ -40,23 +40,26 @@ class CosmologyEngine:
         self.params = params or load_params()
         self.restart_micro_loop()
 
-    def newton_raphson_omega(self) -> float:
-        """Solve T_em(Ω₀) + T_drag(Ω₀) = 0 (§3), max 5 iterations."""
+    def _torque_sum(self, omega: float) -> tuple[float, float]:
+        P = self.params
+        t_em = sum(
+            fields.T_em_sample(P["r_iso"], fields.island_theta(n), omega, P) for n in range(4)
+        )
+        return t_em, fields.T_drag(omega, P)
+
+    def newton_raphson_omega(self, omega_prev: float | None = None) -> float:
+        """Solve I_rot·dΩ/dt = T_em + T_drag; NR steady-state refine (§4.6)."""
         P = self.params
         omega = self.omega0
-        r_iso = P["r_iso"]
+        i_rot = P.get("I_rot", 2.3e24)
+        if omega_prev is not None and i_rot > 0:
+            t_em, t_drag = self._torque_sum(omega_prev)
+            omega = omega_prev + (t_em + t_drag) / i_rot * P["DT_MACRO"]
         for _ in range(5):
-            t_em = sum(
-                fields.T_em_sample(r_iso, fields.island_theta(n), omega, P) for n in range(4)
-            )
-            t_drag = fields.T_drag(omega, P)
+            t_em, t_drag = self._torque_sum(omega)
             f = t_em + t_drag
             d_omega = 1e-4
-            t_em_p = sum(
-                fields.T_em_sample(r_iso, fields.island_theta(n), omega + d_omega, P)
-                for n in range(4)
-            )
-            t_drag_p = fields.T_drag(omega + d_omega, P)
+            t_em_p, t_drag_p = self._torque_sum(omega + d_omega)
             df = (t_em_p + t_drag_p - f) / d_omega
             if abs(df) < 1e-12:
                 break
@@ -85,7 +88,7 @@ class CosmologyEngine:
             return self.state()
 
         omega_prev = self.omega0
-        self.omega0 = self.newton_raphson_omega()
+        self.omega0 = self.newton_raphson_omega(omega_prev)
         t_em = sum(fields.T_em_sample(P["r_iso"], fields.island_theta(n), self.omega0, P) for n in range(4))
         t_drag = fields.T_drag(self.omega0, P)
         power = self.compute_power_gw()
@@ -95,7 +98,7 @@ class CosmologyEngine:
 
         if self.omega0 > P["Omega_max"]:
             self.aborted = True
-            self.abort_reason = "Runaway rotor — Ω₀ exceeds 5.0 rad/s"
+            self.abort_reason = f"Dielectric breakdown — Ω₀ exceeds {P['Omega_max']} rad/s (E_break limit)"
         if glow_70 > P["I_max"]:
             self.aborted = True
             self.abort_reason = "Unphysical flash — glow intensity > 1e6 cd"
@@ -128,19 +131,30 @@ class CosmologyEngine:
         P = self.params
         r, th = 70.0, math.pi / 4
         return {
-            "version": "5.1",
+            "version": "5.2α",
             "engine": "udm_cosmology",
+            "status": "all_constants_defined",
             "t_sim_s": self.t_sim,
             "macro_step": self.macro_step,
             "Omega0": round(self.omega0, 6),
             "Omega0_init": P["Omega0_init"],
+            "Omega_max": P["Omega_max"],
             "aborted": self.aborted,
             "abort_reason": self.abort_reason,
             "warm_start": self.warm_start,
             "P_GW": round(self.compute_power_gw(), 4),
             "P_target_GW": P["P_target"],
-            "omega_res_Hz": round(P["omega_res"] / (2 * math.pi), 2),
+            "C_total_F": P["C_total"],
+            "Z_g_ohm": P.get("Z_g", 2.8),
+            "I_rot_kgm2": P.get("I_rot", 2.3e24),
+            "Q_visc_GW": round(P.get("Q_visc", 4e8) / 1e9, 2),
+            "omega_res_Hz": P.get("f_res", round(P["omega_res"] / (2 * math.pi), 2)),
+            "schumann_Q": round(fields.schumann_q_factor(P), 1),
             "T_a_period_min": P["T_a_period_min"],
+            "firmament_n_z0": {
+                "n_real": round(fields.n_firmament_real(0, P), 6),
+                "n_imag": round(fields.n_firmament_imag(0, P), 8),
+            },
             "fields_at_anchor": {
                 "r_mi": r,
                 "theta_rad": round(th, 6),
@@ -185,6 +199,9 @@ class CosmologyEngine:
             "I_cd": fields.glow_intensity(r_mi, theta_rad, t, P),
             "E_mot": fields.motional_emf(r_mi, theta_rad, self.omega0, P),
             "Omega_firm": fields.omega_firm(r_mi, z_mi, self.omega0, P),
+            "n_real": fields.n_firmament_real(z_mi, P),
+            "n_imag": fields.n_firmament_imag(z_mi, P),
+            "Z_g": P.get("Z_g", 2.8),
         }
 
 

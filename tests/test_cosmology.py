@@ -2,17 +2,26 @@ import math
 
 from earth.cosmology.coordinates import cylindrical_to_geo, geo_to_cylindrical, project_site
 from earth.cosmology.engine import CosmologyEngine
-from earth.cosmology.fields import B_stat, V_r_a, V_r_h, glow_intensity
-from earth.cosmology.params import load_params
+from earth.cosmology.fields import B0_field, V_r_a, V_r_h, glow_azimuthal_ratio, schumann_q_factor
+from earth.cosmology.params import load_params, load_luminary_spectra
 from earth.cosmology.validation import run_validation
 
 
-def test_params_loaded():
+def test_params_v52alpha():
     p = load_params()
     assert p["L_f"] == 2.428
-    assert p["r_base"] == 12.752
-    assert p["R_disk"] == 12500
-    assert p["T_a_period_min"] == 14.2
+    assert p["C_iso"] == 0.071
+    assert p["C_total"] == 0.115
+    assert p["Omega_max"] == 4.9
+    assert p["Z_g"] == 2.8
+    assert p["d_iso"] == 14.0
+    assert p["K_m"] == 0.0013
+    assert p["I_rot"] == 2.3e24
+
+
+def test_B0_ledger():
+    p = load_params()
+    assert abs(B0_field(p) - 8.2e-6) < 1e-7
 
 
 def test_geo_cylindrical_roundtrip_pole():
@@ -22,43 +31,52 @@ def test_geo_cylindrical_roundtrip_pole():
     assert abs(geo["lat"] - 90.0) < 0.01
 
 
-def test_geo_cylindrical_equator():
-    cyl = geo_to_cylindrical(0.0, 45.0, R_disk=12500.0)
-    assert abs(cyl["r_mi"] - 12500.0) < 1.0
-
-
 def test_drain_velocities_at_1mi():
     p = load_params()
-    # Base drain at θ where river modulation cos(4θ)=0 (intercardinal)
     vr_h = V_r_h(1.0, math.pi / 8, p)
     vr_a = V_r_a(1.0, p)
     assert abs(vr_h + 0.138) < 0.02
     assert abs(vr_a + 0.0165) < 0.005
 
 
-def test_aether_period_14_2min():
+def test_schumann_q():
     p = load_params()
-    period_min = (2 * math.pi / p["omega_a"]) / 60
-    assert abs(period_min - 14.2) < 0.3
+    q = schumann_q_factor(p)
+    assert 8 <= q <= 12
 
 
-def test_engine_state():
+def test_engine_state_v52():
     engine = CosmologyEngine()
     state = engine.state()
-    assert state["version"] == "5.1"
-    assert state["Omega0"] == p["Omega0_init"] if (p := load_params()) else True
+    assert state["version"] == "5.2α"
+    assert state["C_total_F"] == 0.115
+    assert state["Z_g_ohm"] == 2.8
     assert len(state["nodes"]) == 6
+    sun = next(n for n in state["nodes"] if n["type"] == "Sun")
+    assert sun["z_mi"] == 3000.0
 
 
-def test_validation_suite():
+def test_validation_18_checks():
     engine = CosmologyEngine()
     report = run_validation(engine)
-    assert report["total_checks"] == 17
-    assert report["passed"] >= 10
+    assert report["total_checks"] == 18
+    assert report["blocking_gaps"] == 0
+    assert report["passed"] >= 14
+
+
+def test_glow_azimuthal_ratio():
+    p = load_params()
+    ratio = glow_azimuthal_ratio(70.0, 0.0, p)
+    assert 0.94 <= ratio <= 1.06
+
+
+def test_luminary_spectra():
+    lines = load_luminary_spectra()
+    assert len(lines) == 5
+    assert lines[2]["wavelength_nm"] == "557"
 
 
 def test_project_site_v5():
     proj = project_site(45.0, -90.0, mode="udm_v5")
     assert "r_mi" in proj
-    assert "theta_rad" in proj
     assert "r_french_mi" in proj

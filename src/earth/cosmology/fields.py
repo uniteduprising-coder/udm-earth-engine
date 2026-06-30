@@ -1,5 +1,5 @@
 """
-UDM Cosmology Engine v5.0 — analytic field functions (§1–§6).
+UDM Cosmology Engine v5.2α — analytic field functions.
 NumPy-free scalar implementations for edge/API parity.
 """
 
@@ -22,10 +22,37 @@ def island_theta(n: int) -> float:
     return math.pi / 4 + n * (math.pi / 2)
 
 
+def B0_field(P: dict[str, Any]) -> float:
+    """B₀ = μ₀·M₀/(2π·r_base²) — use ledger value when present."""
+    if "B0" in P:
+        return float(P["B0"])
+    return P["mu0"] * P["M0"] / (2 * math.pi * P["r_base"] ** 2)
+
+
 def B_stat(r: float, theta: float, P: dict[str, Any]) -> float:
-    """Vertical dipole with 4-fold modulation (§3)."""
-    B0 = P["mu0"] * P["M0"] / (2 * math.pi * P["r_base"] ** 2)
+    """Vertical dipole with 4-fold modulation (§4.2)."""
+    B0 = B0_field(P)
     return B0 * (P["r_base"] / r) ** 2 * (1 + P["B_mod_amp"] * math.cos(4 * theta))
+
+
+def sigma_iso_eff(E: float, P: dict[str, Any]) -> float:
+    """Conductivity saturation σ_iso·tanh(E/E_crit) (§2.2)."""
+    return P["sigma_iso"] * math.tanh(E / P["E_crit"])
+
+
+def n_firmament_real(z: float, P: dict[str, Any]) -> float:
+    """n'(z) = 1 + amp·exp(−z/scale) (§5.2, §6.3)."""
+    return 1.0 + P["n_real_amp"] * math.exp(-z / P["n_real_scale"])
+
+
+def n_firmament_imag(z: float, P: dict[str, Any]) -> float:
+    """n''(z) = n''₀·exp(−z/scale)."""
+    return P["n_imag0"] * math.exp(-z / P["n_imag_scale"])
+
+
+def schumann_q_factor(P: dict[str, Any]) -> float:
+    """Q = f_res / Δf."""
+    return P.get("schumann_Q", P.get("f_res", 25) / P.get("schumann_df_Hz", 2.5))
 
 
 def eps_field(r: float, theta: float, P: dict[str, Any]) -> float:
@@ -118,3 +145,25 @@ def T_em_sample(r: float, theta: float, omega0: float, P: dict[str, Any]) -> flo
     emf = motional_emf(r, theta, omega0, P)
     jr = P["sigma_eff"] * emf
     return r * jr * B_stat(r, theta, P)
+
+
+def glow_azimuthal_ratio(r: float, t: float, P: dict[str, Any]) -> float:
+    """Peak/antipeak ratio of |I(r,θ,t)| ∝ |cos(4θ)| — check #15."""
+    peak = abs(glow_intensity(r, 0.0, t, P))
+    antipeak = abs(glow_intensity(r, math.pi / 4, t, P))
+    if antipeak < 1e-12:
+        return 0.0
+    return peak / antipeak
+
+
+def compute_I_rot(P: dict[str, Any]) -> float:
+    """Rotor inertia I_rot ≈ ∫ρ_a·r²·dV over firmament shell (§4.3)."""
+    if "I_rot" in P:
+        return float(P["I_rot"])
+    z_max = P["z_roof"]
+    r_min, r_max = P["r_base"], P["R_disk"]
+    rho0 = P["rho_a0"]
+    rb = P["r_base"]
+    # Shell integral proxy: 2π·z_max·∫ r³·(rb/r)² dr
+    integral = 2 * math.pi * z_max * (rb**2) * math.log(r_max / r_min)
+    return rho0 * integral * (1609.344**2)  # mi² → m² for kg·m² scale

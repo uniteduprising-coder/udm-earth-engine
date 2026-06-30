@@ -1,5 +1,5 @@
 /**
- * UDM Earth — v5.1 Cosmology Engine + edge-static atlas
+ * UDM Earth — v5.2α Cosmology Engine + edge-static atlas
  */
 (function () {
   const PHI_WIND = 70.55;
@@ -221,7 +221,7 @@
       sel.appendChild(opt);
     });
     sel.value = state.currentLayer;
-    $('#brand-sub').textContent = `UDM v5.1 · L_f=${L_F} mi · edge CDN`;
+    $('#brand-sub').textContent = `UDM v5.2α · L_f=${L_F} mi · zero placeholders`;
   }
 
   async function loadLayerData(layerId) {

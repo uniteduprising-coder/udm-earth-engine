@@ -40,7 +40,7 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     settings = get_settings()
-    app = FastAPI(title="UDM Earth Engine", version="5.1.0", lifespan=lifespan)
+    app = FastAPI(title="UDM Earth Engine", version="5.2.0", lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origin_list,

@@ -1,4 +1,4 @@
-/** Single-file edge worker — UDM Cosmology Engine v5.1 + static atlas */
+/** Single-file edge worker — UDM Cosmology Engine v5.2α + static atlas */
 
 const GITHUB_RAW =
   "https://raw.githubusercontent.com/uniteduprising-coder/udm-earth-engine/master/public";
@@ -131,7 +131,7 @@ export default {
           status: "ok",
           edge: true,
           mode: "standalone",
-          cosmology_engine: "5.1",
+          cosmology_engine: "5.2α",
           projection: "udm_v5",
         },
         corsH,

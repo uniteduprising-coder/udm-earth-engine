@@ -1,22 +1,33 @@
 {
-  "version": "5.1",
+  "version": "5.2\u03b1",
   "engine": "udm_cosmology",
+  "status": "all_constants_defined",
   "t_sim_s": 150.0,
   "macro_step": 10,
   "Omega0": 1e-06,
   "Omega0_init": 2.45,
+  "Omega_max": 4.9,
   "aborted": false,
   "abort_reason": "",
   "warm_start": true,
   "P_GW": 0.0,
   "P_target_GW": 3.8,
+  "C_total_F": 0.115,
+  "Z_g_ohm": 2.8,
+  "I_rot_kgm2": 2.3e+24,
+  "Q_visc_GW": 0.4,
   "omega_res_Hz": 25.0,
+  "schumann_Q": 10.0,
   "T_a_period_min": 14.2,
+  "firmament_n_z0": {
+    "n_real": 1.00125,
+    "n_imag": 5e-05
+  },
   "fields_at_anchor": {
     "r_mi": 70.0,
     "theta_rad": 0.785398,
     "I_cd": 0.13,
-    "B_stat_T": 0.0,
+    "B_stat_T": 2.2e-07,
     "rho_a": -1.7868e-08,
     "V_r_h": -0.00118684,
     "V_r_a": -0.00023646
@@ -24,23 +35,25 @@
   "nodes": [
     {
       "type": "Sun",
-      "x_mi": 9236.11,
+      "x_mi": 3600.0,
       "y_mi": 0.0,
-      "z_mi": 0.0,
+      "z_mi": 3000.0,
       "diameter_mi": 33.0,
       "phase_deg": 0.0,
-      "r_mi": 9236.11,
-      "theta_rad": 0.0
+      "r_mi": 3600.0,
+      "theta_rad": 0.0,
+      "altitude_mi": 3000.0
     },
     {
       "type": "Moon",
-      "x_mi": 10500.0,
-      "y_mi": 0.0,
-      "z_mi": 0.0,
+      "x_mi": 3532.1,
+      "y_mi": 696.8,
+      "z_mi": 3000.0,
       "diameter_mi": 33.0,
-      "phase_deg": 180.0,
-      "r_mi": 10500.0,
-      "theta_rad": 0.0
+      "phase_deg": 11.1,
+      "r_mi": 3600.1750860201228,
+      "theta_rad": 0.19477535481300118,
+      "altitude_mi": 3000.0
     },
     {
       "type": "Island_0",
@@ -50,7 +63,8 @@
       "diameter_mi": 0.9,
       "phase_deg": 45.0,
       "r_mi": 57.38312950685071,
-      "theta_rad": 0.7853981633974483
+      "theta_rad": 0.7853981633974483,
+      "altitude_mi": 0.0
     },
     {
       "type": "Island_1",
@@ -60,7 +74,8 @@
       "diameter_mi": 0.9,
       "phase_deg": 135.0,
       "r_mi": 57.38312950685071,
-      "theta_rad": 2.356194490192345
+      "theta_rad": 2.356194490192345,
+      "altitude_mi": 0.0
     },
     {
       "type": "Island_2",
@@ -70,7 +85,8 @@
       "diameter_mi": 0.9,
       "phase_deg": 225.0,
       "r_mi": 57.38312950685071,
-      "theta_rad": -2.356194490192345
+      "theta_rad": -2.356194490192345,
+      "altitude_mi": 0.0
     },
     {
       "type": "Island_3",
@@ -80,7 +96,8 @@
       "diameter_mi": 0.9,
       "phase_deg": 315.0,
       "r_mi": 57.38312950685071,
-      "theta_rad": -0.7853981633974483
+      "theta_rad": -0.7853981633974483,
+      "altitude_mi": 0.0
     }
   ],
   "uptime_s": 0.0

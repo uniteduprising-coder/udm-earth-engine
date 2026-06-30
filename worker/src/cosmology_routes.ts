@@ -71,7 +71,7 @@ export async function handleCosmologyApi(
     const asset = await env.ASSETS.fetch(req);
     return asset;
   }
-  if (path === "/globe" || path === "/globe.html") {
+  if (path === "/globe" || path === "/globe.html" || path === "/view") {
     const req = new Request("https://earth.uniteduprising.com/globe.html", { method: "GET" });
     return env.ASSETS.fetch(req);
   }

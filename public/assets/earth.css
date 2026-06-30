@@ -35,6 +35,15 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
 .brand h1 { margin: 0; font-size: 1.15rem; }
 .brand p { margin: 2px 0 0; color: var(--muted); font-size: 0.78rem; }
 .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 0.88rem; }
+.ctl-globe-primary {
+  display: inline-flex; align-items: center; padding: 8px 14px;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #f8fafc;
+  border-radius: 8px; font-weight: 600; font-size: 0.88rem; text-decoration: none;
+  border: 1px solid rgba(56, 189, 248, 0.5); white-space: nowrap;
+}
+.ctl-globe-primary:hover { filter: brightness(1.08); }
+.ctl-viewers { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.ctl-viewers a { color: var(--accent); font-size: 0.85rem; }
 .controls label { display: flex; align-items: center; gap: 6px; color: var(--muted); }
 .controls select, .controls button, .ctl-more summary {
   background: #1e293b; color: var(--text); border: 1px solid var(--border);

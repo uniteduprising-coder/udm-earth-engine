@@ -253,7 +253,7 @@ export default {
         return out;
       }
     }
-    if (path === "/globe" || path === "/globe.html") {
+    if (path === "/globe" || path === "/globe.html" || path === "/view") {
       const asset = await fetchRaw("/globe.html");
       if (asset.ok) {
         const out = new Response(asset.body, asset);

@@ -1,185 +1,156 @@
 (function () {
-  const CESIUM_VER = "1.118.2";
-  window.CESIUM_BASE_URL = `https://cdn.jsdelivr.net/npm/cesium@${CESIUM_VER}/Build/Cesium/`;
-
-  const LAYERS = {
-    geocolor: {
-      label: "VIIRS true color",
-      layer: "VIIRS_SNPP_CorrectedReflectance_TrueColor",
-      matrix: "2km",
-      maxLevel: 5,
-    },
-    modis: {
-      label: "MODIS Terra color",
-      layer: "MODIS_Terra_CorrectedReflectance_TrueColor",
-      matrix: "250m",
-      maxLevel: 8,
-    },
-    thermal: {
-      label: "Sea surface temp",
-      layer: "GHRSST_L4_MUR_Sea_Surface_Temperature",
-      matrix: "1km",
-      maxLevel: 7,
-    },
-    weather: {
-      label: "IR clouds (MODIS)",
-      layer: "MODIS_Terra_CorrectedReflectance_Bands721",
-      matrix: "250m",
-      maxLevel: 8,
-    },
-  };
-
   const $ = (id) => document.getElementById(id);
+  const diskEl = $("gb-disk");
+  const ringsCanvas = $("gb-rings");
   const statusEl = $("gb-status");
   const metaEl = $("gb-meta");
 
-  function isoDay(offsetDays = 0) {
-    const d = new Date();
-    d.setUTCDate(d.getUTCDate() - offsetDays);
-    return d.toISOString().split("T")[0];
-  }
+  const layerImgs = {};
+  diskEl?.querySelectorAll("img[data-src]").forEach((img) => {
+    layerImgs[img.dataset.src] = img;
+  });
+
+  let diskMeta = { center: [1024, 1022], outer_radius_px: 1012, width_px: 2048 };
+  let features = [];
 
   function setStatus(msg) {
     if (statusEl) statusEl.textContent = msg;
   }
 
-  function gibsProvider(def, day) {
-    const time = `TIME=${day}`;
-    return new Cesium.WebMapTileServiceImageryProvider({
-      url: `https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?${time}`,
-      layer: def.layer,
-      style: "",
-      format: "image/jpeg",
-      tileMatrixSetID: def.matrix,
-      maximumLevel: def.maxLevel,
-      tileWidth: 256,
-      tileHeight: 256,
-      tilingScheme: gibs.GeographicTilingScheme(),
+  function bust(url) {
+    return `${url.split("?")[0]}?t=${Date.now()}`;
+  }
+
+  function resizeRings() {
+    if (!ringsCanvas || !diskEl) return;
+    const rect = diskEl.getBoundingClientRect();
+    const size = Math.round(rect.width);
+    ringsCanvas.width = size;
+    ringsCanvas.height = size;
+    drawRings();
+  }
+
+  function pxToNorm(px) {
+    return px / (diskMeta.outer_radius_px || 1012);
+  }
+
+  function drawRings() {
+    const ctx = ringsCanvas?.getContext("2d");
+    if (!ctx || !ringsCanvas.width) return;
+    ctx.clearRect(0, 0, ringsCanvas.width, ringsCanvas.height);
+    const cx = ringsCanvas.width / 2;
+    const cy = ringsCanvas.height / 2;
+    const R = ringsCanvas.width / 2;
+
+    const showRings = $("ly-rings")?.checked !== false;
+    const showIslands = $("ly-islands")?.checked !== false;
+
+    if (showRings) {
+      const ringFeatures = features.filter((f) =>
+        /rupes|island_outer|equator|arctic|rim/.test(f.name)
+      );
+      ringFeatures.forEach((f) => {
+        const r = pxToNorm(f.px_from_center) * R;
+        if (r <= 0 || r > R) return;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.strokeStyle =
+          f.name.includes("rupes") ? "rgba(180, 80, 255, 0.9)"
+          : f.name.includes("island") ? "rgba(100, 220, 255, 0.85)"
+          : f.name.includes("equator") ? "rgba(255, 200, 80, 0.7)"
+          : "rgba(120, 160, 220, 0.45)";
+        ctx.lineWidth = f.name.includes("rupes") ? 2 : 1;
+        ctx.setLineDash(f.name.includes("rim") ? [6, 4] : []);
+        ctx.stroke();
+      });
+    }
+
+    ctx.setLineDash([]);
+    ctx.fillStyle = "rgba(0, 255, 220, 0.95)";
+    ctx.beginPath();
+    ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,0.9)";
+    ctx.font = "11px Segoe UI, system-ui, sans-serif";
+    ctx.fillText("North aperture", cx + 8, cy - 8);
+
+    if (showIslands) {
+      const bearings = [45, 135, 225, 315];
+      const island = features.find((f) => f.name === "island_outer_termination");
+      const rho = island ? pxToNorm(island.px_from_center) : 0.0146;
+      bearings.forEach((deg) => {
+        const rad = (deg * Math.PI) / 180;
+        const x = cx + Math.sin(rad) * rho * R;
+        const y = cy - Math.cos(rad) * rho * R;
+        ctx.beginPath();
+        ctx.arc(x, y, 6, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(160, 190, 220, 0.95)";
+        ctx.fill();
+        ctx.strokeStyle = "rgba(255,255,255,0.6)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      });
+    }
+  }
+
+  function bindLayers() {
+    $("ly-procedural")?.addEventListener("change", (e) => {
+      if (layerImgs.procedural) layerImgs.procedural.style.opacity = e.target.checked ? "1" : "0";
+    });
+    $("ly-geocolor")?.addEventListener("change", (e) => {
+      if (layerImgs.geocolor) layerImgs.geocolor.style.opacity = e.target.checked ? "0.92" : "0";
+    });
+    $("ly-rings")?.addEventListener("change", drawRings);
+    $("ly-islands")?.addEventListener("change", drawRings);
+
+    document.querySelectorAll("[data-layer]").forEach((cb) => {
+      const id = cb.dataset.layer;
+      const img = layerImgs[id];
+      const slider = document.querySelector(`[data-opacity='${id}']`);
+      const sync = () => {
+        if (!img) return;
+        const on = cb.checked;
+        img.classList.toggle("hidden", !on);
+        img.style.opacity = on ? String((Number(slider?.value || 50) || 50) / 100) : "0";
+      };
+      cb.addEventListener("change", sync);
+      slider?.addEventListener("input", sync);
     });
   }
 
-  let viewer;
-  let baseKey = "geocolor";
-  let baseDay = isoDay(1);
-  const active = { base: null, overlays: {} };
-
-  function addLayer(def, day, alpha = 1) {
-    const layer = viewer.imageryLayers.addImageryProvider(gibsProvider(def, day));
-    layer.alpha = alpha;
-    return layer;
-  }
-
-  function replaceBase(key, dayOffset = 1) {
-    const def = LAYERS[key];
-    if (!def) return;
-    baseKey = key;
-    baseDay = isoDay(dayOffset);
-    if (active.base) viewer.imageryLayers.remove(active.base, false);
-    active.base = addLayer(def, baseDay, 1);
-    setStatus(`Base: ${def.label} · ${baseDay} · NASA GIBS (cloud)`);
-  }
-
-  function toggleOverlay(key, on, opacity) {
-    const def = LAYERS[key];
-    if (!def) return;
-    if (!on) {
-      if (active.overlays[key]) {
-        viewer.imageryLayers.remove(active.overlays[key], false);
-        delete active.overlays[key];
-      }
-      return;
-    }
-    if (!active.overlays[key]) {
-      active.overlays[key] = addLayer(def, baseDay, opacity);
-    } else {
-      active.overlays[key].alpha = opacity;
-    }
-  }
-
-  function flyNorthPole() {
-    viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(0, 89.5, 2_200_000),
-      duration: 1.4,
-    });
-  }
-
-  async function loadUdmMeta() {
+  async function loadMeta() {
     try {
-      const r = await fetch("/api/procedural/status");
-      if (!r.ok) throw new Error(String(r.status));
-      const data = await r.json();
-      const km = data?.terminations?.anchors?.km_per_px;
-      const islands = data?.terminations?.features?.find((f) => f.name === "island_outer_termination");
+      const [manifest, terms] = await Promise.all([
+        fetch("/api/procedural/status").then((r) => r.json()),
+        fetch("/api/procedural/terminations").then((r) => r.json()),
+      ]);
+      diskMeta = manifest?.terminations?.disk || terms?.disk || diskMeta;
+      features = manifest?.terminations?.features || terms?.features || [];
+      const a = manifest?.terminations?.anchors || terms?.anchors || {};
       metaEl.textContent = [
-        `UDM scale: ${km ? km.toFixed(4) : "?"} km/px`,
-        islands ? `Four-island ring: ${islands.px_from_center} px from center` : "",
-        "Auto-view: North aperture (Rupes Nigra region)",
-      ]
-        .filter(Boolean)
-        .join("\n");
-    } catch {
-      metaEl.textContent = "UDM scale metadata loading…";
+        `km/px: ${a.km_per_px ?? "—"}`,
+        `center: ${JSON.stringify(diskMeta.center)}`,
+        `R: ${diskMeta.outer_radius_px} px`,
+        `NOT spherical — flat polar Frame-U`,
+      ].join("\n");
+      resizeRings();
+      setStatus("Flat polar disk ready — scroll overlays, not a globe");
+    } catch (e) {
+      metaEl.textContent = `Scale metadata: ${e}`;
     }
   }
 
+  function refreshImages() {
+    Object.values(layerImgs).forEach((img) => {
+      if (img.src) img.src = bust(img.src);
+    });
+  }
+
+  window.addEventListener("resize", resizeRings);
   window.addEventListener("load", () => {
-    try {
-      viewer = new Cesium.Viewer("gb-map", {
-        baseLayer: false,
-        baseLayerPicker: false,
-        geocoder: false,
-        homeButton: true,
-        sceneModePicker: true,
-        navigationHelpButton: false,
-        animation: false,
-        timeline: false,
-        fullscreenButton: true,
-        terrainProvider: new Cesium.EllipsoidTerrainProvider(),
-        creditContainer: document.createElement("div"),
-      });
-
-      viewer.scene.globe.baseColor = Cesium.Color.fromCssColorString("#0a0f18");
-      viewer.scene.skyAtmosphere.show = true;
-      viewer.scene.globe.enableLighting = true;
-
-      replaceBase("geocolor", 1);
-
-      viewer.entities.add({
-        name: "UDM North Axis",
-        position: Cesium.Cartesian3.fromDegrees(0, 90),
-        point: {
-          pixelSize: 12,
-          color: Cesium.Color.CYAN.withAlpha(0.95),
-          outlineColor: Cesium.Color.WHITE,
-          outlineWidth: 2,
-        },
-        label: {
-          text: "North aperture",
-          font: "13px Segoe UI",
-          fillColor: Cesium.Color.WHITE,
-          pixelOffset: new Cesium.Cartesian2(0, -20),
-          showBackground: true,
-          backgroundColor: Cesium.Color.BLACK.withAlpha(0.6),
-        },
-      });
-
-      $("gb-base")?.addEventListener("change", (e) => replaceBase(e.target.value, 1));
-      document.querySelectorAll("[data-overlay]").forEach((el) => {
-        const key = el.dataset.overlay;
-        const op = document.querySelector(`[data-opacity='${key}']`);
-        const sync = () => toggleOverlay(key, el.checked, (Number(op?.value || 60) || 60) / 100);
-        el.addEventListener("change", sync);
-        op?.addEventListener("input", sync);
-      });
-      $("gb-pole")?.addEventListener("click", flyNorthPole);
-      $("gb-refresh")?.addEventListener("click", () => replaceBase($("gb-base").value, 0));
-
-      loadUdmMeta();
-      setTimeout(flyNorthPole, 800);
-      setStatus("Cloud globe ready — drag to orbit, scroll to zoom");
-    } catch (err) {
-      setStatus(`Globe error: ${err.message}`);
-      console.error(err);
-    }
+    bindLayers();
+    loadMeta();
+    refreshImages();
+    if (layerImgs.geocolor) layerImgs.geocolor.style.opacity = "0.92";
   });
 })();

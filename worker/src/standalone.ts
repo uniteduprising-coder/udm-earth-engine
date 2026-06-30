@@ -253,8 +253,14 @@ export default {
         return out;
       }
     }
-    if (path === "/globe" || path === "/globe.html" || path === "/view") {
-      const asset = await fetchRaw("/globe.html");
+    if (
+      path === "/simulate" ||
+      path === "/simulate.html" ||
+      path === "/globe" ||
+      path === "/globe.html" ||
+      path === "/view"
+    ) {
+      const asset = await fetchRaw("/simulate.html");
       if (asset.ok) {
         const out = new Response(asset.body, asset);
         out.headers.set("Content-Type", "text/html;charset=utf-8");

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UDM Planar Simulation Engine</title>
+  <link rel="stylesheet" href="/assets/planar_sim.css" />
+</head>
+<body>
+  <header class="ps-header">
+    <div>
+      <h1>UDM Planar Simulation Engine</h1>
+      <p>Flat polar (r, θ) domain · macro-step physics · Q_h inflow · not a globe</p>
+    </div>
+    <nav class="ps-links">
+      <a href="/">Atlas</a>
+      <a href="/realtime">Realtime plate</a>
+      <a href="/toroid">Toroid section</a>
+    </nav>
+  </header>
+
+  <div class="ps-layout">
+    <section class="ps-stage">
+      <div class="ps-disk-frame">
+        <canvas id="ps-canvas" class="ps-canvas" width="256" height="256" aria-label="UDM planar simulation field"></canvas>
+      </div>
+    </section>
+
+    <aside class="ps-sidebar">
+      <h2>Simulation</h2>
+      <button id="ps-play" type="button" class="primary">Pause</button>
+      <button id="ps-step" type="button">Step once (sync API)</button>
+      <button id="ps-reset" type="button">Reset engine</button>
+
+      <h2>Field display</h2>
+      <label>Scalar field
+        <select id="ps-field">
+          <option value="flow" selected>Hydro flow |V_h|</option>
+          <option value="vr">Radial inflow |V_r|</option>
+          <option value="glow">Aether glow I</option>
+          <option value="bstat">B_stat</option>
+          <option value="rhoa">ρ_a wave</option>
+          <option value="emf">Motional EMF</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="ps-vectors" checked /> Flow vectors (planar)</label>
+      <label><input type="checkbox" id="ps-rings" checked /> UDM termination rings</label>
+
+      <h2>Telemetry</h2>
+      <div id="ps-telemetry" class="ps-telemetry">Loading params…</div>
+    </aside>
+  </div>
+
+  <footer class="ps-footer">
+    <span id="ps-status">Initializing planar engine…</span>
+  </footer>
+
+  <script src="/assets/udm_fields.js"></script>
+  <script src="/assets/planar_sim.js"></script>
+</body>
+</html>

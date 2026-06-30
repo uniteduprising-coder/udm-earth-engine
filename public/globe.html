@@ -2,59 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UDM Flat Polar Model</title>
-  <link rel="stylesheet" href="/assets/globe.css" />
+  <meta http-equiv="refresh" content="0; url=/simulate" />
+  <title>Redirect — UDM Planar Simulation</title>
 </head>
 <body>
-  <header class="gb-header">
-    <div>
-      <h1>UDM Flat Polar Model</h1>
-      <p id="gb-sub">Frame-U polar disk · procedural geometry · NASA overlays · not a globe</p>
-    </div>
-    <nav class="gb-links">
-      <a href="/">Atlas</a>
-      <a href="/realtime">Plate-locked realtime</a>
-      <a href="/toroid">Toroid cross-section</a>
-    </nav>
-  </header>
-
-  <aside class="gb-panel">
-    <h2>Base layers</h2>
-    <label><input type="checkbox" id="ly-procedural" checked /> UDM procedural core</label>
-    <label><input type="checkbox" id="ly-geocolor" checked /> Continents (VIIRS)</label>
-
-    <h2>Observational (T1)</h2>
-    <label><input type="checkbox" data-layer="thermal" /> Thermal / SST</label>
-    <input type="range" data-opacity="thermal" min="0" max="100" value="60" />
-    <label><input type="checkbox" data-layer="weather" /> Weather / IR</label>
-    <input type="range" data-opacity="weather" min="0" max="100" value="45" />
-    <label><input type="checkbox" data-layer="ocean" /> Ocean SST</label>
-    <input type="range" data-opacity="ocean" min="0" max="100" value="50" />
-
-    <h2>UDM geometry</h2>
-    <label><input type="checkbox" id="ly-rings" checked /> Termination rings</label>
-    <label><input type="checkbox" id="ly-islands" checked /> Four islands</label>
-    <div id="gb-meta" class="gb-mono">Loading scale…</div>
-  </aside>
-
-  <main class="gb-stage">
-    <div class="gb-disk-wrap">
-      <div class="gb-disk" id="gb-disk">
-        <img data-src="procedural" alt="UDM procedural" src="/data/procedural/polar.png" />
-        <img data-src="geocolor" alt="VIIRS geocolor" src="/data/procedural/layers/geocolor.png" />
-        <img data-src="thermal" class="gb-overlay hidden" alt="Thermal" src="/data/procedural/layers/thermal_isolated.png" />
-        <img data-src="weather" class="gb-overlay hidden" alt="Weather" src="/data/procedural/layers/weather_isolated.png" />
-        <img data-src="ocean" class="gb-overlay hidden" alt="Ocean" src="/data/procedural/layers/ocean_isolated.png" />
-        <canvas id="gb-rings" aria-hidden="true"></canvas>
-      </div>
-    </div>
-  </main>
-
-  <footer class="gb-footer">
-    <span id="gb-status">Flat polar projection — inflow from rim toward North aperture</span>
-  </footer>
-
-  <script src="/assets/globe.js" defer></script>
+  <p><a href="/simulate">UDM Planar Simulation Engine</a></p>
 </body>
 </html>

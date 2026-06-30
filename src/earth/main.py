@@ -11,6 +11,8 @@ from fastapi.staticfiles import StaticFiles
 
 from earth.api.advantage_routes import router as advantage_router
 from earth.api.celestial_routes import router as celestial_router
+from earth.api.procedural_routes import router as procedural_router
+from earth.api.simulation_routes import router as simulation_router
 from earth.api.realtime_routes import router as realtime_router
 from earth.api.encyclopedia_routes import router as encyclopedia_router
 from earth.api.toroidal_routes import router as toroidal_router
@@ -60,6 +62,8 @@ def create_app() -> FastAPI:
     app.include_router(encyclopedia_router, prefix="/api")
     app.include_router(celestial_router, prefix="/api")
     app.include_router(realtime_router, prefix="/api")
+    app.include_router(procedural_router, prefix="/api")
+    app.include_router(simulation_router, prefix="/api")
     app.include_router(router)
     app.include_router(cosmology_router)
     app.include_router(advantage_router)
@@ -67,6 +71,8 @@ def create_app() -> FastAPI:
     app.include_router(encyclopedia_router)
     app.include_router(celestial_router)
     app.include_router(realtime_router)
+    app.include_router(procedural_router)
+    app.include_router(simulation_router)
 
     public = ROOT / "public"
     if public.exists():
@@ -93,6 +99,22 @@ def create_app() -> FastAPI:
         if path.exists():
             return FileResponse(path)
         return {"service": "udm-earth-engine", "realtime": "public/realtime.html missing"}
+
+    @app.get("/toroid")
+    async def toroid_viewer():
+        path = public / "toroid.html"
+        if path.exists():
+            return FileResponse(path)
+        return {"service": "udm-earth-engine", "toroid": "public/toroid.html missing"}
+
+    @app.get("/simulate")
+    @app.get("/globe")
+    @app.get("/view")
+    async def planar_simulation_viewer():
+        path = public / "simulate.html"
+        if path.exists():
+            return FileResponse(path)
+        return {"service": "udm-earth-engine", "simulate": "public/simulate.html missing"}
 
     return app
 
